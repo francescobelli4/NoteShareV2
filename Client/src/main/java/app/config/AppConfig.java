@@ -38,7 +38,7 @@ public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
 
             try {
                 parsedMode = Mode.valueOf(mode);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 throw new IllegalArgumentException("Invalid value for option: mode. Use DEMO or FULL instead.");
             }
         }
@@ -49,7 +49,7 @@ public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
 
             try {
                 parsedGuiType = GuiType.valueOf(guiType);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 throw new IllegalArgumentException("Invalid value for option: guitype. Use FX or SECONDARY instead.");
             }
         }

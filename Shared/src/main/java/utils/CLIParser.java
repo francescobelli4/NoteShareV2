@@ -1,9 +1,12 @@
 package utils;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CLIParser {
+
+    private CLIParser() {}
 
     private static final Pattern OPTION_PATTERN = Pattern.compile("^--([a-zA-Z]+)$");
 
@@ -13,7 +16,7 @@ public class CLIParser {
      * @param args CLI args
      * @return The options hashmap
      */
-    public static HashMap<String, String> fromArgs(String[] args) throws IllegalArgumentException {
+    public static Map<String, String> fromArgs(String[] args) throws IllegalArgumentException {
 
         if (args.length == 0) return new HashMap<>();
 
@@ -21,8 +24,7 @@ public class CLIParser {
 
         HashMap<String, String> parsedArgs = new HashMap<>();
 
-        for (int i = 0; i < args.length; i++) {
-
+        for (int i = 0; i < args.length; i += 2) {
             String option = args[i];
             String value = args[i+1];
 
@@ -33,7 +35,6 @@ public class CLIParser {
                 }
 
                 parsedArgs.put(option.substring(2), value);
-                i++;
             } else {
                 throw new IllegalArgumentException(String.format("Malformed option: %s", option));
             }
