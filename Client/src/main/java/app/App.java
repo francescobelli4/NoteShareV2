@@ -2,7 +2,7 @@ package app;
 
 public class App {
 
-    static void main() {
-
+    static void main(String[] args) {
+        Launcher.launchApp();
     }
 }
