@@ -1,7 +1,6 @@
 package app.config;
 
 import org.junit.jupiter.api.Test;
-import utils.CLIParser;
 
 import java.util.Locale;
 
@@ -40,9 +39,7 @@ class AppConfigTest {
     void createThrowsExceptionOnInvalidMode() {
         String[] args = {"--mode", "EARLY_ACCESS"};
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            AppConfig.create(args);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> AppConfig.create(args));
 
         assertEquals("Invalid value for option: mode. Use DEMO or FULL instead.", exception.getMessage());
     }
@@ -51,9 +48,7 @@ class AppConfigTest {
     void createThrowsExceptionOnInvalidGuiType() {
         String[] args = {"--guitype", "WEB"};
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            AppConfig.create(args);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> AppConfig.create(args));
 
         assertEquals("Invalid value for option: guitype. Use FX or SECONDARY instead.", exception.getMessage());
     }
@@ -62,9 +57,7 @@ class AppConfigTest {
     void createThrowsExceptionOnInvalidLocale() {
         String[] args = {"--locale", "unitorvergata"};
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            AppConfig.create(args);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> AppConfig.create(args));
 
         assertTrue(exception.getMessage().contains("Invalid value for option: locale"));
     }
