@@ -1,6 +1,6 @@
 Software Engineering course project (2026/27). 
 
-[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=francescobelli4_NoteShareV2&metric=alert_status&token=72b4c44aeabc27f41789a2254633be350fe903c1)](https://sonarcloud.io/summary/new_code?id=francescobelli4_NoteShareV2)
+[![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=francescobelli4_NoteShareV2&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=francescobelli4_NoteShareV2)
 
 **User stories:**
 

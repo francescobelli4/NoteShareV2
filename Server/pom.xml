@@ -10,11 +10,4 @@
     </parent>
 
     <artifactId>Server</artifactId>
-
-    <properties>
-        <maven.compiler.source>27</maven.compiler.source>
-        <maven.compiler.target>27</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
 </project>

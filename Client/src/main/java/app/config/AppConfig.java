@@ -2,10 +2,7 @@ package app.config;
 
 import utils.CLIParser;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
 
@@ -28,7 +25,7 @@ public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
     public static AppConfig create(String[] args) throws IllegalArgumentException {
 
         AppConfig def = defaults();
-        HashMap<String, String> options = CLIParser.fromArgs(args);
+        Map<String, String> options = CLIParser.fromArgs(args);
 
         if (options.isEmpty()) return def;
 
@@ -61,7 +58,7 @@ public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
             boolean isValid = Arrays.stream(Locale.getAvailableLocales()).anyMatch(l -> l.getLanguage().equals(locale));
 
             if (!isValid) {
-                throw new IllegalArgumentException("Invalid value for option: locale. Use it-IT or en-EN instead.");
+                throw new IllegalArgumentException("Invalid value for option: locale. Use it or en   instead.");
             }
 
             parsedLocale = Locale.of(locale);
