@@ -22,8 +22,6 @@
 
         <!-- SonarCloud -->
         <sonar.organization>francescobelli4</sonar.organization>
-        <sonar.projectKey>francescobelli4_NoteShareV2</sonar.projectKey>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencyManagement>
