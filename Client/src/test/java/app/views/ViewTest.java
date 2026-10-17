@@ -8,22 +8,47 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ViewTest {
 
-    private class TestView extends View {
+    private static class TestView extends View {
 
-        public TestView() {}
+        private int onCloseCalls = 0;
+        public TestView() {
+            onCloseCalls = 0;
+        }
+
+        void add(View child) {
+            addChild(child);
+        }
+
+        void remove(View child) {
+            removeChild(child);
+        }
+
+        public int getOnCloseCalls() {
+            return onCloseCalls;
+        }
+
+        @Override
+        protected void onClose() {
+            onCloseCalls++;
+            super.onClose();
+        }
     }
 
     @Test
     void testClose() {
 
-        TestView tv = new TestView();
+        TestView parentView = new TestView();
+        TestView childView = new TestView();
         AtomicInteger unsubs = new AtomicInteger();
 
-        tv.subscribe(unsubs::getAndIncrement);
+        parentView.subscribe(unsubs::getAndIncrement);
+        parentView.add(childView);
 
-        tv.close();
+        parentView.close();
 
         assertEquals(1, unsubs.get());
+        assertEquals(1, parentView.getOnCloseCalls());
+        assertEquals(1, childView.getOnCloseCalls());
     }
 
 }
