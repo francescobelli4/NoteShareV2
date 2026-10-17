@@ -3,7 +3,7 @@ package app.views;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class Navigator<V extends View> {
+public abstract class Navigator<V extends View> {
 
     // This stack should keep trace of the user's navigation in the app
     private final Deque<V> stack = new ArrayDeque<>();
@@ -26,7 +26,7 @@ public class Navigator<V extends View> {
         push(view);
     }
 
-    public void display(V view) {
+    protected void display(V view) {
         // To be implemented
     }
 }

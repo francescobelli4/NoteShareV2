@@ -18,7 +18,9 @@ public class FxLauncher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FxFrameManager navigator = new FxFrameManager();
+        FxFrameManager frameManager = new FxFrameManager();
+        FxNavigator navigator = new FxNavigator(frameManager);
+        FxViewFactory viewFactory = new FxViewFactory();
 
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
@@ -28,7 +30,7 @@ public class FxLauncher extends Application {
         double width = Math.max(minWidth, screen.getWidth() * 0.8);
         double height = Math.max(minHeight, screen.getHeight() * 0.8);
 
-        Scene scene = new Scene(navigator.getFrame(), width, height);
+        Scene scene = new Scene(frameManager.getFrame(), width, height);
 
         stage.setMinWidth(minWidth);
         stage.setMinHeight(minHeight);
@@ -36,5 +38,7 @@ public class FxLauncher extends Application {
         stage.setScene(scene);
         stage.setTitle("NoteShare");
         stage.show();
+
+        navigator.resetToPage(viewFactory.createFxHomeView());
     }
 }

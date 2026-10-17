@@ -18,7 +18,6 @@ public class FxFrameManager {
 
         closeOverlay();
 
-        if (currentPage != null) currentPage.close();
         currentPage = view;
         pageContainer.getChildren().setAll(view.getRoot());
     }

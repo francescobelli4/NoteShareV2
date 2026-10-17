@@ -11,7 +11,7 @@ public class FxNavigator extends Navigator<FxView> {
     }
 
     @Override
-    public void display(FxView view) {
+    protected void display(FxView view) {
         frameManager.show(view);
     }
 }

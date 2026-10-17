@@ -27,6 +27,7 @@ public abstract class FxView extends View {
 
             URL url = getClass().getResource(getFxmlPath());
             FXMLLoader fxmlLoader = new FXMLLoader(url);
+            fxmlLoader.setController(this);
 
             try {
                 root = fxmlLoader.load();
@@ -51,10 +52,5 @@ public abstract class FxView extends View {
      */
     protected void updateUI(Runnable runnable) {
         Platform.runLater(runnable);
-    }
-
-    @Override
-    protected void onClose() {
-        super.onClose();
     }
 }
