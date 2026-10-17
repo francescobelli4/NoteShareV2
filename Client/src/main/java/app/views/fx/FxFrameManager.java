@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
  */
 public class FxFrameManager {
 
-    private FxView currentPage, currentOverlay;
+    private FxView currentOverlay;
     private final StackPane pageContainer = new StackPane();
     private final StackPane overlayContainer = new StackPane();
     private final StackPane frame = new StackPane(pageContainer, overlayContainer);
@@ -24,7 +24,6 @@ public class FxFrameManager {
     public void show(FxView view) {
         closeOverlay();
 
-        currentPage = view;
         pageContainer.getChildren().setAll(view.getRoot());
     }
 
