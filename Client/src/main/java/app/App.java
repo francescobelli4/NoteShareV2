@@ -2,6 +2,8 @@ package app;
 
 
 import app.config.AppConfig;
+import app.config.GuiType;
+import app.views.fx.FxLauncher;
 
 import java.util.logging.Logger;
 
@@ -28,6 +30,8 @@ public class App {
                 APPCONFIG.locale()
         ));
 
-        Launcher.launchApp();
+        if (APPCONFIG.guiType() == GuiType.FX) {
+            FxLauncher.launchApp();
+        }
     }
 }

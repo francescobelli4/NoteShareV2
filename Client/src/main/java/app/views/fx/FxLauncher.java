@@ -1,15 +1,12 @@
-package app;
+package app.views.fx;
 
-import app.views.fx.FxNavigator;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Launcher extends Application {
+public class FxLauncher extends Application {
 
     private static final double MIN_WIDTH = 900;
     private static final double MIN_HEIGHT = 600;
@@ -21,7 +18,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FxNavigator navigator = new FxNavigator();
+        FxFrameManager navigator = new FxFrameManager();
 
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
@@ -32,6 +29,9 @@ public class Launcher extends Application {
         double height = Math.max(minHeight, screen.getHeight() * 0.8);
 
         Scene scene = new Scene(navigator.getFrame(), width, height);
+
+        stage.setMinWidth(minWidth);
+        stage.setMinHeight(minHeight);
 
         stage.setScene(scene);
         stage.setTitle("NoteShare");
