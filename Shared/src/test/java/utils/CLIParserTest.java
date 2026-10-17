@@ -43,7 +43,7 @@ class CLIParserTest {
     }
 
     @Test
-    void fromArgsMalformedOptionVAlue() {
+    void fromArgsMalformedOptionValue() {
         String[] args = {"--mode", "--DEMO", "--guitype", "FX", "--locale", "it"};
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> CLIParser.fromArgs(args));

@@ -29,6 +29,5 @@ public class App {
         ));
 
         Launcher.launchApp();
-
     }
 }
