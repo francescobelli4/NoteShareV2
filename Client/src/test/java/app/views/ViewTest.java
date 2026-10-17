@@ -51,4 +51,16 @@ class ViewTest {
         assertEquals(1, childView.getOnCloseCalls());
     }
 
+    @Test
+    void testChildClose() {
+
+        TestView parentView = new TestView();
+        TestView childView = new TestView();
+
+        parentView.add(childView);
+
+        parentView.remove(childView);
+
+        assertEquals(1, childView.getOnCloseCalls());
+    }
 }

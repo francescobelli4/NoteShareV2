@@ -37,4 +37,8 @@ public class ListenerHelper<L> {
     public void triggerEvent(Consumer<L> event) {
         listeners.forEach(event);
     }
+
+    public int getListenersCount() {
+        return listeners.size();
+    }
 }
