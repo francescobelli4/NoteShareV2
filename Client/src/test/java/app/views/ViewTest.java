@@ -30,7 +30,6 @@ class ViewTest {
         @Override
         protected void onClose() {
             onCloseCalls++;
-            super.onClose();
         }
     }
 

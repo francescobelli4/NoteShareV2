@@ -3,6 +3,13 @@ package app.views.fx;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
+/**
+ * This class should manage how the main frame gets populated. The frame is made of a pageContainer and an
+ * overlayContainer.
+ * This class should actually decide the FxView that is visualized by the user, but it should not close it when that
+ * page gets hidden: this is done by the Navigator.
+ * Overlays, instead, do not appear in Navigator's stack, and they can be closed immediately when they get hidden.
+ */
 public class FxFrameManager {
 
     private FxView currentPage, currentOverlay;
@@ -15,7 +22,6 @@ public class FxFrameManager {
     }
 
     public void show(FxView view) {
-
         closeOverlay();
 
         currentPage = view;

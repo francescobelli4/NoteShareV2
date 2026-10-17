@@ -6,7 +6,7 @@ public class FxHomeView extends FxView {
 
     @Override
     protected String getFxmlPath() {
-        return "test/fakepath/HomeView.fxml";
+        return "/fxml/home/HomePage.fxml";
     }
 
     @Override
@@ -16,6 +16,6 @@ public class FxHomeView extends FxView {
 
     @Override
     protected void onClose() {
-        super.onClose();
+        // Still not done :D
     }
 }

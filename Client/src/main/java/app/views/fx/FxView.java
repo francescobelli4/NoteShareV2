@@ -13,9 +13,7 @@ public abstract class FxView extends View {
 
     private Parent root;
 
-    protected String getFxmlPath() {
-        return null;
-    }
+    protected abstract String getFxmlPath();
 
     /**
      * This function should lazy-load the root element for this view.
@@ -26,6 +24,10 @@ public abstract class FxView extends View {
         if (root == null) {
 
             URL url = getClass().getResource(getFxmlPath());
+            if (url == null) {
+                throw new IllegalStateException(String.format("FXML not found: %s", getFxmlPath()));
+            }
+
             FXMLLoader fxmlLoader = new FXMLLoader(url);
             fxmlLoader.setController(this);
 
