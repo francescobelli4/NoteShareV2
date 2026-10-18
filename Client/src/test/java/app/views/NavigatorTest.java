@@ -1,6 +1,5 @@
 package app.views;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,14 +48,22 @@ class NavigatorTest {
     @Test
     void pop() {
         TestView view = new TestView();
+        TestView secondView = new TestView();
 
         navigator.push(view);
-
         navigator.pop();
 
         assertAll(() -> {
-            assertEquals(1, view.getOnCloseCalls());
-            assertEquals(0, navigator.getStackSize());
+            assertEquals(0, view.getOnCloseCalls());
+            assertEquals(1, navigator.getStackSize());
+        });
+
+        navigator.push(secondView);
+        navigator.pop();
+
+        assertAll(() -> {
+            assertEquals(1, secondView.getOnCloseCalls());
+            assertEquals(1, navigator.getStackSize());
         });
     }
 
