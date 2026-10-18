@@ -1,8 +1,14 @@
 package app.views.fx.pages;
 
+import app.views.GraphicController;
 import app.views.fx.FxView;
+import app.views.fx.graphiccontrollers.FxHomeViewController;
 
-public class FxHomeView extends FxView {
+public class FxHomeView extends FxView<FxHomeViewController> {
+
+    public FxHomeView(FxHomeViewController controller) {
+        super(controller);
+    }
 
     @Override
     protected String getFxmlPath() {

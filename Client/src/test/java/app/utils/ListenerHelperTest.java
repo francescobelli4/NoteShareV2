@@ -1,5 +1,6 @@
 package app.utils;
 
+import app.views.GraphicController;
 import app.views.View;
 import org.junit.jupiter.api.Test;
 
@@ -22,20 +23,22 @@ class ListenerHelperTest {
         public void event() {
             listeners.triggerEvent(TestModelListener::testEvent);
         }
-
-
     }
 
     private interface TestModelListener {
         void testEvent();
     }
 
-    private static class TestView extends View implements TestModelListener {
+    private static class TestGraphicsController implements GraphicController {
+        // Just for tests...
+    }
 
-        private int triggeredEventsCount;
+    private static class TestView extends View<TestGraphicsController> implements TestModelListener {
+
+        private int triggeredEventsCount = 0;
 
         public TestView() {
-            triggeredEventsCount = 0;
+            super(new TestGraphicsController());
         }
 
         public int getTriggeredEventsCount() {

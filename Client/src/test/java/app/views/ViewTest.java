@@ -8,18 +8,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ViewTest {
 
-    private static class TestView extends View {
+    private static class TestGraphicsController implements GraphicController {
+        // Just for tests...
+    }
+
+    private static class TestView extends View<TestGraphicsController> {
 
         private int onCloseCalls = 0;
-        public TestView() {
-            onCloseCalls = 0;
+        TestView() {
+            super(new TestGraphicsController());
         }
 
-        void add(View child) {
+        void add(View<?> child) {
             addChild(child);
         }
 
-        void remove(View child) {
+        void remove(View<?> child) {
             removeChild(child);
         }
 

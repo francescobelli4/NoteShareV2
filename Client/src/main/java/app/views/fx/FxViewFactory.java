@@ -1,5 +1,6 @@
 package app.views.fx;
 
+import app.views.fx.graphiccontrollers.FxHomeViewController;
 import app.views.fx.pages.FxHomeView;
 
 /**
@@ -12,6 +13,7 @@ public class FxViewFactory {
     }
 
     public FxHomeView createFxHomeView() {
-        return new FxHomeView();
+        FxHomeViewController controller = new FxHomeViewController();
+        return new FxHomeView(controller);
     }
 }
