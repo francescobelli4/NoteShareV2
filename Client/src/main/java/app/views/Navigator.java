@@ -32,5 +32,9 @@ public abstract class Navigator<V extends View> {
         push(view);
     }
 
+    public int getStackSize() {
+        return stack.size();
+    }
+
     protected abstract void display(V view);
 }

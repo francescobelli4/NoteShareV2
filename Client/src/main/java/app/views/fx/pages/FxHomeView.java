@@ -11,7 +11,7 @@ public class FxHomeView extends FxView {
 
     @Override
     protected void onLoaded() {
-        super.onLoaded();
+        // Still not done :D
     }
 
     @Override
