@@ -1,6 +1,5 @@
 package app.views.fx.pages;
 
-import app.views.GraphicController;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.FxHomeViewController;
 
