@@ -25,7 +25,7 @@ class NavigatorTest {
 
     private int displayCount = 0;
 
-    Navigator<TestView> navigator = new Navigator<TestView>() {
+    Navigator<TestView> navigator = new Navigator<>() {
         @Override
         protected void display(TestView view) {
             displayCount++;
