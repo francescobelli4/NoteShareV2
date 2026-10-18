@@ -5,7 +5,7 @@ import app.views.Navigator;
 /**
  * This class is a subclass of Navigator. This should implement the specific display function for the FX UI.
  */
-public class FxNavigator extends Navigator<FxView> {
+public class FxNavigator extends Navigator<FxView<?>> {
 
     private final FxFrameManager frameManager;
 
@@ -14,7 +14,7 @@ public class FxNavigator extends Navigator<FxView> {
     }
 
     @Override
-    protected void display(FxView view) {
+    protected void display(FxView<?> view) {
         frameManager.show(view);
     }
 }

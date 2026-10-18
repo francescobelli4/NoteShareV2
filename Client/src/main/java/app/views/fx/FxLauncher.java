@@ -16,7 +16,7 @@ public class FxLauncher extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
         FxFrameManager frameManager = new FxFrameManager();
         FxNavigator navigator = new FxNavigator(frameManager);

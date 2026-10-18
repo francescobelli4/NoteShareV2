@@ -6,11 +6,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NavigatorTest {
 
-    private static class TestView extends View {
+    private static class TestGraphicsController implements GraphicController {
+        // Just for tests...
+    }
+
+    private static class TestView extends View<TestGraphicsController> {
 
         private int onCloseCalls = 0;
         public TestView() {
-            onCloseCalls = 0;
+            super(new TestGraphicsController());
         }
 
         public int getOnCloseCalls() {

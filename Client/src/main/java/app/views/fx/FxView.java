@@ -1,5 +1,6 @@
 package app.views.fx;
 
+import app.views.GraphicController;
 import app.views.View;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,11 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URL;
 
-public abstract class FxView extends View {
+public abstract class FxView<C extends GraphicController> extends View<C> {
+
+    protected FxView(C controller) {
+        super(controller);
+    }
 
     private Parent root;
 
@@ -46,7 +51,7 @@ public abstract class FxView extends View {
     /**
      * This should be called AFTER the fxml is loaded
      */
-    protected void onLoaded() {}
+    protected abstract void onLoaded();
 
     /**
      * This function allows to edit the UI only on the JavaFX thread

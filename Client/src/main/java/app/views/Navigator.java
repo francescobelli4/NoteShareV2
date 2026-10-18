@@ -9,7 +9,7 @@ import java.util.Deque;
  * The display method should be implemented by Navigator subclasses.
  * @param <V>
  */
-public abstract class Navigator<V extends View> {
+public abstract class Navigator<V extends View<?>> {
 
     // This stack should keep trace of the user's navigation in the app
     private final Deque<V> stack = new ArrayDeque<>();
