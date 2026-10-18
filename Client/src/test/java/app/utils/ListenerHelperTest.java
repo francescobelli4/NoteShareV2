@@ -46,6 +46,11 @@ class ListenerHelperTest {
         public void testEvent() {
             triggeredEventsCount++;
         }
+
+        @Override
+        protected void onClose() {
+            // no-op
+        }
     }
 
     @Test
