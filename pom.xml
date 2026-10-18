@@ -26,7 +26,7 @@
 
         <junit.version>5.11.0</junit.version>
         <jacoco.version>0.8.14</jacoco.version>
-        <sonar.coverage.exclusions>**/app/App.java,**/app/Launcher.java</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/app/App.java,**/views/fx/**</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>

@@ -38,5 +38,5 @@ public abstract class View {
         onClose();
     }
 
-    protected void onClose() {}
+    protected abstract void onClose();
 }
