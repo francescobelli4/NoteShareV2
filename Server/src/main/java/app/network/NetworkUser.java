@@ -1,8 +1,8 @@
 package app.network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import dtos.Message;
+
+import java.io.*;
 import java.net.Socket;
 import java.util.logging.Logger;
 
@@ -12,8 +12,9 @@ public class NetworkUser implements Runnable {
 
     private final Socket clientSocket;
     private final String address;
-    private DataInputStream dataInputStream;
-    private DataOutputStream dataOutputStream;
+
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
 
     public NetworkUser(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -29,8 +30,8 @@ public class NetworkUser implements Runnable {
     public void run() {
 
         try {
-            dataInputStream = new DataInputStream(clientSocket.getInputStream());
-            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         } catch (IOException e) {
             logger.severe(() -> String.format("Could not get client (%s) input/output stream: %s. Closing connection.", address, e.getMessage()));
             destroy();
@@ -50,10 +51,14 @@ public class NetworkUser implements Runnable {
      */
     private void read() {
         try {
-            String data = dataInputStream.readUTF();
+
+            Message data = (Message) objectInputStream.readObject();
+            MessageHandler.handleMessage(data);
         } catch (IOException ioException) {
-            logger.severe(String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));
+            logger.severe(() -> String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));
             destroy();
+        } catch (ClassNotFoundException e) {
+            logger.severe(() -> String.format("Failed de-serializing an object: %s", e.getMessage()));
         } catch (NullPointerException _) {
             destroy();
         }
@@ -66,24 +71,24 @@ public class NetworkUser implements Runnable {
     private void destroy() {
         logger.info(() -> String.format("Destroying client (%s).", address));
 
-        if (dataInputStream != null) {
+        if (objectInputStream != null) {
 
             try {
-                dataInputStream.close();
+                objectInputStream.close();
             } catch (IOException _) {
                 // Not needed
             }
-            dataInputStream = null;
+            objectInputStream = null;
         }
 
-        if (dataOutputStream != null) {
+        if (objectOutputStream != null) {
 
             try {
-                dataOutputStream.close();
+                objectOutputStream.close();
             } catch (IOException _) {
                 // Not needed
             }
-            dataOutputStream = null;
+            objectOutputStream = null;
         }
 
         if (clientSocket != null && clientSocket.isConnected()) {

@@ -3,6 +3,7 @@ package app;
 
 import app.config.AppConfig;
 import app.config.GuiType;
+import app.network.ConnectionManager;
 import app.views.fx.FxLauncher;
 
 import java.io.DataInputStream;
@@ -34,16 +35,15 @@ public class App {
                 APPCONFIG.locale()
         ));
 
+        try {
+            ConnectionManager.initializeConnection("localhost", 12345);
+        } catch (IOException e) {
+
+            LOGGER.severe(() -> String.format("NoteShare failed to connect to server: %n%s", e.getMessage()));
+            System.exit(1);
+        }
+
         if (APPCONFIG.guiType() == GuiType.FX) {
-
-            try {
-                Socket socket = new Socket("127.0.0.1", 12345);
-
-                DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            } catch (IOException e) {
-
-            }
             FxLauncher.launchApp();
         }
     }
