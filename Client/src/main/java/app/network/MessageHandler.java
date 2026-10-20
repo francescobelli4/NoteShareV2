@@ -1,5 +1,7 @@
 package app.network;
 
+import dtos.Message;
+
 import java.util.logging.Logger;
 
 public class MessageHandler {
@@ -9,6 +11,4 @@ public class MessageHandler {
     private MessageHandler() {
         // Nothing to do
     }
-
-
 }
