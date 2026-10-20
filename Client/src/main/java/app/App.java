@@ -5,6 +5,10 @@ import app.config.AppConfig;
 import app.config.GuiType;
 import app.views.fx.FxLauncher;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.logging.Logger;
 
 public class App {
@@ -31,6 +35,15 @@ public class App {
         ));
 
         if (APPCONFIG.guiType() == GuiType.FX) {
+
+            try {
+                Socket socket = new Socket("127.0.0.1", 12345);
+
+                DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            } catch (IOException e) {
+
+            }
             FxLauncher.launchApp();
         }
     }

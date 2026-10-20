@@ -1,6 +1,7 @@
 package app;
 
 import app.config.AppConfig;
+import app.network.ConnectionManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
