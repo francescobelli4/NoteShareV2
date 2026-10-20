@@ -7,7 +7,6 @@ import dtos.Response;
 import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConnectionManager {
@@ -37,10 +36,12 @@ public class ConnectionManager {
         startReaderThread();
     }
 
+    /**
+     * This function should read a Message object
+     */
     private static void read() {
 
         try {
-
             Message message = (Message) objectInputStream.readObject();
             executorService.submit(() -> handleIncomingMessage(message));
         } catch (IOException e) {
@@ -53,6 +54,18 @@ public class ConnectionManager {
         }
     }
 
+    /**
+     * This function should handle the incoming data.
+     *
+     * RESPONSE:     a Response message surely (if there are no unexpected errors) has a CompletableFuture
+     *               waiting for that response. The handling logic should not be in this class, so I only
+     *               notify the CompletableFuture that the response has arrived.
+     *
+     * NOTIFICATION (Still to do): a Notification message does not have any CompletableFuture waiting for it. The handling
+     *               is based on the SocketMessageType.
+     *
+     * @param message the received Message object
+     */
     private static void handleIncomingMessage(Message message) {
 
         if (!(message instanceof Response response)) {
@@ -63,16 +76,29 @@ public class ConnectionManager {
         handleResponse(response);
     }
 
+    /**
+     * Handling the Response object received from the server.
+     * @param response the Response object
+     */
     private static void handleResponse(Response response) {
         CompletableFuture<Response> future = pendingRequests.remove(response.requestId());
 
         if (future != null) {
             future.complete(response);
         } else {
-            // Didn't find a future for this response
+            LOGGER.warning(() -> String.format("Could not find a future for that id: %d", response.requestId()));
         }
     }
 
+    /**
+     * This function should send an async request to the server.
+     * An async request awaits an answer from the server, but it does not block the thread.
+     * Even if this function should be quite fast, it's suggested to avoid running it in the
+     * UI thread.
+     *
+     * @param request the request that has to be sent
+     * @return a CompletableFuture<Response> that will be notified when the answer arrives
+     */
     private static CompletableFuture<Response> sendAsync(Request request) {
 
         CompletableFuture<Response> future = new CompletableFuture<>();
@@ -82,6 +108,7 @@ public class ConnectionManager {
             try {
 
                 synchronized (writeLock) {
+
                     pendingRequests.put(request.requestId(), future);
                     objectOutputStream.writeObject(request);
                     objectOutputStream.flush();
@@ -95,6 +122,14 @@ public class ConnectionManager {
         return future;
     }
 
+    /**
+     * This function should send a sync request to the server.
+     * A sync request blocks the running thread until the answer is received from
+     * the server.
+     *
+     * @param request the request that has to be sent
+     * @return the Response object received as response
+     */
     private static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException{
 
         CompletableFuture<Response> future = new CompletableFuture<>();
@@ -102,9 +137,10 @@ public class ConnectionManager {
         try {
 
             synchronized (writeLock) {
+
+                LOGGER.info(() -> String.format("SENDING %s", request));
+
                 pendingRequests.put(request.requestId(), future);
-                if (LOGGER.isLoggable(Level.INFO))
-                    LOGGER.info(String.format("SENDING %s", request));
                 objectOutputStream.writeObject(request);
                 objectOutputStream.flush();
             }

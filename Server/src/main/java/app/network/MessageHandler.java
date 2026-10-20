@@ -16,17 +16,13 @@ public class MessageHandler {
 
     public static void handleMessage(Message message) {
 
-        if (!(message instanceof Request)) {
+        if (!(message instanceof Request request)) {
             LOGGER.severe(() -> String.format("Unexpected message: %s", message.getClass().getSimpleName()));
             return;
         }
 
-        Request request = (Request) message;
-
         switch (request) {
-            case LoginRequestDTO loginReq -> {
-                //Handle login request :D
-            }
+            case LoginRequestDTO loginReq -> LOGGER.info("Login request received");
         }
     }
 }
