@@ -4,9 +4,7 @@ import dtos.LoginRequestDTO;
 import dtos.LoginResponseDTO;
 import dtos.Request;
 import dtos.Response;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -21,15 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ConnectionManagerTest {
 
-    private ServerSocket testServer;
+    private static ServerSocket testServer;
 
     /**
      * We should create a fake Server to connect
      * @throws IOException _
      * @throws EOFException _
      */
-    @BeforeEach
-    void setUp() throws IOException {
+    @BeforeAll
+    static void setUp() throws IOException {
 
         testServer = new ServerSocket(0);
 
@@ -58,8 +56,8 @@ class ConnectionManagerTest {
     }
 
 
-    @AfterEach
-    void tearDown() throws IOException {
+    @AfterAll
+    static void tearDown() throws IOException {
         // Resetting everything after each test for simplicity
         ConnectionManager.closeConnection();
         if (testServer != null && !testServer.isClosed()) {
