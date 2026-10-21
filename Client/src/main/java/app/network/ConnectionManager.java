@@ -138,8 +138,6 @@ public class ConnectionManager {
 
             synchronized (writeLock) {
 
-                LOGGER.info("SENDING" + request);
-
                 pendingRequests.put(request.requestId(), future);
                 objectOutputStream.writeObject(request);
                 objectOutputStream.flush();
