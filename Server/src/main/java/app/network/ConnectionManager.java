@@ -3,7 +3,6 @@ package app.network;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConnectionManager {
@@ -23,7 +22,6 @@ public class ConnectionManager {
     public void initializeServerSocket() throws IOException {
 
         ServerSocket serverSocket = new ServerSocket(port);
-
 
         LOGGER.info(() -> String.format("Server socket initialized and listening on port %d!", port));
 

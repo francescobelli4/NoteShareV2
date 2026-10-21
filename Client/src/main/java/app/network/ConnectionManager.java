@@ -138,7 +138,7 @@ public class ConnectionManager {
 
             synchronized (writeLock) {
 
-                LOGGER.info(() -> String.format("SENDING %s", request));
+                LOGGER.info("SENDING" + request);
 
                 pendingRequests.put(request.requestId(), future);
                 objectOutputStream.writeObject(request);

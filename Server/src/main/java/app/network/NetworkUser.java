@@ -13,7 +13,7 @@ public class NetworkUser implements Runnable {
     private final Socket clientSocket;
     private final String address;
 
-    private ObjectInputStream objectInputStream;
+    private SafeObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
     public NetworkUser(Socket clientSocket) {
@@ -31,7 +31,7 @@ public class NetworkUser implements Runnable {
 
         try {
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            objectInputStream = new SafeObjectInputStream(clientSocket.getInputStream());
         } catch (IOException e) {
             logger.severe(() -> String.format("Could not get client (%s) input/output stream: %s. Closing connection.", address, e.getMessage()));
             destroy();

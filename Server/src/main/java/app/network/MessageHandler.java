@@ -22,7 +22,7 @@ public class MessageHandler {
         }
 
         switch (request) {
-            case LoginRequestDTO loginReq -> LOGGER.info("Login request received");
+            case LoginRequestDTO loginReq -> LOGGER.info(() -> String.format("Login request received: %s %s", loginReq.username(), loginReq.password()));
         }
     }
 }
