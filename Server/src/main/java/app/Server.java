@@ -32,7 +32,11 @@ public class Server {
 
         ConnectionManager connectionManager = new ConnectionManager(
                 12345,
-                clientSocket -> new Thread(new NetworkUser(clientSocket)).start()
+                clientSocket -> {
+                    Thread t = new Thread(new NetworkUser(clientSocket));
+                    t.setDaemon(true);
+                    t.start();
+                }
         );
 
         try {

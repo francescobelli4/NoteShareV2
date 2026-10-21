@@ -20,7 +20,12 @@ public class ConnectionManager {
     private static final ConcurrentHashMap<Long, CompletableFuture<Response>> pendingRequests = new ConcurrentHashMap<>();
 
     private static final int MAX_PARALLEL_THREADS = 10;
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(MAX_PARALLEL_THREADS);
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(MAX_PARALLEL_THREADS, (r) -> {
+        Thread t = new Thread(r);
+        // Making sure every thread is a daemon thread
+        t.setDaemon(true);
+        return t;
+    });
     private static final Object writeLock = new Object();
 
     private ConnectionManager() {
@@ -153,7 +158,10 @@ public class ConnectionManager {
 
     public static void closeConnection() {
         try {
-
+            // Making sure every pending request gets terminated with an exception if connection is closed
+            pendingRequests.values().forEach(f ->
+                    f.completeExceptionally(new IOException("Connection closed"))
+            );
             pendingRequests.clear();
 
             if (objectInputStream != null) {
@@ -183,6 +191,8 @@ public class ConnectionManager {
             }
         });
 
+        // Daemon threads get closed when all the user threads terminated
+        t.setDaemon(true);
         t.start();
     }
 }
