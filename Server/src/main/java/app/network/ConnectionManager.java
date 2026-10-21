@@ -24,8 +24,8 @@ public class ConnectionManager {
 
         ServerSocket serverSocket = new ServerSocket(port);
 
-        if (LOGGER.isLoggable(Level.INFO))
-            LOGGER.info(String.format("Server socket initialized and listening on port %d!", port));
+
+        LOGGER.info(() -> String.format("Server socket initialized and listening on port %d!", port));
 
         while (!serverSocket.isClosed()) {
 
@@ -38,8 +38,8 @@ public class ConnectionManager {
                 continue;
             }
 
-            if (LOGGER.isLoggable(Level.INFO))
-                LOGGER.info(String.format("A new client (%s) connected!", clientSocket.getInetAddress().getHostAddress()));
+
+            LOGGER.info(() -> String.format("A new client (%s) connected!", clientSocket.getInetAddress().getHostAddress()));
 
 
             Thread t = new Thread(new NetworkUser(clientSocket));

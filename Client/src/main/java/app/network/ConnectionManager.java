@@ -30,8 +30,8 @@ public class ConnectionManager {
     public static void initializeConnection(String host, int port) throws IOException {
         serverSocket = new Socket(host, port);
 
-        objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
         objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
+        objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
 
         startReaderThread();
     }

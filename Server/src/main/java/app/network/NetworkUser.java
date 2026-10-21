@@ -30,8 +30,8 @@ public class NetworkUser implements Runnable {
     public void run() {
 
         try {
-            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
         } catch (IOException e) {
             logger.severe(() -> String.format("Could not get client (%s) input/output stream: %s. Closing connection.", address, e.getMessage()));
             destroy();
