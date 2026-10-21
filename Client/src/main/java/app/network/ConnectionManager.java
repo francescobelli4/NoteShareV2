@@ -99,7 +99,7 @@ public class ConnectionManager {
      * @param request the request that has to be sent
      * @return a CompletableFuture<Response> that will be notified when the answer arrives
      */
-    private static CompletableFuture<Response> sendAsync(Request request) {
+    public static CompletableFuture<Response> sendAsync(Request request) {
 
         CompletableFuture<Response> future = new CompletableFuture<>();
 
@@ -130,7 +130,7 @@ public class ConnectionManager {
      * @param request the request that has to be sent
      * @return the Response object received as response
      */
-    private static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException{
+    public static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException{
 
         CompletableFuture<Response> future = new CompletableFuture<>();
 
@@ -151,7 +151,7 @@ public class ConnectionManager {
         }
     }
 
-    private static void closeConnection() {
+    public static void closeConnection() {
         try {
 
             pendingRequests.clear();
