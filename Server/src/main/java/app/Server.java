@@ -2,6 +2,7 @@ package app;
 
 import app.config.AppConfig;
 import app.network.ConnectionManager;
+import app.network.NetworkUser;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -27,14 +28,16 @@ public class Server {
             System.exit(1);
         }
 
-        LOGGER.info(() -> String.format("App config set: %s",
-                APPCONFIG.mode()
-        ));
+        LOGGER.info(() -> String.format("App config set: %s", APPCONFIG.mode()));
 
-        ConnectionManager connectionManager = new ConnectionManager(12345);
+        ConnectionManager connectionManager = new ConnectionManager(
+                12345,
+                clientSocket -> new Thread(new NetworkUser(clientSocket)).start()
+        );
 
         try {
             connectionManager.initializeServerSocket();
+            connectionManager.acceptClients();
         } catch (IOException e) {
             LOGGER.severe(() -> String.format("NoteShare Server terminated for: %n%s", e.getMessage()));
             System.exit(1);

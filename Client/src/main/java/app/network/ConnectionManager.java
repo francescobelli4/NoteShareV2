@@ -176,7 +176,7 @@ public class ConnectionManager {
 
         Thread t = new Thread(() -> {
 
-            while (true) {
+            while (!serverSocket.isClosed()) {
 
                 assert serverSocket != null;
                 read();
