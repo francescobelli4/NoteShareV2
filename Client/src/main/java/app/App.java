@@ -3,8 +3,10 @@ package app;
 
 import app.config.AppConfig;
 import app.config.GuiType;
+import app.network.ConnectionManager;
 import app.views.fx.FxLauncher;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class App {
@@ -29,6 +31,14 @@ public class App {
                 APPCONFIG.guiType(),
                 APPCONFIG.locale()
         ));
+
+        try {
+            ConnectionManager.initializeConnection("localhost", 12345);
+        } catch (IOException e) {
+
+            LOGGER.severe(() -> String.format("NoteShare failed to connect to server: %n%s", e.getMessage()));
+            System.exit(1);
+        }
 
         if (APPCONFIG.guiType() == GuiType.FX) {
             FxLauncher.launchApp();
