@@ -20,7 +20,7 @@ public class ConnectionManager {
     private static final ConcurrentHashMap<Long, CompletableFuture<Response>> pendingRequests = new ConcurrentHashMap<>();
 
     private static final int MAX_PARALLEL_THREADS = 10;
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(MAX_PARALLEL_THREADS, (r) -> {
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(MAX_PARALLEL_THREADS, r -> {
         Thread t = new Thread(r);
         // Making sure every thread is a daemon thread
         t.setDaemon(true);

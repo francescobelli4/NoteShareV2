@@ -26,13 +26,28 @@
 
         <junit.version>5.11.0</junit.version>
         <jacoco.version>0.8.14</jacoco.version>
-        <sonar.coverage.exclusions>**/app/App.java,**/views/fx/**</sonar.coverage.exclusions>
+        <mockito.version>5.24.0</mockito.version>
+        <sonar.coverage.exclusions>
+            **/app/App.java,
+            **/views/fx/**,
+            **/dtos/**
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -55,6 +70,25 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!--
+            Mockito should help testing static methods. It was added to test NetworkUser class without editing the
+            original class' code.
+            The best way I found to test this class, for example, was checking if MessageHandler.handleMessage was
+            called: this is why I decided to use Mockito.
+            -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
