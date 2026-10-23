@@ -31,7 +31,7 @@
             **/app/App.java,
             **/views/fx/**,
             **/dtos/**,
-            **/app/network/Server.java
+            **/app/Server.java
         </sonar.coverage.exclusions>
     </properties>
 
