@@ -1,0 +1,113 @@
+/**
+This file should define the style for the whole JavaFX app: main colors, main components like cards, etc.
+Note that this style file was taken from an old project... Some options may be never used
+ */
+.root {
+    -color-primary: #4776e6;
+    -color-accent: #8e54e9;
+
+    -color-surface: white;
+    -color-text: #1e2a3a;
+    -color-text-muted: #3b4655;
+    -color-text-on-primary: white;
+    -color-border: #d5dbe3;
+
+    -color-hover: #f0f2ff;
+    -color-pressed: #e2e7ff;
+    -color-selected: #e8ebff;
+    -color-selected-text: #4a4fe0;
+
+    -color-primary-hover: #3a63c7;
+    -color-primary-pressed: #2f52a6;
+
+    -color-shadow: rgba(0, 0, 0, 0.30);
+    -color-shadow-soft: rgba(0, 0, 0, 0.18);
+
+    -fx-font-size: 16px;
+}
+
+.shadow-soft {
+    -fx-effect: dropshadow(gaussian, -color-shadow-soft, 12, 0.0, 0, 4);
+}
+
+.shadow-strong {
+    -fx-effect: dropshadow(gaussian, -color-shadow, 28, 0.0, 0, 10);
+}
+
+.card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 24;
+    -fx-effect: dropshadow(gaussian, -color-shadow, 28, 0.0, 0, 10);
+}
+
+.label {
+    -fx-text-fill: -color-text;
+    -fx-font-size: 1em;
+}
+
+.page-title {
+    -fx-font-size: 1.75em;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text;
+}
+
+.subtitle {
+    -fx-font-size: 1.25em;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text;
+}
+
+.text-body {
+    -fx-font-size: 1em;
+    -fx-text-fill: -color-text;
+}
+
+.text-muted {
+    -fx-text-fill: -color-text-muted;
+}
+
+.text-small {
+    -fx-font-size: 0.85em;
+}
+
+.button-primary,
+.button-secondary {
+    -fx-background-radius: 12;
+    -fx-padding: 0.65em 1.5em 0.65em 1.5em;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button-primary {
+    -fx-background-color: linear-gradient(to bottom right, -color-primary, -color-accent);
+    -fx-text-fill: -color-text-on-primary;
+}
+
+.button-primary:hover {
+    -fx-background-color: -color-primary-hover;
+}
+
+.button-primary:pressed {
+    -fx-background-color: -color-primary-pressed;
+}
+
+.button-secondary {
+    -fx-background-color: transparent;
+    -fx-border-color: -color-primary;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-text-fill: -color-primary;
+}
+
+.button-secondary:hover {
+    -fx-background-color: -color-hover;
+}
+
+.button-secondary:pressed {
+    -fx-background-color: -color-pressed;
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
+}

@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class FxLauncher extends Application {
 
     private static final double MIN_WIDTH = 900;
@@ -31,6 +33,9 @@ public class FxLauncher extends Application {
         double height = Math.max(minHeight, screen.getHeight() * 0.8);
 
         Scene scene = new Scene(frameManager.getFrame(), width, height);
+
+        // Base CSS file
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxml/styles/base.css")).toExternalForm());
 
         stage.setMinWidth(minWidth);
         stage.setMinHeight(minHeight);
