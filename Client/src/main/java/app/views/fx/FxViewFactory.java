@@ -1,5 +1,6 @@
 package app.views.fx;
 
+import app.models.Models;
 import app.views.fx.graphiccontrollers.FxHomeViewController;
 import app.views.fx.pages.FxHomeView;
 
@@ -8,12 +9,14 @@ import app.views.fx.pages.FxHomeView;
  */
 public class FxViewFactory {
 
-    public FxViewFactory() {
-        // Nothing to do :D
+    private final Models models;
+
+    public FxViewFactory(Models models) {
+        this.models = models;
     }
 
     public FxHomeView createFxHomeView() {
-        FxHomeViewController controller = new FxHomeViewController();
-        return new FxHomeView(controller);
+        FxHomeViewController graphicController = new FxHomeViewController();
+        return new FxHomeView(graphicController, models.userModel());
     }
 }

@@ -3,6 +3,9 @@ package app;
 
 import app.config.AppConfig;
 import app.config.GuiType;
+import app.config.Mode;
+import app.models.Models;
+import app.models.usermodel.UserModel;
 import app.network.ConnectionManager;
 import app.views.fx.FxLauncher;
 
@@ -40,8 +43,10 @@ public class App {
             System.exit(1);
         }
 
+        Models models = new Models(new UserModel());
+
         if (APPCONFIG.guiType() == GuiType.FX) {
-            FxLauncher.launchApp();
+            FxLauncher.launchApp(models);
         }
     }
 }

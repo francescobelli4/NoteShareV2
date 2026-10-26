@@ -1,5 +1,6 @@
 package app.views.fx;
 
+import app.models.Models;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -10,10 +11,12 @@ import java.util.Objects;
 
 public class FxLauncher extends Application {
 
+    private static Models models;
     private static final double MIN_WIDTH = 900;
     private static final double MIN_HEIGHT = 600;
 
-    public static void launchApp() {
+    public static void launchApp(Models passedModels) {
+        models = passedModels;
         launch();
     }
 
@@ -22,7 +25,7 @@ public class FxLauncher extends Application {
 
         FxFrameManager frameManager = new FxFrameManager();
         FxNavigator navigator = new FxNavigator(frameManager);
-        FxViewFactory viewFactory = new FxViewFactory();
+        FxViewFactory viewFactory = new FxViewFactory(models);
 
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
