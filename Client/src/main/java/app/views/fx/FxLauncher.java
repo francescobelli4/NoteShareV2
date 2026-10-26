@@ -1,17 +1,22 @@
 package app.views.fx;
 
+import app.models.Models;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class FxLauncher extends Application {
 
+    private static Models models;
     private static final double MIN_WIDTH = 900;
     private static final double MIN_HEIGHT = 600;
 
-    public static void launchApp() {
+    public static void launchApp(Models passedModels) {
+        models = passedModels;
         launch();
     }
 
@@ -20,7 +25,7 @@ public class FxLauncher extends Application {
 
         FxFrameManager frameManager = new FxFrameManager();
         FxNavigator navigator = new FxNavigator(frameManager);
-        FxViewFactory viewFactory = new FxViewFactory();
+        FxViewFactory viewFactory = new FxViewFactory(models);
 
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
@@ -31,6 +36,9 @@ public class FxLauncher extends Application {
         double height = Math.max(minHeight, screen.getHeight() * 0.8);
 
         Scene scene = new Scene(frameManager.getFrame(), width, height);
+
+        // Base CSS file
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxml/styles/base.css")).toExternalForm());
 
         stage.setMinWidth(minWidth);
         stage.setMinHeight(minHeight);

@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
 /**
- * This class should manage how the main frame gets populated. The frame is made of a pageContainer and an
+ * This class should manage how the main frame gets populated. The main frame is made of a pageContainer and an
  * overlayContainer.
  * This class should actually decide the FxView that is visualized by the user, but it should not close it when that
  * page gets hidden: this is done by the Navigator.
@@ -15,7 +15,7 @@ public class FxFrameManager {
     private FxView<?> currentOverlay;
     private final StackPane pageContainer = new StackPane();
     private final StackPane overlayContainer = new StackPane();
-    private final StackPane frame = new StackPane(pageContainer, overlayContainer);
+    private final StackPane mainFrame = new StackPane(pageContainer, overlayContainer);
 
     public FxFrameManager() {
         overlayContainer.setPickOnBounds(false);
@@ -28,7 +28,6 @@ public class FxFrameManager {
     }
 
     public void showOverlay(FxView<?> view) {
-
         closeOverlay();
 
         currentOverlay = view;
@@ -45,6 +44,6 @@ public class FxFrameManager {
     }
 
     public Parent getFrame() {
-        return frame;
+        return mainFrame;
     }
 }
