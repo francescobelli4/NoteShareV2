@@ -54,4 +54,16 @@ public class UserModel {
     public boolean hasPermission(Permission permission) {
         return role != null && role.hasPermission(permission);
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
 }
