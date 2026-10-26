@@ -2,8 +2,13 @@ package app.views.fx.pages;
 
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.FxHomeViewController;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 public class FxHomeView extends FxView<FxHomeViewController> {
+
+    @FXML
+    Button loginButton;
 
     public FxHomeView(FxHomeViewController controller) {
         super(controller);
@@ -16,7 +21,7 @@ public class FxHomeView extends FxView<FxHomeViewController> {
 
     @Override
     protected void onLoaded() {
-        // Still not done :D
+        loginButton.setOnAction(event -> controller.onLoginButtonClicked());
     }
 
     @Override

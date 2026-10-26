@@ -7,4 +7,8 @@ public class FxHomeViewController implements GraphicController {
     public FxHomeViewController() {
         // Still not done :D
     }
+
+    public void onLoginButtonClicked() {
+        // Still not done :D
+    }
 }

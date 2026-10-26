@@ -24,7 +24,6 @@
     </padding>
 
     <columnConstraints>
-
         <ColumnConstraints hgrow="NEVER" maxWidth="320" minWidth="200" prefWidth="260" />
         <ColumnConstraints hgrow="ALWAYS" minWidth="0" />
     </columnConstraints>
@@ -52,7 +51,7 @@
                      <Image url="@../styles/icons/user.png" />
                   </image>
                </ImageView>
-               <Button maxWidth="Infinity" styleClass="button-primary" text="Login" />
+               <Button maxWidth="Infinity" fx:id="loginButton" styleClass="button-primary" text="Login" />
             </children>
             <padding>
                <Insets bottom="24.0" left="16.0" right="16.0" top="24.0" />
