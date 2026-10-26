@@ -1,6 +1,7 @@
 package app.models.usermodel;
 
 import org.junit.jupiter.api.Test;
+import permissions.Permission;
 import permissions.Role;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,8 @@ class UserModelTest {
         UserModel userModel = new UserModel();
         UserModelListener listener = mock(UserModelListener.class);
 
+        assertFalse(userModel.hasPermission(Permission.BUY_NOTES));
+
         userModel.addListener(listener);
         userModel.logIn("username", Role.STUDENT);
 
@@ -21,6 +24,7 @@ class UserModelTest {
         assertEquals("username", userModel.getUsername());
         assertEquals(Role.STUDENT, userModel.getRole());
         assertTrue(userModel.isLoggedIn());
+        assertTrue(userModel.hasPermission(Permission.BUY_NOTES));
 
         verify(listener).onLoggedIn();
     }
