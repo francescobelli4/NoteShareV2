@@ -1,0 +1,31 @@
+.home-root {
+    -fx-background-color: linear-gradient(to bottom right, -color-primary, -color-accent);
+}
+
+/* Left bar buttons */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12;
+    -fx-alignment: center-left;
+    -fx-padding: 0.8em 1.2em 0.8em 1.2em;
+    -fx-font-size: 1.1em;
+    -fx-text-fill: -color-text-muted;
+    -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.nav-button:hover {
+    -fx-background-color: -color-hover;
+}
+
+.nav-button:pressed {
+    -fx-background-color: -color-pressed;
+}
+
+.nav-button-active,
+.nav-button-active:hover {
+    -fx-background-color: -color-selected;
+    -fx-text-fill: -color-selected-text;
+    -fx-font-weight: bold;
+}
