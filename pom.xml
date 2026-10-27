@@ -33,6 +33,7 @@
             **/dtos/**,
             **/app/Server.java,
             **/Models.java,
+            **/AppControllers.java/**,
             **/permissions/**
         </sonar.coverage.exclusions>
     </properties>

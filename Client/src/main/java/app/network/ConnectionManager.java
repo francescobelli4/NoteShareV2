@@ -135,7 +135,7 @@ public class ConnectionManager {
      * @param request the request that has to be sent
      * @return the Response object received as response
      */
-    public static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException{
+    public static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException {
 
         CompletableFuture<Response> future = new CompletableFuture<>();
 
