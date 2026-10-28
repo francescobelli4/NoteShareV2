@@ -53,6 +53,7 @@ public class SafeObjectInputStream extends ObjectInputStream {
                 defaultResolved.getName().startsWith("dtos.") ||        // The type is a DTO I created
                 defaultResolved.getName().startsWith("java.util.") ||   // The type is a collection like ArrayList
                 defaultResolved.getName().startsWith("java.lang.") ||   // writeObject transforms primitives in Objects
+                defaultResolved.getName().startsWith("permissions.") || // The type is a Permission or Role enum
                 defaultResolved.isEnum();                          // The type is an Enum
     }
 }

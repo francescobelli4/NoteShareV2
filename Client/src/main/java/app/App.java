@@ -1,6 +1,8 @@
 package app;
 
 
+import app.appcontrollers.AppControllers;
+import app.appcontrollers.AuthController;
 import app.config.AppConfig;
 import app.config.GuiType;
 import app.models.Models;
@@ -43,9 +45,10 @@ public class App {
         }
 
         Models models = new Models(new UserModel());
+        AppControllers appControllers = new AppControllers(new AuthController(models.userModel()));
 
         if (APPCONFIG.guiType() == GuiType.FX) {
-            FxLauncher.launchApp(models);
+            FxLauncher.launchApp(models, appControllers);
         }
     }
 }

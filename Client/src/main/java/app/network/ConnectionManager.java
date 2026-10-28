@@ -28,6 +28,8 @@ public class ConnectionManager {
     });
     private static final Object writeLock = new Object();
 
+    private static long requestIdCounter = 0;
+
     private ConnectionManager() {
         // Nothing to do
     }
@@ -135,7 +137,7 @@ public class ConnectionManager {
      * @param request the request that has to be sent
      * @return the Response object received as response
      */
-    public static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException{
+    public static Response sendSync(Request request) throws IOException, InterruptedException, ExecutionException {
 
         CompletableFuture<Response> future = new CompletableFuture<>();
 
@@ -194,5 +196,9 @@ public class ConnectionManager {
         // Daemon threads get closed when all the user threads terminated
         t.setDaemon(true);
         t.start();
+    }
+
+    public static synchronized long nextRequestId() {
+        return requestIdCounter++;
     }
 }

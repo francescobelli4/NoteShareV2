@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="Infinity" maxWidth="Infinity" styleClass="auth-root" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+
+    <stylesheets>
+        <URL value="@../styles/auth.css" />
+    </stylesheets>
+
+    <padding>
+        <Insets bottom="24" left="24" right="24" top="24" />
+    </padding>
+
+    <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="440" minWidth="320" prefWidth="440" spacing="10.0" styleClass="card, auth-card">
+        <padding>
+            <Insets bottom="32" left="32" right="32" top="32" />
+        </padding>
+
+        <Label alignment="CENTER" maxWidth="Infinity" styleClass="page-title" text="NoteShare" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../styles/icons/app_icon.png" />
+         </image>
+      </ImageView>
+
+        <HBox spacing="4" styleClass="auth-tabs">
+            <ToggleButton fx:id="loginToggle" maxWidth="Infinity" selected="true" styleClass="auth-tab" text="Login" HBox.hgrow="ALWAYS">
+                <toggleGroup>
+                    <ToggleGroup fx:id="authModeGroup" />
+                </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="registerToggle" maxWidth="Infinity" styleClass="auth-tab" text="Registrazione" toggleGroup="$authModeGroup" HBox.hgrow="ALWAYS" />
+        </HBox>
+
+        <StackPane fx:id="cardContainer" />
+
+    </VBox>
+</StackPane>

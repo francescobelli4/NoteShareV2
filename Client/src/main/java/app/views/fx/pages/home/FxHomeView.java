@@ -1,9 +1,9 @@
-package app.views.fx.pages;
+package app.views.fx.pages.home;
 
 import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import app.views.fx.FxView;
-import app.views.fx.graphiccontrollers.FxHomeViewController;
+import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 

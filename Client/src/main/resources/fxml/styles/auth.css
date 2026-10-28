@@ -1,0 +1,58 @@
+
+.auth-root {
+    -fx-background-color: linear-gradient(to bottom right, -color-primary, -color-accent);
+}
+
+.auth-tabs {
+    -fx-background-color: -color-hover;
+    -fx-background-radius: 14;
+    -fx-padding: 4;
+}
+
+.auth-tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+    -fx-padding: 0.6em 1em 0.6em 1em;
+    -fx-font-size: 1.1em;
+    -fx-text-fill: -color-text-muted;
+    -fx-cursor: hand;
+}
+
+.auth-tab:hover {
+    -fx-background-color: -color-pressed;
+}
+
+.auth-tab:selected,
+.auth-tab:selected:hover {
+    -fx-background-color: -color-surface;
+    -fx-text-fill: -color-selected-text;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, -color-shadow-soft, 8, 0.0, 0, 2);
+}
+
+.form-label {
+    -fx-font-size: 0.85em;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text-muted;
+}
+
+.auth-form .text-field,
+.auth-form .password-field {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 12;
+    -fx-padding: 0.7em 0.9em 0.7em 0.9em;
+    -fx-font-size: 1em;
+}
+
+.auth-form .text-field:focused,
+.auth-form .password-field:focused {
+    -fx-border-color: -color-primary;
+}
+
+.error-label {
+    -fx-text-fill: #d32f2f;
+    -fx-font-size: 0.85em;
+}

@@ -33,8 +33,12 @@
             **/dtos/**,
             **/app/Server.java,
             **/Models.java,
-            **/permissions/**
+            **/AppControllers.java,
+            **/permissions/**,
+            **/beans/**
         </sonar.coverage.exclusions>
+        <!-- Excluding views from code duplication checks -->
+        <sonar.cpd.exclusions>**/views/fx/**</sonar.cpd.exclusions>
     </properties>
 
     <dependencies>

@@ -11,6 +11,6 @@ public record LoginRequestDTO(long requestId, String username, String password) 
 
     @Override
     public String toString() {
-        return "LoginRequestDTO[requestId=" + requestId + ", username=" + username + ", password=" + password + "]";
+        return "LoginRequestDTO[requestId=" + requestId + ", username=" + username + "]";
     }
 }
