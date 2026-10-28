@@ -45,7 +45,7 @@ public class App {
         }
 
         Models models = new Models(new UserModel());
-        AppControllers appControllers = new AppControllers(new AuthController());
+        AppControllers appControllers = new AppControllers(new AuthController(models.userModel()));
 
         if (APPCONFIG.guiType() == GuiType.FX) {
             FxLauncher.launchApp(models, appControllers);

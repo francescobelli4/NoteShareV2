@@ -28,6 +28,8 @@ public class ConnectionManager {
     });
     private static final Object writeLock = new Object();
 
+    private static long requestIdCounter = 0;
+
     private ConnectionManager() {
         // Nothing to do
     }
@@ -194,5 +196,9 @@ public class ConnectionManager {
         // Daemon threads get closed when all the user threads terminated
         t.setDaemon(true);
         t.start();
+    }
+
+    public static synchronized long nextRequestId() {
+        return requestIdCounter++;
     }
 }

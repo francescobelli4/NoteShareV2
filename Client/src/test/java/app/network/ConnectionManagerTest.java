@@ -5,6 +5,7 @@ import dtos.LoginResponseDTO;
 import dtos.Request;
 import dtos.Response;
 import org.junit.jupiter.api.*;
+import permissions.Role;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -40,7 +41,7 @@ class ConnectionManagerTest {
                 while (!clientSocket.isClosed()) {
 
                     Request _ = (Request) in.readObject();
-                    Response response = new LoginResponseDTO(2027, "pablito:D");
+                    Response response = new LoginResponseDTO(2027, "pablito:D", Role.STUDENT);
 
                     // Always answer with LoginResponseDTO for tests...
                     out.writeObject(response);

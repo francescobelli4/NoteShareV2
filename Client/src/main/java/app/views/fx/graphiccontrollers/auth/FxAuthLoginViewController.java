@@ -42,6 +42,8 @@ public class FxAuthLoginViewController implements GraphicController {
             }
         }
 
-        authController.performLogin(new LoginBean(username, password));
+        authController.performLogin(new LoginBean(username, password)).exceptionally(error -> {
+            throw new AuthException(error.getMessage());
+        });
     }
 }

@@ -11,6 +11,7 @@ import utils.UsernameError;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public class FxAuthRegisterViewController implements GraphicController {
 
@@ -52,13 +53,14 @@ public class FxAuthRegisterViewController implements GraphicController {
             throw new AuthException("Role is blank");
         }
 
-        Role parsedRole;
-        if (role.equals("Student")) {
-            parsedRole = Role.STUDENT;
-        } else {
-            parsedRole = Role.TEACHER;
-        }
+        Role parsedRole = switch (role) {
+            case "Student"   -> Role.STUDENT;
+            case "Teacher" -> Role.TEACHER;
+            default           -> throw new AuthException("Unknown role");
+        };
 
-        authController.performRegister(new RegisterBean(username, password, parsedRole));
+        authController.performRegister(new RegisterBean(username, password, parsedRole)).exceptionally(error -> {
+            throw new AuthException(error.getMessage());
+        });
     }
 }
