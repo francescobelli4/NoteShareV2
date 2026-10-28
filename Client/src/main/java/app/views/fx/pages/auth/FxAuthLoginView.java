@@ -1,7 +1,6 @@
 package app.views.fx.pages.auth;
 
 import app.exceptions.AuthException;
-import app.models.usermodel.UserModel;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
 import javafx.animation.PauseTransition;
