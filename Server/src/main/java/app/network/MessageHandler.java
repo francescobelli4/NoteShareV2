@@ -2,6 +2,7 @@ package app.network;
 
 import dtos.LoginRequestDTO;
 import dtos.Message;
+import dtos.RegisterRequestDTO;
 import dtos.Request;
 
 import java.util.logging.Logger;
@@ -22,7 +23,8 @@ public class MessageHandler {
         }
 
         switch (request) {
-            case LoginRequestDTO loginReq -> LOGGER.info(() -> String.format("Login request received: %s %s", loginReq.username(), loginReq.password()));
+            case LoginRequestDTO loginReq -> LOGGER.info(() -> String.format("Login request received: %s", loginReq));
+            case RegisterRequestDTO registerReq -> LOGGER.info(() -> String.format("Register request received: %s", registerReq));
         }
     }
 }

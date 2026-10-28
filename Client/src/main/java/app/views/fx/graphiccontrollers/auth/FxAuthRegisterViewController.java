@@ -1,28 +1,55 @@
 package app.views.fx.graphiccontrollers.auth;
 
-import app.appcontrollers.LoginController;
+import app.appcontrollers.AuthController;
+import app.beans.RegisterBean;
 import app.exceptions.AuthException;
 import app.views.GraphicController;
 import permissions.Role;
+import utils.AuthRules;
+import utils.PasswordError;
+import utils.UsernameError;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class FxAuthRegisterViewController implements GraphicController {
 
-    private final LoginController loginController;
+    private final AuthController authController;
 
-    public FxAuthRegisterViewController(LoginController loginController) {
-        this.loginController = loginController;
+    public FxAuthRegisterViewController(AuthController authController) {
+        this.authController = authController;
     }
 
     public void registerButtonClicked(String username, String password, String confirmPassword, String role) throws AuthException {
+
+        Optional<UsernameError> usernameError = AuthRules.isUsernameValid(username);
+
+        if (usernameError.isPresent()) {
+            switch (usernameError.get()) {
+                case TOO_LONG -> throw new AuthException("Username is too long");
+                case TOO_SHORT -> throw new AuthException("Username is too short");
+                case NULL_OR_EMPTY -> throw new AuthException("Username is empty");
+                case NOT_ALPHANUMERIC -> throw new AuthException("Username is not alphanumeric");
+            }
+        }
+
+        Optional<PasswordError> passwordError = AuthRules.isPasswordValid(password);
+
+        if (passwordError.isPresent()) {
+            switch (passwordError.get()) {
+                case TOO_LONG -> throw new AuthException("Password is too long");
+                case TOO_SHORT -> throw new AuthException("Password is too short");
+                case NULL_OR_EMPTY -> throw new AuthException("Password is empty");
+                case NOT_ALPHANUMERIC -> throw new AuthException("Password is not alphanumeric");
+            }
+        }
 
         if (!Objects.equals(confirmPassword, password)) {
             throw new AuthException("Passwords do not match");
         }
 
-        if (username.isBlank() || password.isBlank() || confirmPassword.isBlank() || role.isBlank()) {
-            throw new AuthException("One or more fields are empty");
+        if (role == null || role.isBlank()) {
+            throw new AuthException("Role is blank");
         }
 
         Role parsedRole;
@@ -32,6 +59,6 @@ public class FxAuthRegisterViewController implements GraphicController {
             parsedRole = Role.TEACHER;
         }
 
-        loginController.performRegister(username, password, parsedRole);
+        authController.performRegister(new RegisterBean(username, password, parsedRole));
     }
 }

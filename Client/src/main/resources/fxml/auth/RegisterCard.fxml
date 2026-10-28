@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- Registration form. It is shown inside the card of AuthPage.fxml. -->
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       styleClass="auth-form" spacing="16" maxWidth="Infinity">
 
@@ -34,6 +33,7 @@
 
     <VBox spacing="6">
         <Label text="Choose your role..." styleClass="form-label"/>
+        <!-- https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder -->
         <ComboBox fx:id="roleComboBox" promptText="Select the role" maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -44,7 +44,6 @@
         </ComboBox>
     </VBox>
 
-    <!-- Hidden until an error has to be shown: the view sets text, visible and managed -->
     <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" visible="false" managed="false"/>
 
     <Button fx:id="registerButton" text="Create Account" styleClass="button-primary" maxWidth="Infinity"/>

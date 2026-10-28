@@ -34,7 +34,8 @@
             **/app/Server.java,
             **/Models.java,
             **/AppControllers.java/**,
-            **/permissions/**
+            **/permissions/**,
+            **/beans/**
         </sonar.coverage.exclusions>
     </properties>
 

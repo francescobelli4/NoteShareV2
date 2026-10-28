@@ -37,12 +37,12 @@ public class FxViewFactory {
     }
 
     public FxAuthLoginView createFxAuthLoginView() {
-        FxAuthLoginViewController graphicController = new FxAuthLoginViewController(appControllers.loginController());
+        FxAuthLoginViewController graphicController = new FxAuthLoginViewController(appControllers.authController());
         return new FxAuthLoginView(graphicController, models.userModel());
     }
 
     public FxAuthRegisterView createFxAuthRegisterView() {
-        FxAuthRegisterViewController graphicController = new FxAuthRegisterViewController(appControllers.loginController());
+        FxAuthRegisterViewController graphicController = new FxAuthRegisterViewController(appControllers.authController());
         return new FxAuthRegisterView(graphicController, models.userModel());
     }
 }
