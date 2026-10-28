@@ -11,8 +11,6 @@ import javafx.util.Duration;
 
 public class FxAuthRegisterView extends FxView<FxAuthRegisterViewController> {
 
-    private final UserModel userModel;
-
     private PauseTransition errorTimer;
 
     @FXML
@@ -28,8 +26,7 @@ public class FxAuthRegisterView extends FxView<FxAuthRegisterViewController> {
     @FXML
     private Button registerButton;
 
-    public FxAuthRegisterView(FxAuthRegisterViewController controller, UserModel userModel) {
-        this.userModel = userModel;
+    public FxAuthRegisterView(FxAuthRegisterViewController controller) {
         super(controller);
     }
 

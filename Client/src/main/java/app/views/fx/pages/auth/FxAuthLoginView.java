@@ -2,18 +2,14 @@ package app.views.fx.pages.auth;
 
 import app.exceptions.AuthException;
 import app.models.usermodel.UserModel;
-import app.models.usermodel.UserModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
-import app.views.fx.graphiccontrollers.auth.FxAuthViewController;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 
 public class FxAuthLoginView extends FxView<FxAuthLoginViewController> {
-
-    private final UserModel userModel;
 
     private PauseTransition errorTimer;
 
@@ -26,8 +22,7 @@ public class FxAuthLoginView extends FxView<FxAuthLoginViewController> {
     @FXML
     private Button loginButton;
 
-    public FxAuthLoginView(FxAuthLoginViewController controller, UserModel userModel) {
-        this.userModel = userModel;
+    public FxAuthLoginView(FxAuthLoginViewController controller) {
         super(controller);
     }
 

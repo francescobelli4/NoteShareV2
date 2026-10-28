@@ -85,11 +85,11 @@ public class FxAuthView extends FxView<FxAuthViewController> implements UserMode
 
     @Override
     public void onLoggedIn() {
-        // Still not done :D
+
     }
 
     @Override
     public void onLoggedOut() {
-        // Still not done :D
+        // Never happens
     }
 }

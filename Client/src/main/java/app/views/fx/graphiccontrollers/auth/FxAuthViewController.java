@@ -1,18 +1,17 @@
 package app.views.fx.graphiccontrollers.auth;
 
 import app.views.GraphicController;
+import app.views.fx.FxNavigator;
 
 public class FxAuthViewController implements GraphicController {
 
-    public FxAuthViewController() {
-        // Still not done :D
+    private final FxNavigator navigator;
+
+    public FxAuthViewController(FxNavigator navigator) {
+        this.navigator = navigator;
     }
 
-    public void onLoginToggleButtonClicked() {
-        // Still not done :D
-    }
-
-    public void onRegisterToggleButtonClicked() {
-        // Still not done :D
+    public void onLoginSuccess() {
+        navigator.pop();
     }
 }
