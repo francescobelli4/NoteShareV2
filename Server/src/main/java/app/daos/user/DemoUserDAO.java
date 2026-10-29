@@ -41,4 +41,18 @@ public class DemoUserDAO implements UserDAO {
         }
         return null;
     }
+
+    /**
+     * This function should replace the old UserEntity with a new one with the updated token.
+     * @param userEntity the entity that has to be updated
+     * @param token the new token
+     * @return the new updated entity
+     *
+     */
+    @Override
+    public UserEntity updateUserToken(UserEntity userEntity, String token) {
+        UserEntity updatedUserEntity = userEntity.updateToken(token);
+        users.put(userEntity.username(), updatedUserEntity);
+        return updatedUserEntity;
+    }
 }

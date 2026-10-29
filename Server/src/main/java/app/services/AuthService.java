@@ -43,18 +43,20 @@ public class AuthService {
             throw new AuthServiceException(AuthServiceError.INVALID_ROLE);
         }
 
+        String token = java.util.UUID.randomUUID().toString();
+
         UserEntity entity = new UserEntity(
                 registerRequestDTO.username(),
                 Hashing.hashString(registerRequestDTO.password()),
                 registerRequestDTO.role(),
-                ""
+                token
                 );
 
         if (!userDAO.saveUser(entity)) {
             throw new AuthServiceException(AuthServiceError.USERNAME_TAKEN);
         }
 
-        return new RegisterResponseDTO(registerRequestDTO.requestId(), registerRequestDTO.username(), registerRequestDTO.role());
+        return new RegisterResponseDTO(registerRequestDTO.requestId(), registerRequestDTO.username(), registerRequestDTO.role(), token);
     }
 
     /**
@@ -77,6 +79,10 @@ public class AuthService {
             throw new AuthServiceException(AuthServiceError.WRONG_PASSWORD);
         }
 
-        return new LoginResponseDTO(loginRequestDTO.requestId(), loginRequestDTO.username(), foundUser.role());
+        // Updating the token :D
+        String token = java.util.UUID.randomUUID().toString();
+        foundUser = userDAO.updateUserToken(foundUser, token);
+
+        return new LoginResponseDTO(loginRequestDTO.requestId(), loginRequestDTO.username(), foundUser.role(), token);
     }
 }

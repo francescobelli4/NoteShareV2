@@ -25,7 +25,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         LoginBean loginBean = new LoginBean("username", "password");
-        LoginResponseDTO response = new LoginResponseDTO(123L, "username", Role.STUDENT);
+        LoginResponseDTO response = new LoginResponseDTO(123L, "username", Role.STUDENT, "abc");
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
@@ -77,7 +77,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         RegisterBean registerBean = new RegisterBean("username", "password", Role.STUDENT);
-        RegisterResponseDTO response = new RegisterResponseDTO(123L, "username", Role.STUDENT);
+        RegisterResponseDTO response = new RegisterResponseDTO(123L, "username", Role.STUDENT, "abc");
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
