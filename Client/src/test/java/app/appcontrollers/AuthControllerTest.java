@@ -9,6 +9,7 @@ import dtos.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import permissions.Role;
+import utils.AuthServiceError;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -48,7 +49,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         LoginBean loginBean = new LoginBean("username", "password");
-        ErrorResponseDTO response = new ErrorResponseDTO(123L, "login failed");
+        ErrorResponseDTO response = new ErrorResponseDTO(123L, AuthServiceError.USERNAME_TAKEN);
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
@@ -100,7 +101,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         RegisterBean registerBean = new RegisterBean("username", "password", Role.STUDENT);
-        ErrorResponseDTO response = new ErrorResponseDTO(123L, "register failed");
+        ErrorResponseDTO response = new ErrorResponseDTO(123L, AuthServiceError.USERNAME_TAKEN);
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {

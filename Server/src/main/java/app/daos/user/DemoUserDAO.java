@@ -9,8 +9,8 @@ public class DemoUserDAO implements UserDAO {
     private final Map<String, UserEntity> users = new HashMap<>();
 
     /**
-     * This function should only add a new UserEntity to users because this DAO is used
-     * for the demo version of the app. If a user with the specified username already exists, it should return false.
+     * This function should only add a new UserEntity to users because this DAO is used for the demo version of the app.
+     * If a user with the specified username already exists, it should return false.
      * @param userEntity the user that has to be saved
      */
     @Override

@@ -9,6 +9,7 @@ import utils.PasswordError;
 import utils.UsernameError;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public class FxAuthLoginViewController implements GraphicController {
 
@@ -18,32 +19,20 @@ public class FxAuthLoginViewController implements GraphicController {
         this.authController = authController;
     }
 
-    public void onLoginButtonClicked(String username, String password) throws AuthException {
+    public CompletableFuture<Void> onLoginButtonClicked(String username, String password) throws AuthException {
 
         Optional<UsernameError> usernameError = AuthRules.isUsernameValid(username);
 
         if (usernameError.isPresent()) {
-            switch (usernameError.get()) {
-                case TOO_LONG -> throw new AuthException("Username is too long");
-                case TOO_SHORT -> throw new AuthException("Username is too short");
-                case NULL_OR_EMPTY -> throw new AuthException("Username is empty");
-                case NOT_ALPHANUMERIC -> throw new AuthException("Username is not alphanumeric");
-            }
+            throw new AuthException(usernameError.get());
         }
 
         Optional<PasswordError> passwordError = AuthRules.isPasswordValid(password);
 
         if (passwordError.isPresent()) {
-            switch (passwordError.get()) {
-                case TOO_LONG -> throw new AuthException("Password is too long");
-                case TOO_SHORT -> throw new AuthException("Password is too short");
-                case NULL_OR_EMPTY -> throw new AuthException("Password is empty");
-                case NOT_ALPHANUMERIC -> throw new AuthException("Password is not alphanumeric");
-            }
+            throw new AuthException(passwordError.get());
         }
 
-        authController.performLogin(new LoginBean(username, password)).exceptionally(error -> {
-            throw new AuthException(error.getMessage());
-        });
+        return authController.performLogin(new LoginBean(username, password));
     }
 }
