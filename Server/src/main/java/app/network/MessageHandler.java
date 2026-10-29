@@ -1,5 +1,6 @@
 package app.network;
 
+import app.services.Services;
 import dtos.LoginRequestDTO;
 import dtos.Message;
 import dtos.RegisterRequestDTO;
@@ -11,11 +12,13 @@ public class MessageHandler {
 
     private static final Logger LOGGER = Logger.getLogger("MessageHandler");
 
-    private MessageHandler() {
-        // Nothing to do
+    private final Services services;
+
+    public MessageHandler(Services services) {
+        this.services = services;
     }
 
-    public static void handleMessage(Message message) {
+    public void handleMessage(Message message) {
 
         if (!(message instanceof Request request)) {
             LOGGER.severe(() -> String.format("Unexpected message: %s", message.getClass().getSimpleName()));
@@ -23,8 +26,8 @@ public class MessageHandler {
         }
 
         switch (request) {
-            case LoginRequestDTO loginReq -> LOGGER.info(() -> String.format("Login request received: %s", loginReq));
-            case RegisterRequestDTO registerReq -> LOGGER.info(() -> String.format("Register request received: %s", registerReq));
+            case LoginRequestDTO loginReq -> services.authService().performLogin(loginReq);
+            case RegisterRequestDTO registerReq -> services.authService().performRegister(registerReq);
         }
     }
 }

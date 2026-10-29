@@ -11,13 +11,17 @@ public class NetworkUser implements Runnable {
     private final Logger logger;
 
     private final Socket clientSocket;
+    private final MessageHandler messageHandler;
+
     private final String address;
 
     private SafeObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
-    public NetworkUser(Socket clientSocket) {
+    public NetworkUser(Socket clientSocket, MessageHandler messageHandler) {
         this.clientSocket = clientSocket;
+        this.messageHandler = messageHandler;
+
         this.address = clientSocket.getInetAddress().getHostAddress();
         this.logger = Logger.getLogger(String.format("Client (%s)", this.address));
     }
@@ -53,7 +57,7 @@ public class NetworkUser implements Runnable {
         try {
 
             Message data = (Message) objectInputStream.readObject();
-            MessageHandler.handleMessage(data);
+            messageHandler.handleMessage(data);
         } catch (IOException ioException) {
             logger.severe(() -> String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));
             destroy();
