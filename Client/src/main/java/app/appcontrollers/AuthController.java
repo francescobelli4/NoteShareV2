@@ -1,10 +1,12 @@
 package app.appcontrollers;
 
 import app.beans.LoginBean;
+import app.beans.LoginUsingTokenBean;
 import app.beans.RegisterBean;
 import app.exceptions.AuthException;
 import app.models.usermodel.UserModel;
 import app.network.ConnectionManager;
+import app.utils.TokenManager;
 import dtos.*;
 import utils.AuthError;
 
@@ -46,7 +48,10 @@ public class AuthController {
         return ConnectionManager.sendAsync(request).orTimeout(10, TimeUnit.SECONDS)
                 .thenAccept(resp -> {
                     switch (resp) {
-                        case LoginResponseDTO success -> userModel.logIn(success.username(), success.role());
+                        case LoginResponseDTO success -> {
+                            TokenManager.saveToken(success.token());
+                            userModel.logIn(success.username(), success.role());
+                        }
                         case ErrorResponseDTO error      -> throw new AuthException((AuthError) error.error());
                         default                          -> throw new IllegalStateException("Unexpected response");
                     }
@@ -74,10 +79,32 @@ public class AuthController {
         return ConnectionManager.sendAsync(request).orTimeout(10, TimeUnit.SECONDS)
                 .thenAccept(resp -> {
                     switch (resp) {
-                        case RegisterResponseDTO success -> userModel.logIn(success.username(), success.role());
+                        case RegisterResponseDTO success -> {
+                            TokenManager.saveToken(success.token());
+                            userModel.logIn(success.username(), success.role());
+                        }
                         case ErrorResponseDTO error      -> throw new AuthException((AuthError) error.error());
                         default                          -> throw new IllegalStateException("Unexpected response");
                     }
                 });
+    }
+
+
+    /**
+     * This function should send an async request to the server to perform login using user token, if he has one.
+     * @param loginUsingTokenBean the user data
+     */
+    public void performLoginUsingToken(LoginUsingTokenBean loginUsingTokenBean) {
+
+        LoginUsingTokenRequestDTO request = new LoginUsingTokenRequestDTO(
+                ConnectionManager.nextRequestId(),
+                loginUsingTokenBean.token()
+        );
+
+        ConnectionManager.sendAsync(request).orTimeout(10, TimeUnit.SECONDS).thenAccept(resp -> {
+            LoginUsingTokenResponseDTO success = (LoginUsingTokenResponseDTO) resp;
+            TokenManager.saveToken(success.token());
+            userModel.logIn(success.username(), success.role());
+        });
     }
 }

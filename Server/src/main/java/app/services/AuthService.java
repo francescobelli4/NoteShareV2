@@ -85,4 +85,23 @@ public class AuthService {
 
         return new LoginResponseDTO(loginRequestDTO.requestId(), loginRequestDTO.username(), foundUser.role(), token);
     }
+
+    /**
+     * This function should log in a user using his access token
+     * @param loginUsingTokenRequestDTO the user data
+     * @return a response that has to be sent to the user
+     */
+    public Response performLoginUsingToken(LoginUsingTokenRequestDTO loginUsingTokenRequestDTO) {
+
+        UserEntity foundUser = userDAO.findUserByToken(loginUsingTokenRequestDTO.token());
+
+        if (foundUser == null) {
+            return null;
+        }
+
+        String token = java.util.UUID.randomUUID().toString();
+        foundUser = userDAO.updateUserToken(foundUser, token);
+
+        return new LoginUsingTokenResponseDTO(loginUsingTokenRequestDTO.requestId(), foundUser.username(), foundUser.role(), token);
+    }
 }

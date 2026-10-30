@@ -8,6 +8,7 @@ import app.config.GuiType;
 import app.models.Models;
 import app.models.usermodel.UserModel;
 import app.network.ConnectionManager;
+import app.utils.Utils;
 import app.views.fx.FxLauncher;
 
 import java.io.IOException;
@@ -35,6 +36,10 @@ public class App {
                 APPCONFIG.guiType(),
                 APPCONFIG.locale()
         ));
+
+        if (Utils.createDir(Utils.getOSLocalPath())) {
+            LOGGER.info(() -> String.format("NoteShare folder created at: %s", Utils.getOSLocalPath()));
+        }
 
         try {
             ConnectionManager.initializeConnection("localhost", 12345);

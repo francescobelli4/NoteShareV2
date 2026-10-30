@@ -48,6 +48,9 @@ public class MessageHandler {
                     return new ErrorResponseDTO(registerReq.requestId(), e.getAuthError());
                 }
             }
+            case LoginUsingTokenRequestDTO loginUsingTokenReq -> {
+                return services.authService().performLoginUsingToken(loginUsingTokenReq);
+            }
         }
     }
 }
