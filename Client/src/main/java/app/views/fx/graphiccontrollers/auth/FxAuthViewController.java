@@ -12,6 +12,6 @@ public class FxAuthViewController implements GraphicController {
     }
 
     public void onLoginSuccess() {
-        navigator.pop();
+         navigator.pop();
     }
 }

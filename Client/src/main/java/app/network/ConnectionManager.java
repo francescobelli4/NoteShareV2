@@ -80,6 +80,8 @@ public class ConnectionManager {
             return;
         }
 
+        LOGGER.info(() -> String.format("Received %s", message));
+
         handleResponse(response);
     }
 

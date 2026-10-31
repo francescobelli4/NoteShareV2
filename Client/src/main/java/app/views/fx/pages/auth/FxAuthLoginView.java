@@ -35,7 +35,12 @@ public class FxAuthLoginView extends FxView<FxAuthLoginViewController> {
         loginButton.setOnAction(_ -> {
 
             try {
-                controller.onLoginButtonClicked(usernameField.getText(), passwordField.getText());
+                controller.onLoginButtonClicked(usernameField.getText(), passwordField.getText()).exceptionally(error -> {
+                    // For example, if no user with that username was found or password is wrong
+                    Throwable cause = error.getCause() != null ? error.getCause() : error;
+                    updateUI(() -> showError(cause.getMessage()));
+                    return null;
+                });
             } catch (AuthException e) {
                 showError(e.getMessage());
             }
