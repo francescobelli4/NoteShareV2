@@ -55,4 +55,8 @@ public class DemoUserDAO implements UserDAO {
         users.put(userEntity.username(), updatedUserEntity);
         return updatedUserEntity;
     }
+
+    public Map<String, UserEntity> getUsers() {
+        return users;
+    }
 }
