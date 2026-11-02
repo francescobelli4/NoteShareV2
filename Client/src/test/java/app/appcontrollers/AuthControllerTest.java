@@ -1,6 +1,7 @@
 package app.appcontrollers;
 
 import app.beans.LoginBean;
+import app.beans.LoginUsingTokenBean;
 import app.beans.RegisterBean;
 import app.exceptions.AuthException;
 import app.models.usermodel.UserModel;
@@ -121,6 +122,30 @@ class AuthControllerTest {
                 assertInstanceOf(AuthException.class, ex.getCause());
                 return null;
             }).join();
+        }
+    }
+
+    @Test
+    void performLoginUsingToken_Success() {
+
+        UserModel userModel = mock(UserModel.class);
+        AuthController authController = new AuthController(userModel);
+        LoginUsingTokenBean loginBean = new LoginUsingTokenBean("token");
+        LoginUsingTokenResponseDTO response = new LoginUsingTokenResponseDTO(123L, "username", Role.STUDENT, "abc");
+
+        // Mocking the connection manager and crafting a mocked response
+        try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
+
+            // Returning the right requestId
+            mockedCM.when(ConnectionManager::nextRequestId).thenReturn(123L);
+
+            // We want ConnectionManager.sendAsync to return a "fake" future that is already completed. In this way,
+            // authController.performLoginUsingToken receives this future as response.
+            mockedCM.when(() -> ConnectionManager.sendAsync(any(LoginUsingTokenRequestDTO.class))).thenReturn(CompletableFuture.completedFuture(response));
+
+            authController.performLoginUsingToken(loginBean);
+
+            verify(userModel, times(1)).logIn("username", Role.STUDENT);
         }
     }
 }
