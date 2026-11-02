@@ -27,7 +27,7 @@ public class FxViewFactory {
     }
 
     public FxHomeView createFxHomeView() {
-        FxHomeViewController graphicController = new FxHomeViewController(navigator, this);
+        FxHomeViewController graphicController = new FxHomeViewController(navigator, this, appControllers.authController());
         return new FxHomeView(graphicController, models.userModel());
     }
 

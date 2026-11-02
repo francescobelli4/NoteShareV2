@@ -85,7 +85,7 @@ public class FxAuthView extends FxView<FxAuthViewController> implements UserMode
 
     @Override
     public void onLoggedIn() {
-        controller.onLoginSuccess();
+        updateUI(() -> controller.onLoginSuccess());
     }
 
     @Override

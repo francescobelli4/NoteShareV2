@@ -41,7 +41,7 @@ class ConnectionManagerTest {
                 while (!clientSocket.isClosed()) {
 
                     Request _ = (Request) in.readObject();
-                    Response response = new LoginResponseDTO(2027, "pablito:D", Role.STUDENT);
+                    Response response = new LoginResponseDTO(2027, "pablito:D", Role.STUDENT, "abc");
 
                     // Always answer with LoginResponseDTO for tests...
                     out.writeObject(response);

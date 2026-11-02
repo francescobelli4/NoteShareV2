@@ -27,6 +27,7 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     protected void onLoaded() {
         subscribe(userModel.addListener(this));
         loginButton.setOnAction(_ -> controller.onLoginButtonClicked());
+        controller.tryLoginUsingToken();
     }
 
     @Override

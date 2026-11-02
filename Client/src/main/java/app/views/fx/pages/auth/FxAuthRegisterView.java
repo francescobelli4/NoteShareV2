@@ -38,7 +38,13 @@ public class FxAuthRegisterView extends FxView<FxAuthRegisterViewController> {
     protected void onLoaded() {
         registerButton.setOnAction(_ -> {
             try {
-                controller.registerButtonClicked(usernameField.getText(), passwordField.getText(), confirmPasswordField.getText(), roleComboBox.getValue());
+                controller.registerButtonClicked(usernameField.getText(), passwordField.getText(), confirmPasswordField.getText(), roleComboBox.getValue())
+                        .exceptionally(error -> {
+                            // For example, if server answers that the username is already taken
+                            Throwable cause = error.getCause() != null ? error.getCause() : error;
+                            updateUI(() -> showError(cause.getMessage()));
+                            return null;
+                        });
             } catch (AuthException e) {
                 updateUI(() -> showError(e.getMessage()));
             }

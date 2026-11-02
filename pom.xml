@@ -35,7 +35,12 @@
             **/Models.java,
             **/AppControllers.java,
             **/permissions/**,
-            **/beans/**
+            **/beans/**,
+            **/entities/**,
+            **/DAOs.java,
+            **/Services.java,
+            **/exceptions/**,
+            **/AuthServiceError.java
         </sonar.coverage.exclusions>
         <!-- Excluding views from code duplication checks -->
         <sonar.cpd.exclusions>**/views/fx/**</sonar.cpd.exclusions>

@@ -1,6 +1,7 @@
 package app.network;
 
 import dtos.Message;
+import dtos.Response;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,13 +12,17 @@ public class NetworkUser implements Runnable {
     private final Logger logger;
 
     private final Socket clientSocket;
-    private final String address;
+    private final MessageHandler messageHandler;
 
     private SafeObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
-    public NetworkUser(Socket clientSocket) {
+    private final String address;
+
+    public NetworkUser(Socket clientSocket, MessageHandler messageHandler) {
         this.clientSocket = clientSocket;
+        this.messageHandler = messageHandler;
+
         this.address = clientSocket.getInetAddress().getHostAddress();
         this.logger = Logger.getLogger(String.format("Client (%s)", this.address));
     }
@@ -46,20 +51,38 @@ public class NetworkUser implements Runnable {
     }
 
     /**
-     * This function should actually read the data from the input stream and call MessageHandler
-     * to handle the message.
+     * This function should actually read the data from the input stream and delegate the message handling to
+     * MessageHandler class.
+     * MessageHandler always generates a response that has to be sent immediately to the client.
      */
     private void read() {
         try {
 
             Message data = (Message) objectInputStream.readObject();
-            MessageHandler.handleMessage(data);
+            Response response = messageHandler.handleMessage(data);
+            write(response);
         } catch (IOException ioException) {
             logger.severe(() -> String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));
             destroy();
         } catch (ClassNotFoundException e) {
             logger.severe(() -> String.format("Failed de-serializing an object: %s", e.getMessage()));
         } catch (NullPointerException _) {
+            destroy();
+        }
+    }
+
+    /**
+     * This function should send a message to the client.
+     * This function is NOT thread-safe! Only this thread should write on the output stream!
+     * @param response the message that should be sent to the client.
+     */
+    private void write(Response response) {
+
+        try {
+            objectOutputStream.writeObject(response);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            logger.severe(String.format("Connection with client (%s) lost: %s.", address, e.getMessage()));
             destroy();
         }
     }

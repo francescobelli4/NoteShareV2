@@ -1,6 +1,7 @@
 package app.appcontrollers;
 
 import app.beans.LoginBean;
+import app.beans.LoginUsingTokenBean;
 import app.beans.RegisterBean;
 import app.exceptions.AuthException;
 import app.models.usermodel.UserModel;
@@ -9,6 +10,7 @@ import dtos.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import permissions.Role;
+import utils.AuthServiceError;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -24,7 +26,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         LoginBean loginBean = new LoginBean("username", "password");
-        LoginResponseDTO response = new LoginResponseDTO(123L, "username", Role.STUDENT);
+        LoginResponseDTO response = new LoginResponseDTO(123L, "username", Role.STUDENT, "abc");
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
@@ -48,7 +50,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         LoginBean loginBean = new LoginBean("username", "password");
-        ErrorResponseDTO response = new ErrorResponseDTO(123L, "login failed");
+        ErrorResponseDTO response = new ErrorResponseDTO(123L, AuthServiceError.USERNAME_TAKEN);
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
@@ -76,7 +78,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         RegisterBean registerBean = new RegisterBean("username", "password", Role.STUDENT);
-        RegisterResponseDTO response = new RegisterResponseDTO(123L, "username", Role.STUDENT);
+        RegisterResponseDTO response = new RegisterResponseDTO(123L, "username", Role.STUDENT, "abc");
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
@@ -100,7 +102,7 @@ class AuthControllerTest {
         UserModel userModel = mock(UserModel.class);
         AuthController authController = new AuthController(userModel);
         RegisterBean registerBean = new RegisterBean("username", "password", Role.STUDENT);
-        ErrorResponseDTO response = new ErrorResponseDTO(123L, "register failed");
+        ErrorResponseDTO response = new ErrorResponseDTO(123L, AuthServiceError.USERNAME_TAKEN);
 
         // Mocking the connection manager and crafting a mocked response
         try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
@@ -120,6 +122,30 @@ class AuthControllerTest {
                 assertInstanceOf(AuthException.class, ex.getCause());
                 return null;
             }).join();
+        }
+    }
+
+    @Test
+    void performLoginUsingToken_Success() {
+
+        UserModel userModel = mock(UserModel.class);
+        AuthController authController = new AuthController(userModel);
+        LoginUsingTokenBean loginBean = new LoginUsingTokenBean("token");
+        LoginUsingTokenResponseDTO response = new LoginUsingTokenResponseDTO(123L, "username", Role.STUDENT, "abc");
+
+        // Mocking the connection manager and crafting a mocked response
+        try (MockedStatic<ConnectionManager> mockedCM = mockStatic(ConnectionManager.class)) {
+
+            // Returning the right requestId
+            mockedCM.when(ConnectionManager::nextRequestId).thenReturn(123L);
+
+            // We want ConnectionManager.sendAsync to return a "fake" future that is already completed. In this way,
+            // authController.performLoginUsingToken receives this future as response.
+            mockedCM.when(() -> ConnectionManager.sendAsync(any(LoginUsingTokenRequestDTO.class))).thenReturn(CompletableFuture.completedFuture(response));
+
+            authController.performLoginUsingToken(loginBean);
+
+            verify(userModel, times(1)).logIn("username", Role.STUDENT);
         }
     }
 }
