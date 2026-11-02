@@ -2,7 +2,6 @@ package app.daos.user;
 
 import app.entities.UserEntity;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import permissions.Role;
 

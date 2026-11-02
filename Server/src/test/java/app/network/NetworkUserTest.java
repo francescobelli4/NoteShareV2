@@ -1,12 +1,7 @@
 package app.network;
 
-import app.daos.user.DemoUserDAO;
-import app.services.AuthService;
-import app.services.Services;
 import dtos.LoginRequestDTO;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 
 import java.io.IOException;

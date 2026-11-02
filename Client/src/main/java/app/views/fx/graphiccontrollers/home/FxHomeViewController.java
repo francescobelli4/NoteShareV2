@@ -31,7 +31,7 @@ public class FxHomeViewController implements GraphicController {
             if (token == null) return;
 
             authController.performLoginUsingToken(new LoginUsingTokenBean(token));
-        } catch (IOException e) {
+        } catch (IOException _) {
             // We should just ignore it if token was not found
         }
     }

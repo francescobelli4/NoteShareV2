@@ -37,7 +37,7 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
 
     @Override
     public void onLoggedIn() {
-        System.out.println("LOGGED IN");
+        // Still not done :D
     }
 
     @Override

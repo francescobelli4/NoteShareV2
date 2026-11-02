@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 public class TokenManager {
 
-    private final static Logger LOGGER = Logger.getLogger("TokenManager");
+    private static final Logger LOGGER = Logger.getLogger("TokenManager");
+    private static final String TOKEN_FILE_NAME = "access_token.txt";
 
     private TokenManager() { }
 
@@ -18,7 +19,7 @@ public class TokenManager {
      */
     public static void saveToken(String token) {
 
-        try (FileWriter fileWriter = new FileWriter(Utils.getOSLocalPath() + "access_token.txt")) {
+        try (FileWriter fileWriter = new FileWriter(Utils.getOSLocalPath() + TOKEN_FILE_NAME)) {
             fileWriter.write(token);
         } catch (IOException _) {
             LOGGER.severe("Failed writing access token to file");
@@ -26,8 +27,8 @@ public class TokenManager {
     }
 
     public static String getToken() throws IOException {
-        if (Utils.findFile(Utils.getOSLocalPath() + "access_token.txt") == null) return null;
+        if (Utils.findFile(Utils.getOSLocalPath() + TOKEN_FILE_NAME) == null) return null;
 
-        return Utils.readFile(Objects.requireNonNull(Utils.findFile(Utils.getOSLocalPath() + "access_token.txt")));
+        return Utils.readFile(Objects.requireNonNull(Utils.findFile(Utils.getOSLocalPath() + TOKEN_FILE_NAME)));
     }
 }

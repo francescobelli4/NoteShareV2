@@ -21,7 +21,7 @@ class UtilsTest {
     }
 
     @Test
-    void findFile_NotExists() throws IOException {
+    void findFile_NotExists() {
         assertNull(Utils.findFile(tempDir.resolve("abc.txt").toString()));
     }
 
