@@ -6,10 +6,12 @@ import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthRegisterViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthViewController;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
+import app.views.fx.graphiccontrollers.home.FxUserBoxController;
 import app.views.fx.pages.auth.FxAuthLoginView;
 import app.views.fx.pages.auth.FxAuthRegisterView;
 import app.views.fx.pages.auth.FxAuthView;
 import app.views.fx.pages.home.FxHomeView;
+import app.views.fx.pages.home.FxUserBoxView;
 
 /**
  * This class should be the factory that creates every FX view. In this way, editing a view only affects this class.
@@ -28,7 +30,12 @@ public class FxViewFactory {
 
     public FxHomeView createFxHomeView() {
         FxHomeViewController graphicController = new FxHomeViewController(navigator, this, appControllers.authController());
-        return new FxHomeView(graphicController, models.userModel());
+        return new FxHomeView(graphicController, models.userModel(), this::createFxUserBoxView);
+    }
+
+    public FxUserBoxView createFxUserBoxView() {
+        FxUserBoxController graphicsController = new FxUserBoxController();
+        return new FxUserBoxView(graphicsController, models.userModel());
     }
 
     public FxAuthView createFxAuthView() {

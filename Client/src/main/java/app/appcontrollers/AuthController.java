@@ -80,8 +80,14 @@ public class AuthController {
                 .thenAccept(resp -> {
                     switch (resp) {
                         case RegisterResponseDTO success -> {
+                            System.out.println("INNN");
                             TokenManager.saveToken(success.token());
-                            userModel.logIn(success.username(), success.role());
+                            try {
+                                userModel.logIn(success.username(), success.role());
+                            } catch (RuntimeException e) {
+                                e.printStackTrace();
+                                throw e;
+                            }
                         }
                         case ErrorResponseDTO error      -> throw new AuthException((AuthError) error.error());
                         default                          -> throw new IllegalStateException("Unexpected response");

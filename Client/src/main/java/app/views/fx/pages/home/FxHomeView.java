@@ -5,16 +5,29 @@ import app.models.usermodel.UserModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+
+import java.util.function.Supplier;
 
 public class FxHomeView extends FxView<FxHomeViewController> implements UserModelListener {
 
     private final UserModel userModel;
-    @FXML
-    Button loginButton;
 
-    public FxHomeView(FxHomeViewController controller, UserModel userModel) {
+    private final Supplier<FxUserBoxView> userBoxViewSupplier;
+
+    @FXML
+    private Button loginButton;
+    @FXML
+    private VBox guestBox;
+    @FXML
+    private StackPane userBoxContainer;
+
+    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier) {
         this.userModel = userModel;
+        this.userBoxViewSupplier = userBoxViewSupplier;
         super(controller);
     }
 
@@ -28,6 +41,8 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
         subscribe(userModel.addListener(this));
         loginButton.setOnAction(_ -> controller.onLoginButtonClicked());
         controller.tryLoginUsingToken();
+
+        updateUI(this::update);
     }
 
     @Override
@@ -35,9 +50,25 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
         // Still not done :D
     }
 
+    private void update() {
+        setShown(guestBox, !userModel.isLoggedIn());
+        setShown(userBoxContainer, userModel.isLoggedIn());
+    }
+
+    private void setShown(Node node, boolean show) {
+        node.setVisible(show);
+        node.setManaged(show);
+    }
+
     @Override
     public void onLoggedIn() {
-        // Still not done :D
+
+        updateUI(() -> {
+            FxUserBoxView userBoxView = userBoxViewSupplier.get();
+            addChild(userBoxView);
+            userBoxContainer.getChildren().setAll(userBoxView.getRoot());
+            update();
+        });
     }
 
     @Override
