@@ -1,6 +1,7 @@
 package permissions;
 
 public enum Permission {
+    USE_COINS,
     BUY_NOTES,                  // Students can buy notes
     SELL_NOTES,                 // Students can sell notes
     BROWSE_LISTINGS,            // Students can browse the notes that other students are selling

@@ -35,7 +35,7 @@ public class FxViewFactory {
 
     public FxUserBoxView createFxUserBoxView() {
         FxUserBoxController graphicsController = new FxUserBoxController();
-        return new FxUserBoxView(graphicsController, models.userModel());
+        return new FxUserBoxView(graphicsController, models.userModel(), models.walletModel());
     }
 
     public FxAuthView createFxAuthView() {
