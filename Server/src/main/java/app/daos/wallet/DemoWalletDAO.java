@@ -1,6 +1,5 @@
 package app.daos.wallet;
 
-import app.entities.UserEntity;
 import app.entities.WalletEntity;
 
 import java.util.HashMap;
