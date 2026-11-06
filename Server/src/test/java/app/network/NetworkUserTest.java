@@ -21,6 +21,7 @@ class NetworkUserTest {
         MessageHandler messageHandler = mock(MessageHandler.class);
         LoginRequestDTO fakeRequest = new LoginRequestDTO(1, "username", "password");
         ServerSocket fakeServer = new ServerSocket(0);
+        Session session = new Session();
 
         // Preparing a fake client connection in a different thread waiting to connect to a server
         Thread fakeClientThread = new Thread(() -> {
@@ -43,7 +44,7 @@ class NetworkUserTest {
         Socket clientOnServerSocket = fakeServer.accept();
         NetworkUser networkUser = new NetworkUser(clientOnServerSocket, messageHandler);
         networkUser.run();
-        verify(messageHandler).handleMessage(fakeRequest);
+        verify(messageHandler).handleMessage(fakeRequest, session);
         assertTrue(clientOnServerSocket.isClosed());
 
     }

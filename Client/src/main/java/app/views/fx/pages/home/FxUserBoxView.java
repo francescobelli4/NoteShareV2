@@ -37,6 +37,14 @@ public class FxUserBoxView extends FxView<FxUserBoxController> implements UserMo
     protected void onLoaded() {
         subscribe(walletModel.addListener(this));
         subscribe(userModel.addListener(this));
+
+        if (userModel.hasPermission(Permission.USE_COINS)) {
+            controller.getBalance().exceptionally(_ -> {
+                //Throwable cause = error.getCause() != null ? error.getCause() : error;
+                // Still not done, we'll need a notification system!
+                return null;
+            });
+        }
         updateUI(this::update);
     }
 

@@ -20,16 +20,6 @@ public class WalletModel {
         listeners.triggerEvent(WalletModelListener::onBalanceUpdated);
     }
 
-    public void incrementBalance(int coins) {
-        balance += coins;
-        listeners.triggerEvent(WalletModelListener::onBalanceUpdated);
-    }
-
-    public void decrementBalance(int coins) {
-        balance -= coins;
-        listeners.triggerEvent(WalletModelListener::onBalanceUpdated);
-    }
-
     public int getBalance() {
         return balance;
     }

@@ -1,8 +1,10 @@
 package app.services;
 
 import app.daos.user.UserDAO;
+import app.daos.wallet.WalletDAO;
 import app.entities.UserEntity;
 import app.exceptions.AuthServiceException;
+import app.network.Session;
 import dtos.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -26,9 +28,11 @@ class AuthServiceTest {
     void performRegister() {
 
         UserDAO userDAO = mock(UserDAO.class);
+        WalletDAO walletDAO = mock(WalletDAO.class);
         RegisterRequestDTO request = new RegisterRequestDTO(1L, "username", "password", Role.STUDENT);
+        Session userSession = new Session();
 
-        AuthService authService = new AuthService(userDAO);
+        AuthService authService = new AuthService(userDAO, walletDAO);
 
         when(userDAO.saveUser(any(UserEntity.class))).thenReturn(true);
 
@@ -37,7 +41,7 @@ class AuthServiceTest {
         try (MockedStatic<UUID> mockedUUID = Mockito.mockStatic(UUID.class)) {
 
             mockedUUID.when(UUID::randomUUID).thenReturn(uuid);
-            Response response = authService.performRegister(request);
+            Response response = authService.performRegister(request, userSession);
 
             assertEquals(uuid.toString(), ((RegisterResponseDTO) response).token());
             assertEquals(1L, response.requestId());
@@ -50,13 +54,15 @@ class AuthServiceTest {
     void performRegister_InvalidUsername() {
 
         UserDAO userDAO = mock(UserDAO.class);
+        WalletDAO walletDAO = mock(WalletDAO.class);
         RegisterRequestDTO request = new RegisterRequestDTO(1L, "u", "password", Role.STUDENT);
+        Session userSession = new Session();
 
-        AuthService authService = new AuthService(userDAO);
+        AuthService authService = new AuthService(userDAO, walletDAO);
 
         when(userDAO.saveUser(any(UserEntity.class))).thenReturn(true);
 
-        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request));
+        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request, userSession));
 
         assertEquals(UsernameError.TOO_SHORT, exception.getAuthError());
     }
@@ -65,13 +71,15 @@ class AuthServiceTest {
     void performRegister_InvalidPassword() {
 
         UserDAO userDAO = mock(UserDAO.class);
+        WalletDAO walletDAO = mock(WalletDAO.class);
         RegisterRequestDTO request = new RegisterRequestDTO(1L, "username", "p", Role.STUDENT);
+        Session userSession = new Session();
 
-        AuthService authService = new AuthService(userDAO);
+        AuthService authService = new AuthService(userDAO, walletDAO);
 
         when(userDAO.saveUser(any(UserEntity.class))).thenReturn(true);
 
-        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request));
+        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request, userSession));
 
         assertEquals(PasswordError.TOO_SHORT, exception.getAuthError());
     }
@@ -80,13 +88,15 @@ class AuthServiceTest {
     void performRegister_InvalidRole() {
 
         UserDAO userDAO = mock(UserDAO.class);
+        WalletDAO walletDAO = mock(WalletDAO.class);
         RegisterRequestDTO request = new RegisterRequestDTO(1L, "username", "password", Role.MODERATOR);
+        Session userSession = new Session();
 
-        AuthService authService = new AuthService(userDAO);
+        AuthService authService = new AuthService(userDAO, walletDAO);
 
         when(userDAO.saveUser(any(UserEntity.class))).thenReturn(true);
 
-        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request));
+        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request, userSession));
 
         assertEquals(AuthServiceError.INVALID_ROLE, exception.getAuthError());
     }
@@ -95,13 +105,15 @@ class AuthServiceTest {
     void performRegister_UsernameTaken() {
 
         UserDAO userDAO = mock(UserDAO.class);
+        WalletDAO walletDAO = mock(WalletDAO.class);
         RegisterRequestDTO request = new RegisterRequestDTO(1L, "username", "password", Role.STUDENT);
+        Session userSession = new Session();
 
-        AuthService authService = new AuthService(userDAO);
+        AuthService authService = new AuthService(userDAO, walletDAO);
 
         when(userDAO.saveUser(any(UserEntity.class))).thenReturn(false);
 
-        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request));
+        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performRegister(request, userSession));
 
         assertEquals(AuthServiceError.USERNAME_TAKEN, exception.getAuthError());
     }
@@ -110,8 +122,11 @@ class AuthServiceTest {
     void performLogin() {
 
         UserDAO userDAO = mock(UserDAO.class);
-        AuthService authService = new AuthService(userDAO);
+        WalletDAO walletDAO = mock(WalletDAO.class);
+        AuthService authService = new AuthService(userDAO, walletDAO);
         LoginRequestDTO request = new LoginRequestDTO(1L, "username", "password");
+
+        Session userSession = new Session();
 
         UUID oldToken = UUID.fromString("00000000-0000-0000-0000-000000000001");
         UUID newToken = UUID.fromString("00000000-0000-0000-0000-000000000002");
@@ -130,7 +145,7 @@ class AuthServiceTest {
             mockedHashing.when(() -> Hashing.verifyHash(anyString(), anyString())).thenReturn(true);
             mockedUUID.when(UUID::randomUUID).thenReturn(newToken);
 
-            Response response = authService.performLogin(request);
+            Response response = authService.performLogin(request, userSession);
 
             LoginResponseDTO login = assertInstanceOf(LoginResponseDTO.class, response);
             assertEquals(1L, login.requestId());
@@ -146,12 +161,15 @@ class AuthServiceTest {
     void performLogin_UserNotFound() {
 
         UserDAO userDAO = mock(UserDAO.class);
-        AuthService authService = new AuthService(userDAO);
+        WalletDAO walletDAO = mock(WalletDAO.class);
+        AuthService authService = new AuthService(userDAO, walletDAO);
         LoginRequestDTO request = new LoginRequestDTO(1L, "username", "password");
+
+        Session userSession = new Session();
 
         when(userDAO.findUserByUsername("username")).thenReturn(null);
 
-        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performLogin(request));
+        AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performLogin(request, userSession));
 
         assertEquals(AuthServiceError.USER_NOT_FOUND, exception.getAuthError());
     }
@@ -160,8 +178,11 @@ class AuthServiceTest {
     void performLogin_WrongPassword() {
 
         UserDAO userDAO = mock(UserDAO.class);
-        AuthService authService = new AuthService(userDAO);
+        WalletDAO walletDAO = mock(WalletDAO.class);
+        AuthService authService = new AuthService(userDAO, walletDAO);
         LoginRequestDTO request = new LoginRequestDTO(1L, "username", "password");
+
+        Session userSession = new Session();
 
         UUID oldToken = UUID.fromString("00000000-0000-0000-0000-000000000001");
 
@@ -172,10 +193,9 @@ class AuthServiceTest {
         try (
                 MockedStatic<Hashing> mockedHashing = Mockito.mockStatic(Hashing.class)
         ) {
-
             mockedHashing.when(() -> Hashing.verifyHash(anyString(), anyString())).thenReturn(false);
 
-            AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performLogin(request));
+            AuthServiceException exception = assertThrows(AuthServiceException.class, () -> authService.performLogin(request, userSession));
 
             assertEquals(AuthServiceError.WRONG_PASSWORD, exception.getAuthError());
         }
@@ -185,8 +205,11 @@ class AuthServiceTest {
     void performLoginUsingToken() {
 
         UserDAO userDAO = mock(UserDAO.class);
-        AuthService authService = new AuthService(userDAO);
+        WalletDAO walletDAO = mock(WalletDAO.class);
+        AuthService authService = new AuthService(userDAO, walletDAO);
         LoginUsingTokenRequestDTO request = new LoginUsingTokenRequestDTO(1L, "token");
+
+        Session userSession = new Session();
 
         UUID oldToken = UUID.fromString("00000000-0000-0000-0000-000000000001");
         UUID newToken = UUID.fromString("00000000-0000-0000-0000-000000000002");
@@ -202,7 +225,7 @@ class AuthServiceTest {
         ) {
             mockedUUID.when(UUID::randomUUID).thenReturn(newToken);
 
-            Response response = authService.performLoginUsingToken(request);
+            Response response = authService.performLoginUsingToken(request, userSession);
 
             LoginUsingTokenResponseDTO login = assertInstanceOf(LoginUsingTokenResponseDTO.class, response);
             assertEquals(1L, login.requestId());
@@ -218,11 +241,14 @@ class AuthServiceTest {
     void performLoginUsingToken_NoUser() {
 
         UserDAO userDAO = mock(UserDAO.class);
-        AuthService authService = new AuthService(userDAO);
+        WalletDAO walletDAO = mock(WalletDAO.class);
+        AuthService authService = new AuthService(userDAO, walletDAO);
         LoginUsingTokenRequestDTO request = new LoginUsingTokenRequestDTO(1L, "token");
+
+        Session userSession = new Session();
 
         when(userDAO.findUserByToken("token")).thenReturn(null);
 
-        assertNull(authService.performLoginUsingToken(request));
+        assertNull(authService.performLoginUsingToken(request, userSession));
     }
 }
