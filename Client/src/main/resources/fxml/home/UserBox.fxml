@@ -1,0 +1,23 @@
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<VBox styleClass="user-box" alignment="CENTER" spacing="8" maxWidth="Infinity" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../styles/home.css"/>
+    </stylesheets>
+    <ImageView fx:id="avatarImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../styles/icons/user.png"/>
+    </ImageView>
+
+    <Label fx:id="usernameLabel" text="Username" styleClass="subtitle"/>
+
+    <Label fx:id="coinsLabel" text="0" styleClass="coins-label" visible="false" managed="false">
+        <graphic>
+            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../styles/icons/coin.png"/>
+            </ImageView>
+        </graphic>
+    </Label>
+</VBox>

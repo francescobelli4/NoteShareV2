@@ -5,11 +5,14 @@ import app.config.Mode;
 import app.daos.DAOs;
 import app.daos.user.DemoUserDAO;
 import app.daos.user.UserDAO;
+import app.daos.wallet.DemoWalletDAO;
+import app.daos.wallet.WalletDAO;
 import app.network.ConnectionManager;
 import app.network.MessageHandler;
 import app.network.NetworkUser;
 import app.services.AuthService;
 import app.services.Services;
+import app.services.WalletService;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -38,10 +41,12 @@ public class Server {
         LOGGER.info(() -> String.format("App config set: %s", APPCONFIG.mode()));
 
         UserDAO userDAO = APPCONFIG.mode() == Mode.DEMO ? new DemoUserDAO() : null;
-        DAOs daos = new DAOs(userDAO);
+        WalletDAO walletDAO = APPCONFIG.mode() == Mode.DEMO ? new DemoWalletDAO() : null;
+        DAOs daos = new DAOs(userDAO, walletDAO);
 
-        AuthService authService = new AuthService(daos.userDAO());
-        Services services = new Services(authService);
+        AuthService authService = new AuthService(daos.userDAO(), daos.walletDAO());
+        WalletService walletService = new WalletService(daos.walletDAO());
+        Services services = new Services(authService, walletService);
 
         MessageHandler messageHandler = new MessageHandler(services);
 

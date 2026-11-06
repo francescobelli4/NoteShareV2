@@ -29,7 +29,7 @@ public class AuthController {
      * So, we build the LoginRequestDTO and then we sendAsync this request to the server: when the server answers,
      * ConnectionManager calls future.complete(response), the lambda specified in .thenAccept(lambda) is executed.
      * Note that .thenAccept(lambda) is a CompletableFuture<Void> that is returned to the view: in case of
-     * AuthException or IllegaStateException, the .exceptionally(lambda) block in the view is executed.
+     * AuthException or IllegalStateException, the .exceptionally(lambda) block in the view is executed.
      * Obviously this function does not throw AuthException or IllegalStateException because they are thrown in the
      * async block!
      * @param loginBean the user data

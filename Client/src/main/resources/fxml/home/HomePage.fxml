@@ -46,12 +46,20 @@
          <Region VBox.vgrow="ALWAYS" />
          <VBox alignment="CENTER" spacing="16.0">
             <children>
-               <ImageView fitHeight="100.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../styles/icons/user.png" />
-                  </image>
-               </ImageView>
-               <Button maxWidth="Infinity" fx:id="loginButton" styleClass="button-primary" text="Login" />
+                <VBox fx:id="guestBox" alignment="CENTER" spacing="16.0">
+                    <ImageView fitHeight="100.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../styles/icons/user.png" />
+                        </image>
+                    </ImageView>
+                    <Button maxWidth="Infinity" fx:id="loginButton" styleClass="button-primary" text="Login" />
+                </VBox>
+
+                <StackPane fx:id="userBoxContainer" visible="false" managed="false">
+                    <padding>
+                        <Insets bottom="24.0" left="16.0" right="16.0" top="24.0" />
+                    </padding>
+                </StackPane>
             </children>
             <padding>
                <Insets bottom="24.0" left="16.0" right="16.0" top="24.0" />

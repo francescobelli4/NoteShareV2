@@ -29,3 +29,12 @@
     -fx-text-fill: -color-selected-text;
     -fx-font-weight: bold;
 }
+
+.coins-label {
+    -fx-background-color: -color-selected;
+    -fx-background-radius: 12;
+    -fx-padding: 0.3em 0.8em 0.3em 0.8em;
+    -fx-text-fill: -color-selected-text;
+    -fx-font-weight: bold;
+    -fx-graphic-text-gap: 6;
+}
