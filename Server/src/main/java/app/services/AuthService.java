@@ -5,6 +5,7 @@ import app.daos.wallet.WalletDAO;
 import app.entities.UserEntity;
 import app.entities.WalletEntity;
 import app.exceptions.AuthServiceException;
+import app.exceptions.ProfileServiceException;
 import app.network.Session;
 import dtos.*;
 import permissions.Permission;
@@ -65,8 +66,9 @@ public class AuthService {
         userSession.logIn(registerRequestDTO.username(), registerRequestDTO.role());
 
         if (userSession.hasPermission(Permission.USE_COINS)) {
+
             WalletEntity walletEntity = new WalletEntity(userSession.getUsername(), 100);
-            walletDAO.saveWallet(walletEntity);
+            if (!walletDAO.saveWallet(walletEntity)) throw new ProfileServiceException(WalletError.WALLET_ALREADY_EXISTS);
         }
 
         return new RegisterResponseDTO(registerRequestDTO.requestId(), registerRequestDTO.username(), registerRequestDTO.role(), token);

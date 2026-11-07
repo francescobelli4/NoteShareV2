@@ -8,7 +8,5 @@ public interface WalletDAO {
 
     boolean saveWallet(WalletEntity walletEntity);
 
-    WalletEntity findWalletByUsername(String username);
-
     int getWalletBalanceByUsername(String username);
 }

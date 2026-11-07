@@ -11,6 +11,9 @@ import utils.ProfileError;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class is an application controller used to satisfy the "manage profile" use case.
+ */
 public class ProfileController {
 
     private final WalletModel walletModel;
@@ -19,6 +22,12 @@ public class ProfileController {
         this.walletModel = walletModel;
     }
 
+    /**
+     * This function should set the wallet balance in walletModel using an async request to the server.
+     * In case of error (for example, there is no wallet associated with the user), a ProfileException is
+     * thrown.
+     * @return a CompletableFuture<Void> used by the view to display an error if there's one.
+     */
     public CompletableFuture<Void> getBalance() {
 
         GetWalletBalanceRequestDTO request = new GetWalletBalanceRequestDTO(ConnectionManager.nextRequestId());
@@ -28,7 +37,7 @@ public class ProfileController {
                    switch (response) {
                        case GetWalletBalanceResponseDTO success -> walletModel.setBalance(success.balance());
                        case ErrorResponseDTO error -> throw new ProfileException((ProfileError) error.error());
-                       default                          -> throw new IllegalStateException("Unexpected response");
+                       default -> throw new IllegalStateException("Unexpected response");
                    }
                 });
     }

@@ -17,17 +17,10 @@ public class DemoWalletDAO implements WalletDAO {
     }
 
     @Override
-    public WalletEntity findWalletByUsername(String username) {
-        return wallets.get(username);
-    }
-
-    @Override
     public int getWalletBalanceByUsername(String username) {
-
-        WalletEntity walletEntity = findWalletByUsername(username);
+        WalletEntity walletEntity = wallets.get(username);
 
         if (walletEntity == null) return -1;
-
         return walletEntity.balance();
     }
 
