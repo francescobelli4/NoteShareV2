@@ -1,7 +1,7 @@
 package app.utils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  * @param <L>
  */
 public class ListenerHelper<L> {
-    private final List<L> listeners = new ArrayList<>();
+    private final List<L> listeners = new CopyOnWriteArrayList<>();
 
     /**
      * This function should add a new listener to the list and return a Subscription object to him: in this way, the

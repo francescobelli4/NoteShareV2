@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -43,8 +44,7 @@ class NetworkUserTest {
         Socket clientOnServerSocket = fakeServer.accept();
         NetworkUser networkUser = new NetworkUser(clientOnServerSocket, messageHandler);
         networkUser.run();
-        verify(messageHandler).handleMessage(fakeRequest);
+        verify(messageHandler).handleMessage(any(LoginRequestDTO.class), any(Session.class));
         assertTrue(clientOnServerSocket.isClosed());
-
     }
 }

@@ -18,6 +18,7 @@ public class NetworkUser implements Runnable {
     private ObjectOutputStream objectOutputStream;
 
     private final String address;
+    private final Session userSession;
 
     public NetworkUser(Socket clientSocket, MessageHandler messageHandler) {
         this.clientSocket = clientSocket;
@@ -25,6 +26,7 @@ public class NetworkUser implements Runnable {
 
         this.address = clientSocket.getInetAddress().getHostAddress();
         this.logger = Logger.getLogger(String.format("Client (%s)", this.address));
+        userSession = new Session();
     }
 
     /**
@@ -59,7 +61,7 @@ public class NetworkUser implements Runnable {
         try {
 
             Message data = (Message) objectInputStream.readObject();
-            Response response = messageHandler.handleMessage(data);
+            Response response = messageHandler.handleMessage(data, userSession);
             write(response);
         } catch (IOException ioException) {
             logger.severe(() -> String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));

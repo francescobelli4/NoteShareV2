@@ -26,6 +26,18 @@ public class TokenManager {
         }
     }
 
+    /**
+     * This function should erase the saved token
+     */
+    public static void deleteToken() {
+
+        try (FileWriter fileWriter = new FileWriter(Utils.getOSLocalPath() + TOKEN_FILE_NAME)) {
+            fileWriter.write("");
+        } catch (IOException _) {
+            LOGGER.severe("Failed writing access token to file");
+        }
+    }
+
     public static String getToken() throws IOException {
         if (Utils.findFile(Utils.getOSLocalPath() + TOKEN_FILE_NAME) == null) return null;
 

@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public enum Role {
-    STUDENT(EnumSet.of(Permission.BUY_NOTES, Permission.SELL_NOTES, Permission.BROWSE_LISTINGS, Permission.JOIN_CLASSES,
+    STUDENT(EnumSet.of(Permission.USE_COINS, Permission.BUY_NOTES, Permission.SELL_NOTES, Permission.BROWSE_LISTINGS, Permission.JOIN_CLASSES,
             Permission.UPLOAD_NOTES, Permission.REPORT_NOTES)),
     TEACHER(EnumSet.of(Permission.CREATE_CLASSES, Permission.UPLOAD_NOTES_IN_CLASSES)),
     MODERATOR(EnumSet.of(Permission.VIEW_REPORTED_NOTES, Permission.VIEW_ALL_NOTES, Permission.DELETE_NOTES));

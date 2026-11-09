@@ -111,6 +111,7 @@ public class ConnectionManager {
     public static CompletableFuture<Response> sendAsync(Request request) {
 
         CompletableFuture<Response> future = new CompletableFuture<>();
+        future.whenComplete((_, _) -> pendingRequests.remove(request.requestId()));
 
         executorService.submit(() -> {
 

@@ -14,6 +14,7 @@ public class AuthRules {
     }
 
     public static Optional<UsernameError> isUsernameValid(String username) {
+        if (username == null) return Optional.of(UsernameError.NULL_OR_EMPTY);
 
         int length = username.length();
 
@@ -28,6 +29,8 @@ public class AuthRules {
     }
 
     public static Optional<PasswordError> isPasswordValid(String password) {
+
+        if (password == null) return Optional.of(PasswordError.NULL_OR_EMPTY);
 
         int length = password.length();
 

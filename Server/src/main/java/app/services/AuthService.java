@@ -1,9 +1,14 @@
 package app.services;
 
 import app.daos.user.UserDAO;
+import app.daos.wallet.WalletDAO;
 import app.entities.UserEntity;
+import app.entities.WalletEntity;
 import app.exceptions.AuthServiceException;
+import app.exceptions.ProfileServiceException;
+import app.network.Session;
 import dtos.*;
+import permissions.Permission;
 import permissions.Role;
 import utils.*;
 
@@ -12,9 +17,11 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserDAO userDAO;
+    private final WalletDAO walletDAO;
 
-    public AuthService(UserDAO userDAO) {
+    public AuthService(UserDAO userDAO, WalletDAO walletDAO) {
         this.userDAO = userDAO;
+        this.walletDAO = walletDAO;
     }
 
     /**
@@ -27,7 +34,7 @@ public class AuthService {
      *         manage it by creating a ErrorResponseDTO that will be sent to the client.
      * @throws AuthServiceException an exception that specifies the failure cause.
      */
-    public Response performRegister(RegisterRequestDTO registerRequestDTO) throws AuthServiceException {
+    public Response performRegister(RegisterRequestDTO registerRequestDTO, Session userSession) throws AuthServiceException {
 
         Optional<UsernameError> usernameError = AuthRules.isUsernameValid(registerRequestDTO.username());
         if (usernameError.isPresent()) {
@@ -56,6 +63,13 @@ public class AuthService {
             throw new AuthServiceException(AuthServiceError.USERNAME_TAKEN);
         }
 
+        if (entity.role().hasPermission(Permission.USE_COINS)) {
+
+            WalletEntity walletEntity = new WalletEntity(entity.username(), 100);
+            if (!walletDAO.saveWallet(walletEntity)) throw new ProfileServiceException(WalletServiceError.WALLET_ALREADY_EXISTS);
+        }
+
+        userSession.logIn(registerRequestDTO.username(), registerRequestDTO.role());
         return new RegisterResponseDTO(registerRequestDTO.requestId(), registerRequestDTO.username(), registerRequestDTO.role(), token);
     }
 
@@ -67,7 +81,7 @@ public class AuthService {
      * @return a response that has to be sent to the user
      * @throws AuthServiceException an exception that specifies the failure cause.
      */
-    public Response performLogin(LoginRequestDTO loginRequestDTO) throws AuthServiceException {
+    public Response performLogin(LoginRequestDTO loginRequestDTO, Session userSession) throws AuthServiceException {
 
         UserEntity foundUser = userDAO.findUserByUsername(loginRequestDTO.username());
 
@@ -83,6 +97,8 @@ public class AuthService {
         String token = java.util.UUID.randomUUID().toString();
         foundUser = userDAO.updateUserToken(foundUser, token);
 
+        userSession.logIn(loginRequestDTO.username(), foundUser.role());
+
         return new LoginResponseDTO(loginRequestDTO.requestId(), loginRequestDTO.username(), foundUser.role(), token);
     }
 
@@ -91,16 +107,16 @@ public class AuthService {
      * @param loginUsingTokenRequestDTO the user data
      * @return a response that has to be sent to the user
      */
-    public Response performLoginUsingToken(LoginUsingTokenRequestDTO loginUsingTokenRequestDTO) {
+    public Response performLoginUsingToken(LoginUsingTokenRequestDTO loginUsingTokenRequestDTO, Session userSession) throws AuthServiceException {
 
         UserEntity foundUser = userDAO.findUserByToken(loginUsingTokenRequestDTO.token());
 
-        if (foundUser == null) {
-            return null;
-        }
+        if (foundUser == null) throw new AuthServiceException(AuthServiceError.USER_NOT_FOUND);
 
         String token = java.util.UUID.randomUUID().toString();
         foundUser = userDAO.updateUserToken(foundUser, token);
+
+        userSession.logIn(foundUser.username(), foundUser.role());
 
         return new LoginUsingTokenResponseDTO(loginUsingTokenRequestDTO.requestId(), foundUser.username(), foundUser.role(), token);
     }
