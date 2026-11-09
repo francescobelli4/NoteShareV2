@@ -26,6 +26,8 @@ public class WalletService {
      */
     public Response getWalletBalance(GetWalletBalanceRequestDTO getWalletBalanceRequestDTO, Session userSession) throws ProfileServiceException {
 
+        if (!userSession.isLoggedIn()) throw new ProfileServiceException(WalletServiceError.NOT_LOGGED_IN);
+
         int balance = walletDAO.getWalletBalanceByUsername(userSession.getUsername());
 
         if (balance == -1) {

@@ -63,14 +63,13 @@ public class AuthService {
             throw new AuthServiceException(AuthServiceError.USERNAME_TAKEN);
         }
 
-        userSession.logIn(registerRequestDTO.username(), registerRequestDTO.role());
+        if (entity.role().hasPermission(Permission.USE_COINS)) {
 
-        if (userSession.hasPermission(Permission.USE_COINS)) {
-
-            WalletEntity walletEntity = new WalletEntity(userSession.getUsername(), 100);
+            WalletEntity walletEntity = new WalletEntity(entity.username(), 100);
             if (!walletDAO.saveWallet(walletEntity)) throw new ProfileServiceException(WalletServiceError.WALLET_ALREADY_EXISTS);
         }
 
+        userSession.logIn(registerRequestDTO.username(), registerRequestDTO.role());
         return new RegisterResponseDTO(registerRequestDTO.requestId(), registerRequestDTO.username(), registerRequestDTO.role(), token);
     }
 
