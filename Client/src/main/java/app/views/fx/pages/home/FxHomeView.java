@@ -65,7 +65,7 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     public void onLoggedIn() {
 
         updateUI(() -> {
-            if (userBoxView != null) userBoxView.close();
+            if (userBoxView != null) removeChild(userBoxView);
 
             userBoxView = userBoxViewSupplier.get();
             addChild(userBoxView);

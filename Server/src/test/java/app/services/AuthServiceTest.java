@@ -251,6 +251,6 @@ class AuthServiceTest {
 
         when(userDAO.findUserByToken("token")).thenReturn(null);
 
-        assertNull(authService.performLoginUsingToken(request, userSession));
+        assertThrows(AuthServiceException.class, () -> authService.performLoginUsingToken(request, userSession));
     }
 }
