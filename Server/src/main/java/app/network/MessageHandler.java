@@ -50,7 +50,11 @@ public class MessageHandler {
                 }
             }
             case LoginUsingTokenRequestDTO loginUsingTokenReq -> {
-                return services.authService().performLoginUsingToken(loginUsingTokenReq, userSession);
+                try {
+                    return services.authService().performLoginUsingToken(loginUsingTokenReq, userSession);
+                } catch (AuthServiceException e) {
+                    return new ErrorResponseDTO(loginUsingTokenReq.requestId(), e.getAuthError());
+                }
             }
             case GetWalletBalanceRequestDTO getWalletBalanceRequestDTO -> {
                 try {

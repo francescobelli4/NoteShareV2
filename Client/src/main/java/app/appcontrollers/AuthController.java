@@ -10,6 +10,7 @@ import app.utils.TokenManager;
 import dtos.*;
 import utils.AuthError;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -102,9 +103,12 @@ public class AuthController {
         );
 
         ConnectionManager.sendAsync(request).orTimeout(10, TimeUnit.SECONDS).thenAccept(resp -> {
-            LoginUsingTokenResponseDTO success = (LoginUsingTokenResponseDTO) resp;
-            TokenManager.saveToken(success.token());
-            userModel.logIn(success.username(), success.role());
+            if (Objects.requireNonNull(resp) instanceof LoginUsingTokenResponseDTO success) {
+                TokenManager.saveToken(success.token());
+                userModel.logIn(success.username(), success.role());
+            } else {
+                TokenManager.deleteToken();
+            }
         });
     }
 }

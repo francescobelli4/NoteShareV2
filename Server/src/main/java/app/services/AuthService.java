@@ -107,13 +107,11 @@ public class AuthService {
      * @param loginUsingTokenRequestDTO the user data
      * @return a response that has to be sent to the user
      */
-    public Response performLoginUsingToken(LoginUsingTokenRequestDTO loginUsingTokenRequestDTO, Session userSession) {
+    public Response performLoginUsingToken(LoginUsingTokenRequestDTO loginUsingTokenRequestDTO, Session userSession) throws AuthServiceException {
 
         UserEntity foundUser = userDAO.findUserByToken(loginUsingTokenRequestDTO.token());
 
-        if (foundUser == null) {
-            return null;
-        }
+        if (foundUser == null) throw new AuthServiceException(AuthServiceError.USER_NOT_FOUND);
 
         String token = java.util.UUID.randomUUID().toString();
         foundUser = userDAO.updateUserToken(foundUser, token);

@@ -17,6 +17,7 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     private final UserModel userModel;
 
     private final Supplier<FxUserBoxView> userBoxViewSupplier;
+    private FxUserBoxView userBoxView;
 
     @FXML
     private Button loginButton;
@@ -64,7 +65,9 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     public void onLoggedIn() {
 
         updateUI(() -> {
-            FxUserBoxView userBoxView = userBoxViewSupplier.get();
+            if (userBoxView != null) userBoxView.close();
+
+            userBoxView = userBoxViewSupplier.get();
             addChild(userBoxView);
             userBoxContainer.getChildren().setAll(userBoxView.getRoot());
             update();
