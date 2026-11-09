@@ -5,10 +5,8 @@ import app.models.usermodel.UserModelListener;
 import app.models.walletmodel.WalletModel;
 import app.models.walletmodel.WalletModelListener;
 import app.views.fx.FxView;
-import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.home.FxUserBoxController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import permissions.Permission;
 

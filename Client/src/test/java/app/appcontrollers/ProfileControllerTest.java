@@ -1,17 +1,14 @@
 package app.appcontrollers;
 
-import app.exceptions.AuthException;
 import app.exceptions.ProfileException;
 import app.models.walletmodel.WalletModel;
 import app.network.ConnectionManager;
 import dtos.ErrorResponseDTO;
 import dtos.GetWalletBalanceRequestDTO;
 import dtos.GetWalletBalanceResponseDTO;
-import dtos.LoginRequestDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import permissions.Role;
 import utils.WalletServiceError;
 
 import java.util.concurrent.CompletableFuture;

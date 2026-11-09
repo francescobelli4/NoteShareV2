@@ -1,6 +1,5 @@
 package app.exceptions;
 
-import utils.AuthError;
 import utils.ProfileError;
 
 /**
