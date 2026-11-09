@@ -2,7 +2,6 @@ package app.network;
 
 import dtos.LoginRequestDTO;
 import org.junit.jupiter.api.Test;
-import permissions.Role;
 
 
 import java.io.IOException;

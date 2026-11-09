@@ -6,7 +6,7 @@ import app.network.Session;
 import dtos.GetWalletBalanceRequestDTO;
 import dtos.GetWalletBalanceResponseDTO;
 import dtos.Response;
-import utils.WalletError;
+import utils.WalletServiceError;
 
 public class WalletService {
 
@@ -29,7 +29,7 @@ public class WalletService {
         int balance = walletDAO.getWalletBalanceByUsername(userSession.getUsername());
 
         if (balance == -1) {
-            throw new ProfileServiceException(WalletError.COULD_NOT_GET_BALANCE);
+            throw new ProfileServiceException(WalletServiceError.COULD_NOT_GET_BALANCE);
         }
 
         return new GetWalletBalanceResponseDTO(getWalletBalanceRequestDTO.requestId(), balance);

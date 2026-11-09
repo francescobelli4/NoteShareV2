@@ -68,7 +68,7 @@ public class AuthService {
         if (userSession.hasPermission(Permission.USE_COINS)) {
 
             WalletEntity walletEntity = new WalletEntity(userSession.getUsername(), 100);
-            if (!walletDAO.saveWallet(walletEntity)) throw new ProfileServiceException(WalletError.WALLET_ALREADY_EXISTS);
+            if (!walletDAO.saveWallet(walletEntity)) throw new ProfileServiceException(WalletServiceError.WALLET_ALREADY_EXISTS);
         }
 
         return new RegisterResponseDTO(registerRequestDTO.requestId(), registerRequestDTO.username(), registerRequestDTO.role(), token);
