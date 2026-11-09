@@ -3,6 +3,7 @@ package app.services;
 import app.daos.user.UserDAO;
 import app.daos.wallet.WalletDAO;
 import app.entities.UserEntity;
+import app.entities.WalletEntity;
 import app.exceptions.AuthServiceException;
 import app.network.Session;
 import dtos.*;
@@ -35,6 +36,7 @@ class AuthServiceTest {
         AuthService authService = new AuthService(userDAO, walletDAO);
 
         when(userDAO.saveUser(any(UserEntity.class))).thenReturn(true);
+        when(walletDAO.saveWallet(any(WalletEntity.class))).thenReturn(true);
 
         UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000001");
 

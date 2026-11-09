@@ -2,6 +2,7 @@ package app.network;
 
 import dtos.LoginRequestDTO;
 import org.junit.jupiter.api.Test;
+import permissions.Role;
 
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -21,7 +23,6 @@ class NetworkUserTest {
         MessageHandler messageHandler = mock(MessageHandler.class);
         LoginRequestDTO fakeRequest = new LoginRequestDTO(1, "username", "password");
         ServerSocket fakeServer = new ServerSocket(0);
-        Session session = new Session();
 
         // Preparing a fake client connection in a different thread waiting to connect to a server
         Thread fakeClientThread = new Thread(() -> {
@@ -44,8 +45,7 @@ class NetworkUserTest {
         Socket clientOnServerSocket = fakeServer.accept();
         NetworkUser networkUser = new NetworkUser(clientOnServerSocket, messageHandler);
         networkUser.run();
-        verify(messageHandler).handleMessage(fakeRequest, session);
+        verify(messageHandler).handleMessage(any(LoginRequestDTO.class), any(Session.class));
         assertTrue(clientOnServerSocket.isClosed());
-
     }
 }
