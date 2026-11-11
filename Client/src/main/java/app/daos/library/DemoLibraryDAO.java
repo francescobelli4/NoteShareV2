@@ -12,6 +12,11 @@ public class DemoLibraryDAO implements LibraryDAO {
      */
     @Override
     public FolderEntity loadFullLibrary(String username) {
-        return new FolderEntity(null, username);
+        return new FolderEntity(username);
+    }
+
+    @Override
+    public FolderEntity createFolder(String name) {
+        return new FolderEntity(name);
     }
 }

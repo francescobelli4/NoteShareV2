@@ -14,4 +14,8 @@ public class FxFolderExplorerController implements GraphicController {
     public void loadLibrary() {
         libraryController.loadLibrary();
     }
+
+    public void createFolder() {
+        libraryController.createFolder("testName");
+    }
 }

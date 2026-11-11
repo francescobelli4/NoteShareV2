@@ -1,6 +1,7 @@
 package app.appcontrollers;
 
 import app.daos.library.LibraryDAO;
+import app.entities.FolderEntity;
 import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
 
@@ -17,6 +18,11 @@ public class LibraryController {
     }
 
     public void loadLibrary() {
-        libraryModel.setRootFolder(libraryDAO.loadFullLibrary(userModel.getUsername()));
+        libraryModel.setRootFolder(libraryDAO.loadFullLibrary(userModel.isLoggedIn() ? userModel.getUsername() : "ns"));
+    }
+
+    public void createFolder(String name) {
+        FolderEntity folder = libraryDAO.createFolder(name);
+        libraryModel.addFolderToActive(folder);
     }
 }
