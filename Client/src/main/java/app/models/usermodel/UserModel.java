@@ -27,7 +27,7 @@ import permissions.Role;
 public class UserModel {
 
     private final ListenerHelper<UserModelListener> listeners = new ListenerHelper<>();
-    private String username;
+    private String username = "guest";
     private Role role;
     private boolean loggedIn = false;
 

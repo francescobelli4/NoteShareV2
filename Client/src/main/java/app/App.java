@@ -3,10 +3,15 @@ package app;
 
 import app.appcontrollers.AppControllers;
 import app.appcontrollers.AuthController;
+import app.appcontrollers.LibraryController;
 import app.appcontrollers.ProfileController;
 import app.config.AppConfig;
 import app.config.GuiType;
+import app.config.Mode;
+import app.daos.library.DemoLibraryDAO;
+import app.daos.library.LibraryDAO;
 import app.models.Models;
+import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
 import app.models.walletmodel.WalletModel;
 import app.network.ConnectionManager;
@@ -51,8 +56,10 @@ public class App {
             System.exit(1);
         }
 
-        Models models = new Models(new UserModel(), new WalletModel());
-        AppControllers appControllers = new AppControllers(new AuthController(models.userModel()), new ProfileController(models.walletModel()));
+        LibraryDAO libraryDAO = APPCONFIG.mode() == Mode.DEMO ? new DemoLibraryDAO() : null;
+
+        Models models = new Models(new UserModel(), new WalletModel(), new LibraryModel());
+        AppControllers appControllers = new AppControllers(new AuthController(models.userModel()), new ProfileController(models.walletModel()), new LibraryController(models.userModel(), models.libraryModel(), libraryDAO));
 
         if (APPCONFIG.guiType() == GuiType.FX) {
             FxLauncher.launchApp(models, appControllers);
