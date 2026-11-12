@@ -1,23 +1,25 @@
-<?import java.net.URL?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<HBox styleClass="user-box" alignment="CENTER" spacing="8" maxWidth="Infinity" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.VBox?>
+
+<?import java.net.URL?>
+<HBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="notification" alignment="CENTER_LEFT" spacing="12"
+      prefWidth="420" maxWidth="420" maxHeight="-Infinity">
+
     <stylesheets>
-        <URL value="@../styles/home.css"/>
+        <URL value="@../styles/notification.css"/>
     </stylesheets>
-    <ImageView fx:id="avatarImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../styles/icons/user.png"/>
+
+    <ImageView fx:id="image" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../styles/icons/app_icon.png"/>
     </ImageView>
 
-    <Label fx:id="usernameLabel" text="Username" styleClass="subtitle"/>
-
-    <Label fx:id="coinsLabel" text="0" styleClass="coins-label" visible="false" managed="false">
-        <graphic>
-            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../styles/icons/coin.png"/>
-            </ImageView>
-        </graphic>
-    </Label>
+    <VBox spacing="4" HBox.hgrow="ALWAYS">
+        <Label fx:id="titleLabel" text="Title" styleClass="subtitle"/>
+        <Label fx:id="descriptionLabel" text="Description" styleClass="text-muted" wrapText="true"/>
+    </VBox>
 </HBox>
