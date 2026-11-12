@@ -23,7 +23,7 @@ public class AuthRules {
         if (length < USERNAME_MIN) return Optional.of(UsernameError.TOO_SHORT);
         if (length > USERNAME_MAX) return Optional.of(UsernameError.TOO_LONG);
 
-        if (!isAlphanumeric(username)) return Optional.of(UsernameError.NOT_ALPHANUMERIC);
+        if (!Utils.isAlphanumeric(username)) return Optional.of(UsernameError.NOT_ALPHANUMERIC);
 
         return Optional.empty();
     }
@@ -39,20 +39,9 @@ public class AuthRules {
         if (length < PASSWORD_MIN) return Optional.of(PasswordError.TOO_SHORT);
         if (length > PASSWORD_MAX) return Optional.of(PasswordError.TOO_LONG);
 
-        if (!isAlphanumeric(password)) return Optional.of(PasswordError.NOT_ALPHANUMERIC);
+        if (!Utils.isAlphanumeric(password)) return Optional.of(PasswordError.NOT_ALPHANUMERIC);
 
         return Optional.empty();
     }
 
-    private static boolean isAlphanumeric(String str) {
-
-        for (int i = 0; i < str.length(); i++) {
-
-            char c = str.charAt(i);
-
-            if (!Character.isLetterOrDigit(c)) return false;
-        }
-
-        return true;
-    }
 }

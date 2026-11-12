@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox maxHeight="Infinity" maxWidth="Infinity" spacing="16" styleClass="explorer-root" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
 
-</AnchorPane>
+    <stylesheets>
+        <URL value="@../styles/explorer.css" />
+    </stylesheets>
+
+    <padding>
+        <Insets bottom="32" left="40" right="40" top="32" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="8">
+        <Button fx:id="backButton" disable="true" styleClass="icon-button">
+            <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../styles/icons/left-arrow.png" />
+                </ImageView>
+            </graphic>
+        </Button>
+        <Label fx:id="pathLabel" styleClass="text-muted" text="/">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+        <Region HBox.hgrow="ALWAYS" />
+      <Button fx:id="newFolderButton" styleClass="icon-button">
+         <graphic>
+             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                 <Image url="@../styles/icons/folder_plus.png"/>
+             </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="newNoteButton" styleClass="icon-button">
+         <graphic>
+             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                 <Image url="@../styles/icons/file_plus.png"/>
+             </ImageView>
+         </graphic>
+      </Button>
+    </HBox>
+
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <ScrollPane fitToWidth="true" styleClass="explorer-scroll">
+            <FlowPane fx:id="itemsPane" hgap="16" styleClass="explorer-items" vgap="16">
+                <padding>
+                    <Insets bottom="8" left="8" right="8" top="8" />
+                </padding>
+            </FlowPane>
+        </ScrollPane>
+
+        <Label fx:id="emptyLabel" managed="false" styleClass="text-muted" text="This folder is empty" visible="false" />
+    </StackPane>
+</VBox>

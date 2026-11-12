@@ -1,7 +1,12 @@
 package app.views.fx.graphiccontrollers.home;
 
 import app.appcontrollers.LibraryController;
+import app.exceptions.LibraryException;
 import app.views.GraphicController;
+import utils.LibraryError;
+import utils.LibraryRules;
+
+import java.util.Optional;
 
 public class FxFolderExplorerController implements GraphicController {
 
@@ -15,7 +20,15 @@ public class FxFolderExplorerController implements GraphicController {
         libraryController.loadLibrary();
     }
 
-    public void createFolder() {
-        libraryController.createFolder("testName");
+    public void onNewFolderButtonPressed() throws LibraryException {
+        String testName = "testName";
+
+        Optional<LibraryError> nameError = LibraryRules.isNameValid(testName);
+
+        if (nameError.isPresent()) {
+            throw new LibraryException(nameError.get());
+        }
+
+        libraryController.createFolderInActive(testName);
     }
 }

@@ -5,8 +5,23 @@ import app.models.librarymodel.LibraryModel;
 import app.models.librarymodel.LibraryModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxFolderExplorerController;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
 
 public class FxFolderExplorerView extends FxView<FxFolderExplorerController> implements LibraryModelListener {
+
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button newFolderButton;
+    @FXML
+    private Button newNoteButton;
+    @FXML
+    private Label pathLabel;
+    @FXML
+    private Label emptyLabel;
 
     private final LibraryModel libraryModel;
 
@@ -24,6 +39,15 @@ public class FxFolderExplorerView extends FxView<FxFolderExplorerController> imp
     protected void onLoaded() {
         subscribe(libraryModel.addListener(this));
         controller.loadLibrary();
+
+        newFolderButton.setOnAction(_ -> {
+            // No possibility to choose the name for now... :D
+            controller.onNewFolderButtonPressed();
+        });
+    }
+
+    private void updatePathLabel() {
+        pathLabel.setText(libraryModel.getActiveFolder().getPath());
     }
 
 
@@ -34,6 +58,6 @@ public class FxFolderExplorerView extends FxView<FxFolderExplorerController> imp
 
     @Override
     public void activeFolderUpdated(FolderEntity folderEntity) {
-
+        updateUI(this::updatePathLabel);
     }
 }

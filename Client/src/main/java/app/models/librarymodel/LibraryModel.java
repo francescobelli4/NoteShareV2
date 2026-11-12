@@ -29,4 +29,8 @@ public class LibraryModel {
         activeFolder.addSubFolder(folderEntity);
         listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
     }
+
+    public FolderEntity getActiveFolder() {
+        return activeFolder;
+    }
 }

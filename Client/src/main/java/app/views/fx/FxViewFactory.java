@@ -5,11 +5,13 @@ import app.models.Models;
 import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthRegisterViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthViewController;
+import app.views.fx.graphiccontrollers.home.FxFolderExplorerController;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.home.FxUserBoxController;
 import app.views.fx.pages.auth.FxAuthLoginView;
 import app.views.fx.pages.auth.FxAuthRegisterView;
 import app.views.fx.pages.auth.FxAuthView;
+import app.views.fx.pages.home.FxFolderExplorerView;
 import app.views.fx.pages.home.FxHomeView;
 import app.views.fx.pages.home.FxUserBoxView;
 
@@ -30,7 +32,7 @@ public class FxViewFactory {
 
     public FxHomeView createFxHomeView() {
         FxHomeViewController graphicController = new FxHomeViewController(navigator, this, appControllers.authController());
-        return new FxHomeView(graphicController, models.userModel(), this::createFxUserBoxView);
+        return new FxHomeView(graphicController, models.userModel(), this::createFxUserBoxView, this::createFxFolderExplorerView);
     }
 
     public FxUserBoxView createFxUserBoxView() {
@@ -51,5 +53,10 @@ public class FxViewFactory {
     public FxAuthRegisterView createFxAuthRegisterView() {
         FxAuthRegisterViewController graphicController = new FxAuthRegisterViewController(appControllers.authController());
         return new FxAuthRegisterView(graphicController);
+    }
+
+    public FxFolderExplorerView createFxFolderExplorerView() {
+        FxFolderExplorerController graphicsController = new FxFolderExplorerController(appControllers.libraryController());
+        return new FxFolderExplorerView(graphicsController, models.libraryModel());
     }
 }

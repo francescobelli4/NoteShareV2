@@ -1,58 +1,32 @@
 package utils;
 
+import java.util.List;
 import java.util.Optional;
 
-public class AuthRules {
+public class LibraryRules {
+    public static final int NAME_MAX = 20;
 
-    public static final int USERNAME_MIN = 4;
-    public static final int USERNAME_MAX = 10;
-    public static final int PASSWORD_MIN = 8;
-    public static final int PASSWORD_MAX = 20;
-
-    private AuthRules() {
+    private LibraryRules() {
         // Nothing to do :D
     }
 
-    public static Optional<UsernameError> isUsernameValid(String username) {
-        if (username == null) return Optional.of(UsernameError.NULL_OR_EMPTY);
+    public static Optional<LibraryError> isNameValid(String name) {
+        if (name == null) return Optional.of(LibraryError.NAME_EMPTY);
 
-        int length = username.length();
+        int length = name.length();
 
-        if (length == 0) return Optional.of(UsernameError.NULL_OR_EMPTY);
+        if (length == 0) return Optional.of(LibraryError.NAME_EMPTY);
 
-        if (length < USERNAME_MIN) return Optional.of(UsernameError.TOO_SHORT);
-        if (length > USERNAME_MAX) return Optional.of(UsernameError.TOO_LONG);
+        if (length > NAME_MAX) return Optional.of(LibraryError.NAME_TOO_LONG);
 
-        if (!isAlphanumeric(username)) return Optional.of(UsernameError.NOT_ALPHANUMERIC);
-
-        return Optional.empty();
-    }
-
-    public static Optional<PasswordError> isPasswordValid(String password) {
-
-        if (password == null) return Optional.of(PasswordError.NULL_OR_EMPTY);
-
-        int length = password.length();
-
-        if (length == 0) return Optional.of(PasswordError.NULL_OR_EMPTY);
-
-        if (length < PASSWORD_MIN) return Optional.of(PasswordError.TOO_SHORT);
-        if (length > PASSWORD_MAX) return Optional.of(PasswordError.TOO_LONG);
-
-        if (!isAlphanumeric(password)) return Optional.of(PasswordError.NOT_ALPHANUMERIC);
+        if (!Utils.isAlphanumeric(name)) return Optional.of(LibraryError.NAME_NOT_VALID);
 
         return Optional.empty();
     }
 
-    private static boolean isAlphanumeric(String str) {
+    public static Optional<LibraryError> isDuplicate(String name, List<String> siblings) {
 
-        for (int i = 0; i < str.length(); i++) {
-
-            char c = str.charAt(i);
-
-            if (!Character.isLetterOrDigit(c)) return false;
-        }
-
-        return true;
+        if (siblings.contains(name)) return Optional.of(LibraryError.FOLDER_ALREADY_EXISTS);
+        return Optional.empty();
     }
 }

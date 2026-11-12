@@ -16,7 +16,7 @@ public class DemoLibraryDAO implements LibraryDAO {
     }
 
     @Override
-    public FolderEntity createFolder(String name) {
+    public FolderEntity createFolder(String name, FolderEntity parentFolder) {
         return new FolderEntity(name);
     }
 }

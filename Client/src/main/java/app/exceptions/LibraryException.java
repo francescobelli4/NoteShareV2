@@ -1,7 +1,16 @@
 package app.exceptions;
 
+import utils.LibraryError;
+
 public class LibraryException extends RuntimeException {
-  public LibraryException(String message) {
-    super(message);
-  }
+
+    private final transient LibraryError libraryError;
+    public LibraryException(LibraryError libraryError) {
+        super(libraryError.toString());
+        this.libraryError = libraryError;
+    }
+
+    public LibraryError getLibraryError() {
+        return libraryError;
+    }
 }

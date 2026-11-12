@@ -4,5 +4,5 @@ import app.entities.FolderEntity;
 
 public interface LibraryDAO {
     FolderEntity loadFullLibrary(String username);
-    FolderEntity createFolder(String name);
+    FolderEntity createFolder(String name, FolderEntity parentFolder);
 }
