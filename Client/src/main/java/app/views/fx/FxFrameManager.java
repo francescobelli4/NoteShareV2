@@ -47,12 +47,12 @@ public class FxFrameManager {
         overlayContainer.getChildren().clear();
     }
 
-    public void addNotification(Node card) {
-        notificationContainer.getChildren().add(card);
+    public void showNotification(Node card) {
+        notificationContainer.getChildren().setAll(card);
     }
 
-    public void removeNotification(Node card) {
-        notificationContainer.getChildren().remove(card);
+    public void removeNotification() {
+        notificationContainer.getChildren().clear();
     }
 
     public Parent getFrame() {
