@@ -1,0 +1,10 @@
+.notification {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 16;
+    -fx-padding: 14 18 14 18;
+    -fx-effect: dropshadow(gaussian, -color-shadow, 20, 0.0, 0, 6);
+}
+
+.notification .subtitle {
+    -fx-font-size: 1em;
+}

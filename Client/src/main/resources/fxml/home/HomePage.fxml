@@ -52,10 +52,10 @@
                             <Image url="@../styles/icons/user.png" />
                         </image>
                     </ImageView>
-                    <Button maxWidth="Infinity" fx:id="loginButton" styleClass="button-primary" text="Login" />
+                    <Button fx:id="loginButton" maxWidth="Infinity" styleClass="button-primary" text="Login" />
                 </VBox>
 
-                <StackPane fx:id="userBoxContainer" visible="false" managed="false">
+                <StackPane fx:id="userBoxContainer" managed="false" visible="false">
                     <padding>
                         <Insets bottom="24.0" left="16.0" right="16.0" top="24.0" />
                     </padding>
@@ -70,10 +70,19 @@
 
     <!-- Main -->
     <StackPane styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <Label styleClass="page-title" text="Your Notes" StackPane.alignment="TOP_LEFT">
-            <padding>
-                <Insets left="40" top="32" />
-            </padding>
-        </Label>
+      <VBox StackPane.alignment="TOP_LEFT">
+         <children>
+              <Label styleClass="page-title" text="Your Notes">
+                  <padding>
+                      <Insets left="40" top="32" />
+                  </padding>
+              </Label>
+            <StackPane fx:id="explorerContainer">
+               <padding>
+                  <Insets bottom="24.0" left="16.0" right="16.0" top="24.0" />
+               </padding>
+            </StackPane>
+         </children>
+      </VBox>
     </StackPane>
 </GridPane>

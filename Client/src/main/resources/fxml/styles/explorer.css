@@ -1,0 +1,42 @@
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12;
+    -fx-padding: 0.4em;
+    -fx-cursor: hand;
+}
+
+.icon-button:hover {
+    -fx-background-color: -color-hover;
+}
+
+.icon-button:pressed {
+    -fx-background-color: -color-pressed;
+}
+
+.explorer-scroll,
+.explorer-scroll > .viewport,
+.explorer-items {
+    -fx-background-color: transparent;
+}
+
+.explorer-scroll {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.explorer-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12;
+    -fx-padding: 0.6em;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-pref-width: 110;
+}
+
+.explorer-item:hover {
+    -fx-background-color: -color-hover;
+}
+
+.explorer-item-selected {
+    -fx-background-color: -color-selected;
+}

@@ -19,16 +19,22 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     private final Supplier<FxUserBoxView> userBoxViewSupplier;
     private FxUserBoxView userBoxView;
 
+    private final Supplier<FxFolderExplorerView> folderExplorerViewSupplier;
+    private FxFolderExplorerView folderExplorerView;
+
     @FXML
     private Button loginButton;
     @FXML
     private VBox guestBox;
     @FXML
     private StackPane userBoxContainer;
+    @FXML
+    private StackPane explorerContainer;
 
-    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier) {
+    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier, Supplier<FxFolderExplorerView> folderExplorerViewSupplier) {
         this.userModel = userModel;
         this.userBoxViewSupplier = userBoxViewSupplier;
+        this.folderExplorerViewSupplier = folderExplorerViewSupplier;
         super(controller);
     }
 
@@ -43,7 +49,16 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
         loginButton.setOnAction(_ -> controller.onLoginButtonClicked());
         controller.tryLoginUsingToken();
 
-        updateUI(this::update);
+        updateUI(() -> {
+
+            if (folderExplorerView != null) removeChild(folderExplorerView);
+
+            folderExplorerView = folderExplorerViewSupplier.get();
+            addChild(folderExplorerView);
+            explorerContainer.getChildren().setAll(folderExplorerView.getRoot());
+
+            update();
+        });
     }
 
     @Override

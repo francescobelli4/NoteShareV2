@@ -1,7 +1,10 @@
 package app.views.fx;
 
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
  * This class should manage how the main frame gets populated. The main frame is made of a pageContainer and an
@@ -15,10 +18,14 @@ public class FxFrameManager {
     private FxView<?> currentOverlay;
     private final StackPane pageContainer = new StackPane();
     private final StackPane overlayContainer = new StackPane();
-    private final StackPane mainFrame = new StackPane(pageContainer, overlayContainer);
+    private final VBox notificationContainer = new VBox();
+    private final StackPane mainFrame = new StackPane(pageContainer, overlayContainer, notificationContainer);
 
     public FxFrameManager() {
         overlayContainer.setPickOnBounds(false);
+        notificationContainer.setPickOnBounds(false);
+        notificationContainer.setAlignment(Pos.TOP_CENTER);
+        notificationContainer.setFillWidth(false);
     }
 
     public void show(FxView<?> view) {
@@ -41,6 +48,14 @@ public class FxFrameManager {
         }
 
         overlayContainer.getChildren().clear();
+    }
+
+    public void showNotification(Node card) {
+        notificationContainer.getChildren().setAll(card);
+    }
+
+    public void removeNotification() {
+        notificationContainer.getChildren().clear();
     }
 
     public Parent getFrame() {
