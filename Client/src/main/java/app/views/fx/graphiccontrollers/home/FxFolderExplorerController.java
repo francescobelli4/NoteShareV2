@@ -11,6 +11,8 @@ import app.views.fx.pages.dialog.FxDialogView;
 import utils.LibraryError;
 import utils.LibraryRules;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class FxFolderExplorerController implements GraphicController {
@@ -53,7 +55,7 @@ public class FxFolderExplorerController implements GraphicController {
                 };
 
                 notificationController.showError("Error", String.format(errorStr, name));
-                throw new LibraryException(nameError.get());
+                return;
             }
 
             try {
@@ -61,7 +63,6 @@ public class FxFolderExplorerController implements GraphicController {
                 notificationController.showSuccess("Success", String.format("Folder %s was created.", name));
             } catch (LibraryException e) {
                 notificationController.showError("Error", String.format("The folder %s already exists!", name));
-                throw e;
             }
         });
 

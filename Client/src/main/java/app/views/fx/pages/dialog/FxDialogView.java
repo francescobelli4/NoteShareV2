@@ -70,6 +70,7 @@ public class FxDialogView extends FxView<FxDialogViewController> {
 
     public void populate(DialogSpecs specs, Consumer<Map<String, String>> out) {
         this.out = out;
+        getRoot();
 
         for (DialogField field : specs.getFields()) {
 
@@ -79,7 +80,12 @@ public class FxDialogView extends FxView<FxDialogViewController> {
                     textField.setPromptText(dtf.getPrompt());
                     yield textField;
                 }
-                case DialogComboBoxField dcbf -> new ComboBox<>(FXCollections.observableArrayList(dcbf.getOptions()));
+                case DialogComboBoxField dcbf -> {
+                    ComboBox<?> cb = new ComboBox<>(FXCollections.observableArrayList(dcbf.getOptions()));
+                    cb.setMaxWidth(Double.MAX_VALUE);
+                    cb.setPromptText("Select...");
+                    yield cb;
+                }
                 default -> null;
             };
 
