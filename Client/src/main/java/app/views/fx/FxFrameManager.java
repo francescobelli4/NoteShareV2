@@ -1,5 +1,6 @@
 package app.views.fx;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
@@ -23,6 +24,8 @@ public class FxFrameManager {
     public FxFrameManager() {
         overlayContainer.setPickOnBounds(false);
         notificationContainer.setPickOnBounds(false);
+        notificationContainer.setAlignment(Pos.TOP_CENTER);
+        notificationContainer.setFillWidth(false);
     }
 
     public void show(FxView<?> view) {
