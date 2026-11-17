@@ -30,6 +30,7 @@ public class FxLauncher extends Application {
         FxFrameManager frameManager = new FxFrameManager();
         FxNavigator navigator = new FxNavigator(frameManager);
         FxViewFactory viewFactory = new FxViewFactory(navigator, models, appControllers);
+        new FxNotificationManager(models.notificationModel(), frameManager, viewFactory);
 
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 

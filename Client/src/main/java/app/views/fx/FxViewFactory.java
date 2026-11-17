@@ -5,15 +5,19 @@ import app.models.Models;
 import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthRegisterViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthViewController;
+import app.views.fx.graphiccontrollers.dialog.FxDialogViewController;
 import app.views.fx.graphiccontrollers.home.FxFolderExplorerController;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.home.FxUserBoxController;
+import app.views.fx.graphiccontrollers.notification.FxNotificationController;
 import app.views.fx.pages.auth.FxAuthLoginView;
 import app.views.fx.pages.auth.FxAuthRegisterView;
 import app.views.fx.pages.auth.FxAuthView;
+import app.views.fx.pages.dialog.FxDialogView;
 import app.views.fx.pages.home.FxFolderExplorerView;
 import app.views.fx.pages.home.FxHomeView;
 import app.views.fx.pages.home.FxUserBoxView;
+import app.views.fx.pages.notification.FxNotificationView;
 
 /**
  * This class should be the factory that creates every FX view. In this way, editing a view only affects this class.
@@ -56,7 +60,17 @@ public class FxViewFactory {
     }
 
     public FxFolderExplorerView createFxFolderExplorerView() {
-        FxFolderExplorerController graphicsController = new FxFolderExplorerController(appControllers.libraryController());
+        FxFolderExplorerController graphicsController = new FxFolderExplorerController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
         return new FxFolderExplorerView(graphicsController, models.libraryModel());
+    }
+
+    public FxNotificationView createFxNotificationView() {
+        FxNotificationController graphicsController = new FxNotificationController();
+        return new FxNotificationView(graphicsController);
+    }
+
+    public FxDialogView createFxDialogView() {
+        FxDialogViewController graphicsController = new FxDialogViewController(navigator);
+        return new FxDialogView(graphicsController);
     }
 }
