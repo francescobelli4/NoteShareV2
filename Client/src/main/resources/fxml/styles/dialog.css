@@ -1,0 +1,43 @@
+.dialog-background {
+    -fx-background-color: rgba(0, 0, 0, 0.40);
+}
+
+.dialog-card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 20;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, -color-shadow, 28, 0.0, 0, 10);
+}
+
+.dialog-field-label {
+    -fx-font-size: 0.85em;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text-muted;
+}
+
+.dialog-card .text-field,
+.dialog-card .combo-box {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 12;
+    -fx-font-size: 1em;
+}
+
+.dialog-card .text-field {
+    -fx-padding: 0.7em 0.9em 0.7em 0.9em;
+}
+
+.dialog-card .combo-box {
+    -fx-padding: 0.2em 0.3em 0.2em 0.3em;
+}
+
+.dialog-card .text-field:focused,
+.dialog-card .combo-box:focused {
+    -fx-border-color: -color-primary;
+}
+
+.dialog-error {
+    -fx-text-fill: #d32f2f;
+    -fx-font-size: 0.85em;
+}
