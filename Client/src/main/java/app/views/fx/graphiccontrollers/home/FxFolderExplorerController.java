@@ -26,14 +26,27 @@ public class FxFolderExplorerController implements GraphicController {
     public void onNewFolderButtonPressed() throws LibraryException {
         String testName = "testName";
 
-        notificationController.showError("titoloo", "descrizioneeeeeeeee");
-
         Optional<LibraryError> nameError = LibraryRules.isNameValid(testName);
 
         if (nameError.isPresent()) {
+
+            String errorStr = switch (nameError.get()) {
+                case NAME_EMPTY -> "Name can't be empty!";
+                case NAME_TOO_LONG -> "Name %s is too long";
+                case NAME_NOT_VALID -> "Name %s is not valid";
+                default -> "Unexpected error";
+            };
+
+            notificationController.showError("Error", String.format(errorStr, testName));
             throw new LibraryException(nameError.get());
         }
 
-        libraryController.createFolderInActive(testName);
+        try {
+            libraryController.createFolderInActive(testName);
+            notificationController.showSuccess("Success", String.format("Folder %s was created.", testName));
+        } catch (LibraryException e) {
+            notificationController.showError("Error", String.format("The folder %s already exists!", testName));
+            throw e;
+        }
     }
 }

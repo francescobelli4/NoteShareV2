@@ -4,6 +4,7 @@ import app.models.notificationmodel.NotificationModel;
 import app.models.notificationmodel.NotificationModelListener;
 import app.utils.NotificationType;
 import app.views.fx.pages.notification.FxNotificationView;
+import javafx.application.Platform;
 import javafx.scene.Node;
 
 public class FxNotificationManager implements NotificationModelListener {
@@ -21,11 +22,18 @@ public class FxNotificationManager implements NotificationModelListener {
 
     @Override
     public void onNotification(NotificationType notificationType, String title, String description) {
-        FxNotificationView notificationView = fxViewFactory.createFxNotificationView();
-        Node root = notificationView.getRoot();
+        runOnFx(() -> {
+            FxNotificationView notificationView = fxViewFactory.createFxNotificationView();
+            Node root = notificationView.getRoot();
 
-        notificationView.setContent(notificationType, title, description);
-        fxFrameManager.showNotification(root);
-        notificationView.playAnim(fxFrameManager::removeNotification);
+            notificationView.setContent(notificationType, title, description);
+            fxFrameManager.showNotification(root);
+            notificationView.playAnim(fxFrameManager::removeNotification);
+        });
+    }
+
+    private void runOnFx(Runnable r) {
+        if (Platform.isFxApplicationThread()) r.run();
+        else Platform.runLater(r);
     }
 }

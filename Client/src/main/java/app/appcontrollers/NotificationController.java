@@ -14,4 +14,12 @@ public class NotificationController {
     public void showError(String title, String description) {
         notificationModel.show(NotificationType.ERROR, title, description);
     }
+
+    public void showInfo(String title, String description) {
+        notificationModel.show(NotificationType.INFO, title, description);
+    }
+
+    public void showSuccess(String title, String description) {
+        notificationModel.show(NotificationType.SUCCESS, title, description);
+    }
 }
