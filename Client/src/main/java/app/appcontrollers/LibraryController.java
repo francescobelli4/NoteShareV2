@@ -29,6 +29,14 @@ public class LibraryController {
         libraryModel.setRootFolder(libraryDAO.loadFullLibrary(userModel.isLoggedIn() ? userModel.getUsername() : "ns"));
     }
 
+    public void setActiveFolder(FolderEntity folderEntity) {
+        libraryModel.updateActiveFolder(folderEntity);
+    }
+
+    public void goBackToParentFolder() {
+        libraryModel.updateActiveFolder(libraryModel.getActiveFolder().getParentFolder());
+    }
+
     public void createFolderInActive(String name) throws LibraryException {
         FolderEntity folder = libraryDAO.createFolder(name, libraryModel.getActiveFolder());
 

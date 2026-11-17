@@ -2,6 +2,8 @@ package app.views.fx.graphiccontrollers.home;
 
 import app.appcontrollers.LibraryController;
 import app.appcontrollers.NotificationController;
+import app.entities.FolderEntity;
+import app.entities.NoteEntity;
 import app.exceptions.LibraryException;
 import app.utils.dialogs.DialogSpecs;
 import app.views.GraphicController;
@@ -102,5 +104,17 @@ public class FxFolderExplorerController implements GraphicController {
         });
 
         navigator.showOverlay(dialog);
+    }
+
+    public void onFolderDoubleClicked(FolderEntity folderEntity) {
+        libraryController.setActiveFolder(folderEntity);
+    }
+
+    public void onNoteDoubleClicked(NoteEntity noteEntity) {
+
+    }
+
+    public void onBackButtonClicked() {
+        libraryController.goBackToParentFolder();
     }
 }
