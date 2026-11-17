@@ -40,10 +40,8 @@ public class FxFolderExplorerView extends FxView<FxFolderExplorerController> imp
         subscribe(libraryModel.addListener(this));
         controller.loadLibrary();
 
-        newFolderButton.setOnAction(_ -> {
-            // No possibility to choose the name for now... :D
-            controller.onNewFolderButtonPressed();
-        });
+        newFolderButton.setOnAction(_ -> controller.onNewFolderButtonPressed());
+        newNoteButton.setOnAction(_ -> controller.onNewNoteButtonPressed());
     }
 
     private void updatePathLabel() {

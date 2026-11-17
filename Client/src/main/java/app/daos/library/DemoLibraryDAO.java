@@ -1,6 +1,7 @@
 package app.daos.library;
 
 import app.entities.FolderEntity;
+import app.entities.NoteEntity;
 
 public class DemoLibraryDAO implements LibraryDAO {
 
@@ -18,5 +19,10 @@ public class DemoLibraryDAO implements LibraryDAO {
     @Override
     public FolderEntity createFolder(String name, FolderEntity parentFolder) {
         return new FolderEntity(name);
+    }
+
+    @Override
+    public NoteEntity createNote(String name, FolderEntity parentFolder) {
+        return new NoteEntity(name);
     }
 }

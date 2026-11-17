@@ -18,6 +18,11 @@ public class FolderEntity {
         subFolders.add(folderEntity);
     }
 
+    public void addNote(NoteEntity noteEntity) {
+        noteEntity.setParentFolder(this);
+        notes.add(noteEntity);
+    }
+
     public FolderEntity getParentFolder() {
         return parentFolder;
     }

@@ -2,6 +2,7 @@ package app.appcontrollers;
 
 import app.daos.library.LibraryDAO;
 import app.entities.FolderEntity;
+import app.entities.NoteEntity;
 import app.exceptions.LibraryException;
 import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
@@ -40,5 +41,19 @@ public class LibraryController {
         }
 
         libraryModel.addFolderToActive(folder);
+    }
+
+    public void createNoteInActive(String name) throws LibraryException {
+        NoteEntity noteEntity = libraryDAO.createNote(name, libraryModel.getActiveFolder());
+
+        List<String> siblings = new ArrayList<>();
+        libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
+        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
+
+        if (duplicateError.isPresent()) {
+            throw new LibraryException(duplicateError.get());
+        }
+
+        libraryModel.addNoteToActive(noteEntity);
     }
 }

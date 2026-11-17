@@ -1,6 +1,7 @@
 package app.models.librarymodel;
 
 import app.entities.FolderEntity;
+import app.entities.NoteEntity;
 import app.utils.ListenerHelper;
 import app.utils.Subscription;
 
@@ -27,6 +28,11 @@ public class LibraryModel {
 
     public void addFolderToActive(FolderEntity folderEntity) {
         activeFolder.addSubFolder(folderEntity);
+        listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
+    }
+
+    public void addNoteToActive(NoteEntity noteEntity) {
+        activeFolder.addNote(noteEntity);
         listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
     }
 
