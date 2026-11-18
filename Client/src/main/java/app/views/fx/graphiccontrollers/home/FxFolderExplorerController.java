@@ -2,8 +2,8 @@ package app.views.fx.graphiccontrollers.home;
 
 import app.appcontrollers.LibraryController;
 import app.appcontrollers.NotificationController;
-import app.entities.FolderEntity;
-import app.entities.NoteEntity;
+import app.entities.LibraryFolderEntity;
+import app.entities.LibraryNoteEntity;
 import app.exceptions.LibraryException;
 import app.utils.dialogs.DialogSpecs;
 import app.views.GraphicController;
@@ -13,8 +13,6 @@ import app.views.fx.pages.dialog.FxDialogView;
 import utils.LibraryError;
 import utils.LibraryRules;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class FxFolderExplorerController implements GraphicController {
@@ -106,11 +104,11 @@ public class FxFolderExplorerController implements GraphicController {
         navigator.showOverlay(dialog);
     }
 
-    public void onFolderDoubleClicked(FolderEntity folderEntity) {
-        libraryController.setActiveFolder(folderEntity);
+    public void onFolderDoubleClicked(LibraryFolderEntity libraryFolderEntity) {
+        libraryController.setActiveFolder(libraryFolderEntity);
     }
 
-    public void onNoteDoubleClicked(NoteEntity noteEntity) {
+    public void onNoteDoubleClicked(LibraryNoteEntity libraryNoteEntity) {
 
     }
 

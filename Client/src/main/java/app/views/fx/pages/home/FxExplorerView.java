@@ -1,7 +1,8 @@
 package app.views.fx.pages.home;
 
-import app.entities.FolderEntity;
-import app.entities.NoteEntity;
+import app.entities.ExplorerItemEntity;
+import app.entities.LibraryFolderEntity;
+import app.entities.LibraryNoteEntity;
 import app.models.explorermodel.ExplorerModel;
 import app.models.explorermodel.ExplorerModelListener;
 import app.views.fx.FxView;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -58,21 +60,25 @@ public class FxExplorerView extends FxView<FxFolderExplorerController> implement
         backButton.setOnAction(_ -> controller.onBackButtonClicked());
     }
 
-    private void update() {
+    private void update(List<ExplorerItemEntity> newItems) {
 
-        FolderEntity activeFolder = explorerModel.getActiveFolder();
-
+        /* QUESTA ROBA DOVRà STARE IN UNA NUOVA VIEW CHE SAREBBE LIBRARYEXPLORERTOPBAR, CHE DOVRà OSSERVARE LIBRARYMODEL
         pathLabel.setText(activeFolder.getPath());
         backButton.setDisable(activeFolder.getParentFolder() == null);
+         */
 
         itemsPane.getChildren().clear();
 
-        for (FolderEntity folder : activeFolder.getSubFolders()) {
-            itemsPane.getChildren().add(new ExplorerItem(folder.getName(), folderIcon, () -> controller.onFolderDoubleClicked(folder)));
-        }
+        for (ExplorerItemEntity item : newItems) {
 
-        for (NoteEntity note : activeFolder.getNotes()) {
-            itemsPane.getChildren().add(new ExplorerItem(note.getName(), noteIcon, () -> controller.onNoteDoubleClicked(note)));
+            switch (item) {
+                case LibraryFolderEntity libFolder -> itemsPane.getChildren().add(new ExplorerItem(libFolder.getName(), folderIcon, () -> controller.onFolderDoubleClicked(libFolder)));
+                case LibraryNoteEntity libNote -> itemsPane.getChildren().add(new ExplorerItem(libNote.getName(), noteIcon, () -> controller.onNoteDoubleClicked(libNote)));
+
+                default -> {
+                    // Nothing for now
+                }
+            }
         }
 
         boolean empty = itemsPane.getChildren().isEmpty();
@@ -86,8 +92,9 @@ public class FxExplorerView extends FxView<FxFolderExplorerController> implement
         // Still not done :D
     }
 
+
     @Override
-    public void activeFolderUpdated(FolderEntity folderEntity) {
-        updateUI(this::update);
+    public void itemsUpdated(List<ExplorerItemEntity> newItems) {
+        updateUI(() -> update(newItems));
     }
 }

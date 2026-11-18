@@ -1,7 +1,7 @@
 package app.daos.library;
 
-import app.entities.FolderEntity;
-import app.entities.NoteEntity;
+import app.entities.LibraryFolderEntity;
+import app.entities.LibraryNoteEntity;
 
 public class DemoLibraryDAO implements LibraryDAO {
 
@@ -12,17 +12,17 @@ public class DemoLibraryDAO implements LibraryDAO {
      * @return the library's root folder
      */
     @Override
-    public FolderEntity loadFullLibrary(String username) {
-        return new FolderEntity(username);
+    public LibraryFolderEntity loadFullLibrary(String username) {
+        return new LibraryFolderEntity(username);
     }
 
     @Override
-    public FolderEntity createFolder(String name, FolderEntity parentFolder) {
-        return new FolderEntity(name);
+    public LibraryFolderEntity createFolder(String name, LibraryFolderEntity parentFolder) {
+        return new LibraryFolderEntity(name);
     }
 
     @Override
-    public NoteEntity createNote(String name, FolderEntity parentFolder) {
-        return new NoteEntity(name);
+    public LibraryNoteEntity createNote(String name, LibraryFolderEntity parentFolder) {
+        return new LibraryNoteEntity(name);
     }
 }

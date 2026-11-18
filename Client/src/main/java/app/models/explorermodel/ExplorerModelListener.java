@@ -1,7 +1,9 @@
 package app.models.explorermodel;
 
-import app.entities.FolderEntity;
+import app.entities.ExplorerItemEntity;
+
+import java.util.List;
 
 public interface ExplorerModelListener {
-    void activeFolderUpdated(FolderEntity folderEntity);
+    void itemsUpdated(List<ExplorerItemEntity> newItems);
 }

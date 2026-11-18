@@ -1,42 +1,45 @@
 package app.models.explorermodel;
 
-import app.entities.FolderEntity;
-import app.entities.NoteEntity;
+import app.entities.ExplorerItemEntity;
 import app.utils.ListenerHelper;
 import app.utils.Subscription;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExplorerModel {
 
     private final ListenerHelper<ExplorerModelListener> listeners = new ListenerHelper<>();
 
-    private FolderEntity rootFolder;
-    private FolderEntity activeFolder;
+    private final List<ExplorerItemEntity> items = new ArrayList<>();
+    private ExplorerMode mode = ExplorerMode.LIBRARY;
 
     public Subscription addListener(ExplorerModelListener listener) {
         return listeners.subscribe(listener);
     }
 
-    public void setRootFolder(FolderEntity folderEntity) {
-        rootFolder = folderEntity;
-        updateActiveFolder(rootFolder);
+    public void setItems(List<ExplorerItemEntity> newItems) {
+        items.clear();
+        items.addAll(newItems);
+
+        listeners.triggerEvent(listener -> listener.itemsUpdated(items));
     }
 
-    public void updateActiveFolder(FolderEntity folderEntity) {
-        activeFolder = folderEntity;
-        listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
+    public void addItem(ExplorerItemEntity item) {
+        items.add(item);
+
+        listeners.triggerEvent(listener -> listener.itemsUpdated(items));
     }
 
-    public void addFolderToActive(FolderEntity folderEntity) {
-        activeFolder.addSubFolder(folderEntity);
-        listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
+    public List<ExplorerItemEntity> getItems() {
+        return items;
     }
 
-    public void addNoteToActive(NoteEntity noteEntity) {
-        activeFolder.addNote(noteEntity);
-        listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
+    public void setMode(ExplorerMode mode) {
+        this.mode = mode;
     }
 
-    public FolderEntity getActiveFolder() {
-        return activeFolder;
+    public ExplorerMode getMode() {
+        return mode;
     }
 }
