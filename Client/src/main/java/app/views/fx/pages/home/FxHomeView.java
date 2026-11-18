@@ -19,8 +19,8 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     private final Supplier<FxUserBoxView> userBoxViewSupplier;
     private FxUserBoxView userBoxView;
 
-    private final Supplier<FxFolderExplorerView> folderExplorerViewSupplier;
-    private FxFolderExplorerView folderExplorerView;
+    private final Supplier<FxExplorerView> folderExplorerViewSupplier;
+    private FxExplorerView folderExplorerView;
 
     @FXML
     private Button loginButton;
@@ -31,7 +31,7 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     @FXML
     private StackPane explorerContainer;
 
-    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier, Supplier<FxFolderExplorerView> folderExplorerViewSupplier) {
+    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier, Supplier<FxExplorerView> folderExplorerViewSupplier) {
         this.userModel = userModel;
         this.userBoxViewSupplier = userBoxViewSupplier;
         this.folderExplorerViewSupplier = folderExplorerViewSupplier;

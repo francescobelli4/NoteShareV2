@@ -1,12 +1,11 @@
 package app.entities;
 
-public class NoteEntity {
+public class NoteEntity extends ExplorerItemEntity {
 
     private FolderEntity parentFolder;
-    private final String name;
 
     public NoteEntity(String name) {
-        this.name = name;
+        super(ExplorerItemType.NOTE, name);
     }
 
     public FolderEntity getParentFolder() {
@@ -15,9 +14,5 @@ public class NoteEntity {
 
     public void setParentFolder(FolderEntity parentFolder) {
         this.parentFolder = parentFolder;
-    }
-
-    public String getName() {
-        return name;
     }
 }

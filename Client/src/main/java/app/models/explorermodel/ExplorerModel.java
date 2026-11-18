@@ -1,18 +1,18 @@
-package app.models.librarymodel;
+package app.models.explorermodel;
 
 import app.entities.FolderEntity;
 import app.entities.NoteEntity;
 import app.utils.ListenerHelper;
 import app.utils.Subscription;
 
-public class LibraryModel {
+public class ExplorerModel {
 
-    private final ListenerHelper<LibraryModelListener> listeners = new ListenerHelper<>();
+    private final ListenerHelper<ExplorerModelListener> listeners = new ListenerHelper<>();
 
     private FolderEntity rootFolder;
     private FolderEntity activeFolder;
 
-    public Subscription addListener(LibraryModelListener listener) {
+    public Subscription addListener(ExplorerModelListener listener) {
         return listeners.subscribe(listener);
     }
 

@@ -1,7 +1,7 @@
-package app.models.librarymodel;
+package app.models.explorermodel;
 
 import app.entities.FolderEntity;
 
-public interface LibraryModelListener {
+public interface ExplorerModelListener {
     void activeFolderUpdated(FolderEntity folderEntity);
 }

@@ -3,14 +3,13 @@ package app.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FolderEntity {
+public class FolderEntity extends ExplorerItemEntity {
     private FolderEntity parentFolder;
     private final List<FolderEntity> subFolders = new ArrayList<>();
     private final List<NoteEntity> notes = new ArrayList<>();
-    private final String name;
 
     public FolderEntity(String name) {
-        this.name = name;
+        super(ExplorerItemType.FOLDER, name);
     }
 
     public void addSubFolder(FolderEntity folderEntity) {
@@ -33,10 +32,6 @@ public class FolderEntity {
 
     public List<NoteEntity> getNotes() {
         return notes;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getPath() {

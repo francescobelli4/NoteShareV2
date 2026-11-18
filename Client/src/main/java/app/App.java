@@ -8,7 +8,7 @@ import app.config.Mode;
 import app.daos.library.DemoLibraryDAO;
 import app.daos.library.LibraryDAO;
 import app.models.Models;
-import app.models.librarymodel.LibraryModel;
+import app.models.explorermodel.ExplorerModel;
 import app.models.notificationmodel.NotificationModel;
 import app.models.usermodel.UserModel;
 import app.models.walletmodel.WalletModel;
@@ -59,14 +59,14 @@ public class App {
         Models models = new Models(
                 new UserModel(),
                 new WalletModel(),
-                new LibraryModel(),
+                new ExplorerModel(),
                 new NotificationModel()
         );
 
         AppControllers appControllers = new AppControllers(
                 new AuthController(models.userModel()),
                 new ProfileController(models.walletModel()),
-                new LibraryController(models.userModel(), models.libraryModel(), libraryDAO),
+                new LibraryController(models.userModel(), models.explorerModel(), libraryDAO),
                 new NotificationController(models.notificationModel())
         );
 

@@ -4,7 +4,7 @@ import app.daos.library.LibraryDAO;
 import app.entities.FolderEntity;
 import app.entities.NoteEntity;
 import app.exceptions.LibraryException;
-import app.models.librarymodel.LibraryModel;
+import app.models.explorermodel.ExplorerModel;
 import app.models.usermodel.UserModel;
 import utils.LibraryError;
 import utils.LibraryRules;
@@ -13,55 +13,58 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is an application controller which manages the creation of folders and notes.
+ */
 public class LibraryController {
 
     private final UserModel userModel;
-    private final LibraryModel libraryModel;
+    private final ExplorerModel explorerModel;
     private final LibraryDAO libraryDAO;
 
-    public LibraryController(UserModel userModel, LibraryModel libraryModel, LibraryDAO libraryDAO) {
+    public LibraryController(UserModel userModel, ExplorerModel explorerModel, LibraryDAO libraryDAO) {
         this.userModel = userModel;
-        this.libraryModel = libraryModel;
+        this.explorerModel = explorerModel;
         this.libraryDAO = libraryDAO;
     }
 
     public void loadLibrary() {
-        libraryModel.setRootFolder(libraryDAO.loadFullLibrary(userModel.isLoggedIn() ? userModel.getUsername() : "ns"));
+        explorerModel.setRootFolder(libraryDAO.loadFullLibrary(userModel.isLoggedIn() ? userModel.getUsername() : "ns"));
     }
 
     public void setActiveFolder(FolderEntity folderEntity) {
-        libraryModel.updateActiveFolder(folderEntity);
+        explorerModel.updateActiveFolder(folderEntity);
     }
 
     public void goBackToParentFolder() {
-        libraryModel.updateActiveFolder(libraryModel.getActiveFolder().getParentFolder());
+        explorerModel.updateActiveFolder(explorerModel.getActiveFolder().getParentFolder());
     }
 
     public void createFolderInActive(String name) throws LibraryException {
-        FolderEntity folder = libraryDAO.createFolder(name, libraryModel.getActiveFolder());
+        FolderEntity folder = libraryDAO.createFolder(name, explorerModel.getActiveFolder());
 
         List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getSubFolders().forEach(folderEntity -> siblings.add(folderEntity.getName()));
+        explorerModel.getActiveFolder().getSubFolders().forEach(folderEntity -> siblings.add(folderEntity.getName()));
         Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
 
         if (duplicateError.isPresent()) {
             throw new LibraryException(duplicateError.get());
         }
 
-        libraryModel.addFolderToActive(folder);
+        explorerModel.addFolderToActive(folder);
     }
 
     public void createNoteInActive(String name) throws LibraryException {
-        NoteEntity noteEntity = libraryDAO.createNote(name, libraryModel.getActiveFolder());
+        NoteEntity noteEntity = libraryDAO.createNote(name, explorerModel.getActiveFolder());
 
         List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
+        explorerModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
         Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
 
         if (duplicateError.isPresent()) {
             throw new LibraryException(duplicateError.get());
         }
 
-        libraryModel.addNoteToActive(noteEntity);
+        explorerModel.addNoteToActive(noteEntity);
     }
 }

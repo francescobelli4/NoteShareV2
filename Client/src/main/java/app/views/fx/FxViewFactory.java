@@ -14,7 +14,7 @@ import app.views.fx.pages.auth.FxAuthLoginView;
 import app.views.fx.pages.auth.FxAuthRegisterView;
 import app.views.fx.pages.auth.FxAuthView;
 import app.views.fx.pages.dialog.FxDialogView;
-import app.views.fx.pages.home.FxFolderExplorerView;
+import app.views.fx.pages.home.FxExplorerView;
 import app.views.fx.pages.home.FxHomeView;
 import app.views.fx.pages.home.FxUserBoxView;
 import app.views.fx.pages.notification.FxNotificationView;
@@ -59,9 +59,9 @@ public class FxViewFactory {
         return new FxAuthRegisterView(graphicController);
     }
 
-    public FxFolderExplorerView createFxFolderExplorerView() {
+    public FxExplorerView createFxFolderExplorerView() {
         FxFolderExplorerController graphicsController = new FxFolderExplorerController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
-        return new FxFolderExplorerView(graphicsController, models.libraryModel());
+        return new FxExplorerView(graphicsController, models.explorerModel());
     }
 
     public FxNotificationView createFxNotificationView() {

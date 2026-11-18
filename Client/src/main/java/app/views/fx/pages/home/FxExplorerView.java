@@ -2,8 +2,8 @@ package app.views.fx.pages.home;
 
 import app.entities.FolderEntity;
 import app.entities.NoteEntity;
-import app.models.librarymodel.LibraryModel;
-import app.models.librarymodel.LibraryModelListener;
+import app.models.explorermodel.ExplorerModel;
+import app.models.explorermodel.ExplorerModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxFolderExplorerController;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ import javafx.scene.layout.FlowPane;
 import java.util.Objects;
 
 
-public class FxFolderExplorerView extends FxView<FxFolderExplorerController> implements LibraryModelListener {
+public class FxExplorerView extends FxView<FxFolderExplorerController> implements ExplorerModelListener {
 
     @FXML
     private Button backButton;
@@ -33,21 +33,21 @@ public class FxFolderExplorerView extends FxView<FxFolderExplorerController> imp
     private Image folderIcon;
     private Image noteIcon;
 
-    private final LibraryModel libraryModel;
+    private final ExplorerModel explorerModel;
 
-    public FxFolderExplorerView(FxFolderExplorerController controller, LibraryModel libraryModel) {
+    public FxExplorerView(FxFolderExplorerController controller, ExplorerModel explorerModel) {
         super(controller);
-        this.libraryModel = libraryModel;
+        this.explorerModel = explorerModel;
     }
 
     @Override
     protected String getFxmlPath() {
-        return "/fxml/home/FolderExplorer.fxml";
+        return "/fxml/home/Explorer.fxml";
     }
 
     @Override
     protected void onLoaded() {
-        subscribe(libraryModel.addListener(this));
+        subscribe(explorerModel.addListener(this));
         controller.loadLibrary();
 
         folderIcon = new Image(Objects.requireNonNull(getClass().getResource("/fxml/styles/icons/folder.png")).toExternalForm());
@@ -60,7 +60,7 @@ public class FxFolderExplorerView extends FxView<FxFolderExplorerController> imp
 
     private void update() {
 
-        FolderEntity activeFolder = libraryModel.getActiveFolder();
+        FolderEntity activeFolder = explorerModel.getActiveFolder();
 
         pathLabel.setText(activeFolder.getPath());
         backButton.setDisable(activeFolder.getParentFolder() == null);
