@@ -1,7 +1,8 @@
 package app.models.librarymodel;
 
-import app.entities.FolderEntity;
+import app.entities.LibraryFolderEntity;
 
 public interface LibraryModelListener {
-    void activeFolderUpdated(FolderEntity folderEntity);
+
+    void activeFolderUpdated(LibraryFolderEntity activeFolder);
 }

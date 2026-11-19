@@ -1,9 +1,7 @@
-package app.views.fx.graphiccontrollers.home;
+package app.views.fx.graphiccontrollers.home.explorer;
 
 import app.appcontrollers.LibraryController;
 import app.appcontrollers.NotificationController;
-import app.entities.FolderEntity;
-import app.entities.NoteEntity;
 import app.exceptions.LibraryException;
 import app.utils.dialogs.DialogSpecs;
 import app.views.GraphicController;
@@ -13,18 +11,16 @@ import app.views.fx.pages.dialog.FxDialogView;
 import utils.LibraryError;
 import utils.LibraryRules;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-public class FxFolderExplorerController implements GraphicController {
+public class FxLibraryExplorerTopBarController implements GraphicController {
 
     private final LibraryController libraryController;
     private final NotificationController notificationController;
     private final FxViewFactory factory;
     private final FxNavigator navigator;
 
-    public FxFolderExplorerController(LibraryController libraryController, NotificationController notificationController, FxViewFactory factory, FxNavigator navigator) {
+    public FxLibraryExplorerTopBarController(LibraryController libraryController, NotificationController notificationController, FxViewFactory factory, FxNavigator navigator) {
         this.libraryController = libraryController;
         this.notificationController = notificationController;
         this.factory = factory;
@@ -98,20 +94,12 @@ public class FxFolderExplorerController implements GraphicController {
             try {
                 libraryController.createFolderInActive(name);
                 notificationController.showSuccess("Success", String.format("Folder %s was created.", name));
-            } catch (LibraryException e) {
+            } catch (LibraryException _) {
                 notificationController.showError("Error", String.format("The folder %s already exists!", name));
             }
         });
 
         navigator.showOverlay(dialog);
-    }
-
-    public void onFolderDoubleClicked(FolderEntity folderEntity) {
-        libraryController.setActiveFolder(folderEntity);
-    }
-
-    public void onNoteDoubleClicked(NoteEntity noteEntity) {
-
     }
 
     public void onBackButtonClicked() {

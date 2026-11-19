@@ -6,17 +6,19 @@ import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthRegisterViewController;
 import app.views.fx.graphiccontrollers.auth.FxAuthViewController;
 import app.views.fx.graphiccontrollers.dialog.FxDialogViewController;
-import app.views.fx.graphiccontrollers.home.FxFolderExplorerController;
+import app.views.fx.graphiccontrollers.home.explorer.FxExplorerController;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.home.FxUserBoxController;
+import app.views.fx.graphiccontrollers.home.explorer.FxLibraryExplorerTopBarController;
 import app.views.fx.graphiccontrollers.notification.FxNotificationController;
 import app.views.fx.pages.auth.FxAuthLoginView;
 import app.views.fx.pages.auth.FxAuthRegisterView;
 import app.views.fx.pages.auth.FxAuthView;
 import app.views.fx.pages.dialog.FxDialogView;
-import app.views.fx.pages.home.FxFolderExplorerView;
+import app.views.fx.pages.home.explorer.FxExplorerView;
 import app.views.fx.pages.home.FxHomeView;
 import app.views.fx.pages.home.FxUserBoxView;
+import app.views.fx.pages.home.explorer.FxLibraryExplorerTopBarView;
 import app.views.fx.pages.notification.FxNotificationView;
 
 /**
@@ -36,7 +38,7 @@ public class FxViewFactory {
 
     public FxHomeView createFxHomeView() {
         FxHomeViewController graphicController = new FxHomeViewController(navigator, this, appControllers.authController());
-        return new FxHomeView(graphicController, models.userModel(), this::createFxUserBoxView, this::createFxFolderExplorerView);
+        return new FxHomeView(graphicController, models.userModel(), this::createFxUserBoxView, this::createFxExplorerView);
     }
 
     public FxUserBoxView createFxUserBoxView() {
@@ -59,9 +61,14 @@ public class FxViewFactory {
         return new FxAuthRegisterView(graphicController);
     }
 
-    public FxFolderExplorerView createFxFolderExplorerView() {
-        FxFolderExplorerController graphicsController = new FxFolderExplorerController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
-        return new FxFolderExplorerView(graphicsController, models.libraryModel());
+    public FxExplorerView createFxExplorerView() {
+        FxExplorerController graphicsController = new FxExplorerController(appControllers.libraryController());
+        return new FxExplorerView(graphicsController, models.explorerModel(), this::createFxLibraryExplorerTopBarView);
+    }
+
+    public FxLibraryExplorerTopBarView createFxLibraryExplorerTopBarView() {
+        FxLibraryExplorerTopBarController graphicsController = new FxLibraryExplorerTopBarController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
+        return new FxLibraryExplorerTopBarView(graphicsController, models.libraryModel());
     }
 
     public FxNotificationView createFxNotificationView() {
