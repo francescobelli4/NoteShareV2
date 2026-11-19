@@ -48,6 +48,7 @@ public class FxDialogView extends FxView<FxDialogViewController> {
 
     @Override
     protected void onLoaded() {
+        if (out == null || inputNodes.isEmpty()) return;
 
         cancelButton.setOnAction(_ -> controller.cancelButtonPressed(out));
         confirmButton.setOnAction(_ -> {
