@@ -6,7 +6,6 @@ import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.notification.FxNotificationController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,7 +13,6 @@ import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * <a href="https://dev.java/learn/javafx/javafx-animations/">info animazioni...</a>
@@ -83,7 +81,7 @@ public class FxNotificationView extends FxView<FxNotificationController> {
 
     @Override
     protected void onLoaded() {
-
+        // No-op
     }
 
     @Override

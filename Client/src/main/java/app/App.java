@@ -14,6 +14,7 @@ import app.models.notificationmodel.NotificationModel;
 import app.models.usermodel.UserModel;
 import app.models.walletmodel.WalletModel;
 import app.network.ConnectionManager;
+import app.utils.Locales;
 import app.utils.Utils;
 import app.views.fx.FxLauncher;
 
@@ -31,6 +32,7 @@ public class App {
 
         try {
             APPCONFIG = AppConfig.create(args);
+            Locales.setCurrentLocale(APPCONFIG.locale());
         } catch (IllegalArgumentException e) {
 
             LOGGER.severe(() -> String.format("NoteShare terminated for: %n%s", e.getMessage()));

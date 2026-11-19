@@ -14,16 +14,16 @@
     </stylesheets>
 
     <VBox spacing="6">
-        <Label text="Username" styleClass="form-label"/>
-        <TextField fx:id="usernameField" promptText="Your Username"/>
+        <Label text="%username" styleClass="form-label"/>
+        <TextField fx:id="usernameField" promptText="%your_username"/>
     </VBox>
 
     <VBox spacing="6">
-        <Label text="Password" styleClass="form-label"/>
-        <PasswordField fx:id="passwordField" promptText="Your Password"/>
+        <Label text="%password" styleClass="form-label"/>
+        <PasswordField fx:id="passwordField" promptText="%your_password"/>
     </VBox>
 
     <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" visible="false" managed="false"/>
 
-    <Button fx:id="loginButton" text="Login" styleClass="button-primary" maxWidth="Infinity"/>
+    <Button fx:id="loginButton" text="%login" styleClass="button-primary" maxWidth="Infinity"/>
 </VBox>

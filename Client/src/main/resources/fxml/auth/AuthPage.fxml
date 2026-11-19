@@ -26,7 +26,7 @@
             <Insets bottom="32" left="32" right="32" top="32" />
         </padding>
 
-        <Label alignment="CENTER" maxWidth="Infinity" styleClass="page-title" text="NoteShare" />
+        <Label alignment="CENTER" maxWidth="Infinity" styleClass="page-title" text="%noteshare" />
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../styles/icons/app_icon.png" />
@@ -34,12 +34,12 @@
       </ImageView>
 
         <HBox spacing="4" styleClass="auth-tabs">
-            <ToggleButton fx:id="loginToggle" maxWidth="Infinity" selected="true" styleClass="auth-tab" text="Login" HBox.hgrow="ALWAYS">
+            <ToggleButton fx:id="loginToggle" maxWidth="Infinity" selected="true" styleClass="auth-tab" text="%login" HBox.hgrow="ALWAYS">
                 <toggleGroup>
                     <ToggleGroup fx:id="authModeGroup" />
                 </toggleGroup>
             </ToggleButton>
-            <ToggleButton fx:id="registerToggle" maxWidth="Infinity" styleClass="auth-tab" text="Registrazione" toggleGroup="$authModeGroup" HBox.hgrow="ALWAYS" />
+            <ToggleButton fx:id="registerToggle" maxWidth="Infinity" styleClass="auth-tab" text="%register" toggleGroup="$authModeGroup" HBox.hgrow="ALWAYS" />
         </HBox>
 
         <StackPane fx:id="cardContainer" />

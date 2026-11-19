@@ -17,24 +17,24 @@
     </stylesheets>
 
     <VBox spacing="6">
-        <Label text="Username" styleClass="form-label"/>
-        <TextField fx:id="usernameField" promptText="Choose a username"/>
+        <Label text="%username" styleClass="form-label"/>
+        <TextField fx:id="usernameField" promptText="%choose_username"/>
     </VBox>
 
     <VBox spacing="6">
-        <Label text="Password" styleClass="form-label"/>
-        <PasswordField fx:id="passwordField" promptText="Choose a password"/>
+        <Label text="%password" styleClass="form-label"/>
+        <PasswordField fx:id="passwordField" promptText="%choose_password"/>
     </VBox>
 
     <VBox spacing="6">
-        <Label text="Conferma password" styleClass="form-label"/>
-        <PasswordField fx:id="confirmPasswordField" promptText="Repeat the password"/>
+        <Label text="%confirm_password" styleClass="form-label"/>
+        <PasswordField fx:id="confirmPasswordField" promptText="%repeat_password"/>
     </VBox>
 
     <VBox spacing="6">
-        <Label text="Choose your role..." styleClass="form-label"/>
+        <Label text="%choose_role" styleClass="form-label"/>
         <!-- https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder -->
-        <ComboBox fx:id="roleComboBox" promptText="Select the role" maxWidth="Infinity">
+        <ComboBox fx:id="roleComboBox" promptText="%select_role" maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Student"/>
@@ -46,5 +46,5 @@
 
     <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" visible="false" managed="false"/>
 
-    <Button fx:id="registerButton" text="Create Account" styleClass="button-primary" maxWidth="Infinity"/>
+    <Button fx:id="registerButton" text="%register" styleClass="button-primary" maxWidth="Infinity"/>
 </VBox>

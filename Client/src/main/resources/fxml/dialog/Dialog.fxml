@@ -16,8 +16,8 @@
 
         <Label fx:id="errorLabel" styleClass="dialog-error" wrapText="true" visible="false" managed="false"/>
         <HBox spacing="12" alignment="CENTER_RIGHT">
-            <Button fx:id="cancelButton" text="Cancel" styleClass="button-secondary"/>
-            <Button fx:id="confirmButton" text="Confirm" styleClass="button-primary" defaultButton="true"/>
+            <Button fx:id="cancelButton" text="%cancel" styleClass="button-secondary"/>
+            <Button fx:id="confirmButton" text="%confirm" styleClass="button-primary" defaultButton="true"/>
         </HBox>
     </VBox>
 </StackPane>
