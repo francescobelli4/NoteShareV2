@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class FxLauncher extends Application {

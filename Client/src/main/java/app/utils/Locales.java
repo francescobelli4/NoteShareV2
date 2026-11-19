@@ -1,7 +1,5 @@
 package app.utils;
 
-import app.config.AppConfig;
-
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
