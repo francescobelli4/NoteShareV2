@@ -4,6 +4,7 @@ import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
+import app.views.fx.pages.home.explorer.FxExplorerView;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -45,7 +46,9 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
 
     @Override
     protected void onLoaded() {
+
         subscribe(userModel.addListener(this));
+
         loginButton.setOnAction(_ -> controller.onLoginButtonClicked());
         controller.tryLoginUsingToken();
 

@@ -22,21 +22,22 @@ public class ExplorerModel {
         items.clear();
         items.addAll(newItems);
 
-        listeners.triggerEvent(listener -> listener.itemsUpdated(items));
+        listeners.triggerEvent(listener -> listener.itemsUpdated(List.copyOf(items)));
     }
 
     public void addItem(ExplorerItemEntity item) {
         items.add(item);
 
-        listeners.triggerEvent(listener -> listener.itemsUpdated(items));
+        listeners.triggerEvent(listener -> listener.itemsUpdated(List.copyOf(items)));
     }
 
     public List<ExplorerItemEntity> getItems() {
-        return items;
+        return List.copyOf(items);
     }
 
     public void setMode(ExplorerMode mode) {
         this.mode = mode;
+        listeners.triggerEvent(listener -> listener.explorerModeUpdated(mode));
     }
 
     public ExplorerMode getMode() {

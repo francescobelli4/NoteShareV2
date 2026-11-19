@@ -24,35 +24,7 @@
         <Insets bottom="32" left="40" right="40" top="32" />
     </padding>
 
-    <HBox alignment="CENTER_LEFT" spacing="8">
-        <Button fx:id="backButton" disable="true" styleClass="icon-button">
-            <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../styles/icons/left-arrow.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-        <Label fx:id="pathLabel" styleClass="text-muted" text="/">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-        <Region HBox.hgrow="ALWAYS" />
-      <Button fx:id="newFolderButton" styleClass="icon-button">
-         <graphic>
-             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                 <Image url="@../styles/icons/folder_plus.png"/>
-             </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="newNoteButton" styleClass="icon-button">
-         <graphic>
-             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                 <Image url="@../styles/icons/file_plus.png"/>
-             </ImageView>
-         </graphic>
-      </Button>
-    </HBox>
-
+    <StackPane fx:id="topBarContainer" />
 
     <StackPane VBox.vgrow="ALWAYS">
         <ScrollPane fitToWidth="true" styleClass="explorer-scroll">

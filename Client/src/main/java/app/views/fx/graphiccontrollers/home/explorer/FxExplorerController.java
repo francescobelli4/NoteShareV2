@@ -1,4 +1,4 @@
-package app.views.fx.graphiccontrollers.home;
+package app.views.fx.graphiccontrollers.home.explorer;
 
 import app.appcontrollers.LibraryController;
 import app.appcontrollers.NotificationController;
@@ -15,14 +15,14 @@ import utils.LibraryRules;
 
 import java.util.Optional;
 
-public class FxFolderExplorerController implements GraphicController {
+public class FxExplorerController implements GraphicController {
 
     private final LibraryController libraryController;
     private final NotificationController notificationController;
     private final FxViewFactory factory;
     private final FxNavigator navigator;
 
-    public FxFolderExplorerController(LibraryController libraryController, NotificationController notificationController, FxViewFactory factory, FxNavigator navigator) {
+    public FxExplorerController(LibraryController libraryController, NotificationController notificationController, FxViewFactory factory, FxNavigator navigator) {
         this.libraryController = libraryController;
         this.notificationController = notificationController;
         this.factory = factory;

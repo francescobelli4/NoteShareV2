@@ -9,7 +9,7 @@ public class LibraryFolderEntity extends ExplorerItemEntity {
     private final List<LibraryNoteEntity> notes = new ArrayList<>();
 
     public LibraryFolderEntity(String name) {
-        super(ExplorerItemType.FOLDER, name);
+        super(name);
     }
 
     public void addSubFolder(LibraryFolderEntity libraryFolderEntity) {

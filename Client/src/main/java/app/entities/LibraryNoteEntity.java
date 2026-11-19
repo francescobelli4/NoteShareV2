@@ -5,7 +5,7 @@ public class LibraryNoteEntity extends ExplorerItemEntity {
     private LibraryFolderEntity parentFolder;
 
     public LibraryNoteEntity(String name) {
-        super(ExplorerItemType.NOTE, name);
+        super(name);
     }
 
     public LibraryFolderEntity getParentFolder() {
