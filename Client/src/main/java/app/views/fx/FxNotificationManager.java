@@ -9,6 +9,7 @@ import javafx.scene.Node;
 
 public class FxNotificationManager implements NotificationModelListener {
 
+    @SuppressWarnings("java:S1075")
     public static final String ICONS_PATH = "/fxml/styles/icons/";
 
     private final FxFrameManager fxFrameManager;
