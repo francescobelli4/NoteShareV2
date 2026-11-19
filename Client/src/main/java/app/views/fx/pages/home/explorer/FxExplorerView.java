@@ -69,8 +69,6 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
             Image icon = switch (item) {
                 case LibraryFolderEntity _ -> folderIcon;
                 case LibraryNoteEntity _ -> noteIcon;
-
-                default -> null;
             };
 
             itemsPane.getChildren().add(new ExplorerItem(item.getName(), icon, () -> controller.onItemDoubleClicked(item)));

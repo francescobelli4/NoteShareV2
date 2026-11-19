@@ -1,6 +1,6 @@
 package app.entities;
 
-public class LibraryNoteEntity extends ExplorerItemEntity {
+public final class LibraryNoteEntity extends ExplorerItemEntity {
 
     private LibraryFolderEntity parentFolder;
 

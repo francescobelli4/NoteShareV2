@@ -62,7 +62,7 @@ public class FxViewFactory {
     }
 
     public FxExplorerView createFxExplorerView() {
-        FxExplorerController graphicsController = new FxExplorerController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
+        FxExplorerController graphicsController = new FxExplorerController(appControllers.libraryController());
         return new FxExplorerView(graphicsController, models.explorerModel(), this::createFxLibraryExplorerTopBarView);
     }
 

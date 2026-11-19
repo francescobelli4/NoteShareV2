@@ -1,6 +1,6 @@
 package app.entities;
 
-public class ExplorerItemEntity {
+public abstract sealed class ExplorerItemEntity permits LibraryFolderEntity, LibraryNoteEntity {
     protected String name;
 
     protected ExplorerItemEntity(String name) {

@@ -3,7 +3,7 @@ package app.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryFolderEntity extends ExplorerItemEntity {
+public final class LibraryFolderEntity extends ExplorerItemEntity {
     private LibraryFolderEntity parentFolder;
     private final List<LibraryFolderEntity> subFolders = new ArrayList<>();
     private final List<LibraryNoteEntity> notes = new ArrayList<>();
