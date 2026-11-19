@@ -2,6 +2,7 @@ package app.views.fx.graphiccontrollers.home.explorer;
 
 import app.appcontrollers.LibraryController;
 import app.appcontrollers.NotificationController;
+import app.entities.ExplorerItemEntity;
 import app.entities.LibraryFolderEntity;
 import app.entities.LibraryNoteEntity;
 import app.exceptions.LibraryException;
@@ -60,7 +61,7 @@ public class FxExplorerController implements GraphicController {
             try {
                 libraryController.createNoteInActive(name);
                 notificationController.showSuccess("Success", String.format("Note %s was created.", name));
-            } catch (LibraryException e) {
+            } catch (LibraryException _) {
                 notificationController.showError("Error", String.format("The note %s already exists!", name));
             }
         });
@@ -96,7 +97,7 @@ public class FxExplorerController implements GraphicController {
             try {
                 libraryController.createFolderInActive(name);
                 notificationController.showSuccess("Success", String.format("Folder %s was created.", name));
-            } catch (LibraryException e) {
+            } catch (LibraryException _) {
                 notificationController.showError("Error", String.format("The folder %s already exists!", name));
             }
         });
@@ -104,12 +105,13 @@ public class FxExplorerController implements GraphicController {
         navigator.showOverlay(dialog);
     }
 
-    public void onFolderDoubleClicked(LibraryFolderEntity libraryFolderEntity) {
-        libraryController.setActiveFolder(libraryFolderEntity);
-    }
+    public void onItemDoubleClicked(ExplorerItemEntity itemEntity) {
 
-    public void onNoteDoubleClicked(LibraryNoteEntity libraryNoteEntity) {
-
+        switch (itemEntity) {
+            case LibraryFolderEntity libFolder -> libraryController.setActiveFolder(libFolder);
+            case LibraryNoteEntity _ -> { /* ... */ }
+            default -> { /* No-op */ }
+        }
     }
 
     public void onBackButtonClicked() {

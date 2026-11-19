@@ -66,14 +66,14 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
 
         for (ExplorerItemEntity item : newItems) {
 
-            switch (item) {
-                case LibraryFolderEntity libFolder -> itemsPane.getChildren().add(new ExplorerItem(libFolder.getName(), folderIcon, () -> controller.onFolderDoubleClicked(libFolder)));
-                case LibraryNoteEntity libNote -> itemsPane.getChildren().add(new ExplorerItem(libNote.getName(), noteIcon, () -> controller.onNoteDoubleClicked(libNote)));
+            Image icon = switch (item) {
+                case LibraryFolderEntity _ -> folderIcon;
+                case LibraryNoteEntity _ -> noteIcon;
 
-                default -> {
-                    // Nothing for now
-                }
-            }
+                default -> null;
+            };
+
+            itemsPane.getChildren().add(new ExplorerItem(item.getName(), icon, () -> controller.onItemDoubleClicked(item)));
         }
 
         boolean empty = itemsPane.getChildren().isEmpty();
@@ -95,6 +95,10 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
 
     @Override
     public void explorerModeUpdated(ExplorerMode mode) {
+        updateUI(() -> updateTopBar(mode));
+    }
+
+    private void updateTopBar(ExplorerMode mode) {
 
         switch (mode) {
             case LIBRARY -> setTopBar(libraryExplorerTopBarViewSupplier.get());
