@@ -18,7 +18,11 @@ public class FxNavigator extends Navigator<FxView<?>> {
         frameManager.show(view);
     }
 
-    public void showOverlay(FxView<?> view) { frameManager.showOverlay(view); }
+    public void showOverlay(FxView<?> view) {
+        frameManager.showOverlay(view);
+    }
 
-    public void closeOverlay()              { frameManager.closeOverlay(); }
+    public void closeOverlay() {
+        frameManager.closeOverlay();
+    }
 }

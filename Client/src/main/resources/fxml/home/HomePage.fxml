@@ -39,9 +39,9 @@
               <padding>
                   <Insets bottom="24" left="16" right="16" top="24" />
               </padding>
-              <Button maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Your Notes" />
-              <Button maxWidth="Infinity" styleClass="nav-button" text="Explore" />
-              <Button maxWidth="Infinity" styleClass="nav-button" text="Shared Notes" />
+              <Button maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="%your_notes" />
+              <Button maxWidth="Infinity" styleClass="nav-button" text="%explore" />
+              <Button maxWidth="Infinity" styleClass="nav-button" text="%shared_notes" />
           </VBox>
          <Region VBox.vgrow="ALWAYS" />
          <VBox alignment="CENTER" spacing="16.0">
@@ -52,7 +52,7 @@
                             <Image url="@../styles/icons/user.png" />
                         </image>
                     </ImageView>
-                    <Button fx:id="loginButton" maxWidth="Infinity" styleClass="button-primary" text="Login" />
+                    <Button fx:id="loginButton" maxWidth="Infinity" styleClass="button-primary" text="%login" />
                 </VBox>
 
                 <StackPane fx:id="userBoxContainer" managed="false" visible="false">
@@ -72,7 +72,7 @@
     <StackPane styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
       <VBox StackPane.alignment="TOP_LEFT">
          <children>
-              <Label styleClass="page-title" text="Your Notes">
+              <Label styleClass="page-title" text="%your_notes">
                   <padding>
                       <Insets left="40" top="32" />
                   </padding>

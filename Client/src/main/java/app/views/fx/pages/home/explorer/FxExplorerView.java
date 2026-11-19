@@ -10,12 +10,10 @@ import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.explorer.FxExplorerController;
 import app.views.fx.pages.home.ExplorerItem;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 import java.util.List;
 import java.util.Objects;
@@ -98,9 +96,10 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
 
     private void updateTopBar(ExplorerMode mode) {
 
-        switch (mode) {
-            case LIBRARY -> setTopBar(libraryExplorerTopBarViewSupplier.get());
-            default -> clearTopBar();
+        if (Objects.requireNonNull(mode) == ExplorerMode.LIBRARY) {
+            setTopBar(libraryExplorerTopBarViewSupplier.get());
+        } else {
+            clearTopBar();
         }
     }
 

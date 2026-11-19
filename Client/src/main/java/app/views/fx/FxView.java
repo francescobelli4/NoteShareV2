@@ -1,5 +1,6 @@
 package app.views.fx;
 
+import app.utils.Locales;
 import app.views.GraphicController;
 import app.views.View;
 import javafx.application.Platform;
@@ -33,7 +34,7 @@ public abstract class FxView<C extends GraphicController> extends View<C> {
                 throw new IllegalStateException(String.format("FXML not found: %s", getFxmlPath()));
             }
 
-            FXMLLoader fxmlLoader = new FXMLLoader(url);
+            FXMLLoader fxmlLoader = new FXMLLoader(url, Locales.getBundle());
             fxmlLoader.setController(this);
 
             try {

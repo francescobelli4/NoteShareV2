@@ -3,6 +3,7 @@ package app.views.fx.graphiccontrollers.home.explorer;
 import app.appcontrollers.LibraryController;
 import app.appcontrollers.NotificationController;
 import app.exceptions.LibraryException;
+import app.utils.Locales;
 import app.utils.dialogs.DialogSpecs;
 import app.views.GraphicController;
 import app.views.fx.FxNavigator;
@@ -34,9 +35,9 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
     public void onNewNoteButtonPressed() {
         FxDialogView dialog = factory.createFxDialogView();
         DialogSpecs dialogSpecs = new DialogSpecs();
-        dialogSpecs.addTextField("name", "Note's name");
+        dialogSpecs.addTextField("name", Locales.get("dialog.note_name"));
 
-        dialog.populate(dialogSpecs, output -> {
+        dialog.populate(Locales.get("dialog.create_new_note"), dialogSpecs, output -> {
 
             String name = output.get("name");
 
@@ -45,21 +46,21 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
             if (nameError.isPresent()) {
 
                 String errorStr = switch (nameError.get()) {
-                    case NAME_EMPTY -> "Name can't be empty!";
-                    case NAME_TOO_LONG -> "Name %s is too long";
-                    case NAME_NOT_VALID -> "Name %s is not valid";
+                    case NAME_EMPTY -> Locales.get("dialog.name_empty");
+                    case NAME_TOO_LONG -> Locales.get("dialog.name_too_long", name);
+                    case NAME_NOT_VALID -> Locales.get("dialog.name_not_valid", name);
                     default -> "Unexpected error";
                 };
 
-                notificationController.showError("Error", String.format(errorStr, name));
+                notificationController.showError(Locales.get("error"), errorStr);
                 return;
             }
 
             try {
                 libraryController.createNoteInActive(name);
-                notificationController.showSuccess("Success", String.format("Note %s was created.", name));
-            } catch (LibraryException e) {
-                notificationController.showError("Error", String.format("The note %s already exists!", name));
+                notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.note_created", name));
+            } catch (LibraryException _) {
+                notificationController.showError(Locales.get("error"), Locales.get("dialog.note_already_exists"));
             }
         });
 
@@ -70,9 +71,9 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
 
         FxDialogView dialog = factory.createFxDialogView();
         DialogSpecs dialogSpecs = new DialogSpecs();
-        dialogSpecs.addTextField("name", "Folder's name");
+        dialogSpecs.addTextField("name", Locales.get("dialog.folder_name"));
 
-        dialog.populate(dialogSpecs, output -> {
+        dialog.populate(Locales.get("dialog.create_new_folder"), dialogSpecs, output -> {
 
             String name = output.get("name");
 
@@ -81,21 +82,21 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
             if (nameError.isPresent()) {
 
                 String errorStr = switch (nameError.get()) {
-                    case NAME_EMPTY -> "Name can't be empty!";
-                    case NAME_TOO_LONG -> "Name %s is too long";
-                    case NAME_NOT_VALID -> "Name %s is not valid";
+                    case NAME_EMPTY -> Locales.get("dialog.name_empty");
+                    case NAME_TOO_LONG -> Locales.get("dialog.name_too_long", name);
+                    case NAME_NOT_VALID -> Locales.get("dialog.name_not_valid", name);
                     default -> "Unexpected error";
                 };
 
-                notificationController.showError("Error", String.format(errorStr, name));
+                notificationController.showError(Locales.get("error"), errorStr);
                 return;
             }
 
             try {
                 libraryController.createFolderInActive(name);
-                notificationController.showSuccess("Success", String.format("Folder %s was created.", name));
+                notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.folder_created", name));
             } catch (LibraryException _) {
-                notificationController.showError("Error", String.format("The folder %s already exists!", name));
+                notificationController.showError(Locales.get("error"), Locales.get("dialog.folder_already_exists", name));
             }
         });
 

@@ -13,7 +13,7 @@ public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
     }
 
     private static AppConfig defaults() {
-        return new AppConfig(Mode.DEMO, GuiType.FX, Locale.ITALIAN);
+        return new AppConfig(Mode.DEMO, GuiType.FX, Locale.ENGLISH);
     }
 
     /**
@@ -58,7 +58,7 @@ public record AppConfig(Mode mode, GuiType guiType, Locale locale) {
             boolean isValid = Arrays.stream(Locale.getAvailableLocales()).anyMatch(l -> l.getLanguage().equals(locale));
 
             if (!isValid) {
-                throw new IllegalArgumentException("Invalid value for option: locale. Use it or en   instead.");
+                throw new IllegalArgumentException("Invalid value for option: locale. Use it or en instead.");
             }
 
             parsedLocale = Locale.of(locale);

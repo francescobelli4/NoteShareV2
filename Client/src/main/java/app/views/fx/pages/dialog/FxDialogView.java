@@ -1,5 +1,6 @@
 package app.views.fx.pages.dialog;
 
+import app.utils.Locales;
 import app.utils.dialogs.DialogComboBoxField;
 import app.utils.dialogs.DialogField;
 import app.utils.dialogs.DialogSpecs;
@@ -16,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -48,7 +48,6 @@ public class FxDialogView extends FxView<FxDialogViewController> {
 
     @Override
     protected void onLoaded() {
-        if (out == null || inputNodes.isEmpty()) return;
 
         cancelButton.setOnAction(_ -> controller.cancelButtonPressed(out));
         confirmButton.setOnAction(_ -> {
@@ -69,9 +68,11 @@ public class FxDialogView extends FxView<FxDialogViewController> {
         });
     }
 
-    public void populate(DialogSpecs specs, Consumer<Map<String, String>> out) {
+    public void populate(String title, DialogSpecs specs, Consumer<Map<String, String>> out) {
         this.out = out;
         getRoot();
+
+        titleLabel.setText(title);
 
         for (DialogField field : specs.getFields()) {
 
@@ -84,7 +85,7 @@ public class FxDialogView extends FxView<FxDialogViewController> {
                 case DialogComboBoxField dcbf -> {
                     ComboBox<?> cb = new ComboBox<>(FXCollections.observableArrayList(dcbf.getOptions()));
                     cb.setMaxWidth(Double.MAX_VALUE);
-                    cb.setPromptText("Select...");
+                    cb.setPromptText(Locales.get("dialog.select"));
                     yield cb;
                 }
                 default -> null;
@@ -99,6 +100,6 @@ public class FxDialogView extends FxView<FxDialogViewController> {
 
     @Override
     protected void onClose() {
-
+        // No-op
     }
 }
