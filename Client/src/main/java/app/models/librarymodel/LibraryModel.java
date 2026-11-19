@@ -5,6 +5,10 @@ import app.entities.LibraryNoteEntity;
 import app.utils.ListenerHelper;
 import app.utils.Subscription;
 
+/**
+ * This model represents the user's library in the app. We can add or remove notes and folders in the library and
+ * the listeners should be notified when a folder is updated.
+ */
 public class LibraryModel {
 
     private final ListenerHelper<LibraryModelListener> listeners = new ListenerHelper<>();

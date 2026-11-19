@@ -34,6 +34,10 @@ public class LibraryController {
         this.libraryDAO = libraryDAO;
     }
 
+    /**
+     * This function should get the root folder, generate the entity and set it as root and active.
+     * In demo mode, simply the root folder is created by the DAO.
+     */
     public void loadLibrary() {
 
         LibraryFolderEntity rootFolder = libraryDAO.loadFullLibrary(userModel.isLoggedIn() ? userModel.getUsername() : "ns");
@@ -43,18 +47,37 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(rootFolder));
     }
 
+    /**
+     * This function should set a new active folder and then notify the explorer if needed
+     * @param libraryFolderEntity the new active folder
+     */
     public void setActiveFolder(LibraryFolderEntity libraryFolderEntity) {
         libraryModel.changeActiveFolder(libraryFolderEntity);
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryFolderEntity));
     }
 
+    /**
+     * This function should set the active folder to the actual folder's parent folder and then notify the explorer if
+     * needed
+     */
     public void goBackToParentFolder() {
-        libraryModel.changeActiveFolder(libraryModel.getActiveFolder().getParentFolder());
+        LibraryFolderEntity parentFolder = libraryModel.getActiveFolder().getParentFolder();
+
+        if (parentFolder == null) return;
+
+        libraryModel.changeActiveFolder(parentFolder);
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }
 
+    /**
+     * This function should create a new folder in the active folder. It also checks if a folder with that name already
+     * exists.
+     * In demo mode, creating a new folder only consists in adding that new folder to the active folder's subfolders
+     * @param name the new folder's name
+     * @throws LibraryException in case a folder with that name already exists
+     */
     public void createFolderInActive(String name) throws LibraryException {
         LibraryFolderEntity folder = libraryDAO.createFolder(name, libraryModel.getActiveFolder());
 
@@ -71,6 +94,13 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }
 
+    /**
+     * This function should create a new note in the active folder. It also checks if a note with that name already
+     * exists.
+     * In demo mode, creating a new note only consists in adding that new note to the active folder's notes
+     * @param name the new note's name
+     * @throws LibraryException in case a note with that name already exists
+     */
     public void createNoteInActive(String name) throws LibraryException {
         LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, libraryModel.getActiveFolder());
 

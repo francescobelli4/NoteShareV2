@@ -6,7 +6,7 @@ import app.entities.LibraryNoteEntity;
 public class DemoLibraryDAO implements LibraryDAO {
 
     /**
-     * This function should actually load the full library. In demo mode, it's always made only of the root folder,
+     * This function should load the full library. In demo mode, it's always made only of the root folder,
      * named after the user's username.
      * @param username in case the user is not logged in, it should be "guest"
      * @return the library's root folder
@@ -16,11 +16,25 @@ public class DemoLibraryDAO implements LibraryDAO {
         return new LibraryFolderEntity(username);
     }
 
+    /**
+     * This function should create a new folder (IN PERSISTENT MEMORY) in a specified parent folder. In demo mode,
+     * persistent memory is not used, so it should only return a new LibraryFolderEntity
+     * @param name the new folder's name
+     * @param parentFolder the new folder's parent folder
+     * @return the LibraryFolderEntity associated with the new folder that was created.
+     */
     @Override
     public LibraryFolderEntity createFolder(String name, LibraryFolderEntity parentFolder) {
         return new LibraryFolderEntity(name);
     }
 
+    /**
+     * This function should create a new note (IN PERSISTENT MEMORY) in a specified parent folder. In demo mode,
+     * persistent memory is not used, so it should only return a new LibraryNoteEntity
+     * @param name the new note's name
+     * @param parentFolder the new note's parent folder
+     * @return the LibraryNoteEntity associated with the new note that was created.
+     */
     @Override
     public LibraryNoteEntity createNote(String name, LibraryFolderEntity parentFolder) {
         return new LibraryNoteEntity(name);

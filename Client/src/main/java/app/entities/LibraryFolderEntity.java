@@ -12,11 +12,19 @@ public final class LibraryFolderEntity extends ExplorerItemEntity {
         super(name);
     }
 
+    /**
+     * This function should add a new subfolder to this folder.
+     * @param libraryFolderEntity the new subfolder
+     */
     public void addSubFolder(LibraryFolderEntity libraryFolderEntity) {
         libraryFolderEntity.parentFolder = this;
         subFolders.add(libraryFolderEntity);
     }
 
+    /**
+     * This function should add a new note to this folder.
+     * @param libraryNoteEntity the new note
+     */
     public void addNote(LibraryNoteEntity libraryNoteEntity) {
         libraryNoteEntity.setParentFolder(this);
         notes.add(libraryNoteEntity);
