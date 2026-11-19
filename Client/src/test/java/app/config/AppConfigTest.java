@@ -31,7 +31,7 @@ class AppConfigTest {
         assertAll("Default Options",
                 () -> assertEquals(Mode.DEMO, appConfig.mode()),
                 () -> assertEquals(GuiType.FX, appConfig.guiType()),
-                () -> assertEquals(Locale.ITALIAN, appConfig.locale())
+                () -> assertEquals(Locale.ENGLISH, appConfig.locale())
         );
     }
 
