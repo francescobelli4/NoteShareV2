@@ -47,4 +47,8 @@ public class ExplorerModel {
     public ExplorerMode getMode() {
         return mode;
     }
+
+    public List<ExplorerItemEntity> getItems() {
+        return List.copyOf(items);
+    }
 }
