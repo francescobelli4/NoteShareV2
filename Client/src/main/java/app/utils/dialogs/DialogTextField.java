@@ -5,7 +5,7 @@ public class DialogTextField extends DialogField {
     private final String prompt;
 
     public DialogTextField(String id, String prompt) {
-        this.id = id;
+        super(id);
         this.prompt = prompt;
     }
 

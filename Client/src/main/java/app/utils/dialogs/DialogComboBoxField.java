@@ -6,7 +6,7 @@ public class DialogComboBoxField extends DialogField {
     private final List<String> options;
 
     public DialogComboBoxField(String id, List<String> options) {
-        this.id = id;
+        super(id);
         this.options = options;
     }
 
