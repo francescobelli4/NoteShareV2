@@ -4,6 +4,7 @@ import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
+import app.views.fx.pages.home.explorer.FxExplorerView;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -19,8 +20,8 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     private final Supplier<FxUserBoxView> userBoxViewSupplier;
     private FxUserBoxView userBoxView;
 
-    private final Supplier<FxFolderExplorerView> folderExplorerViewSupplier;
-    private FxFolderExplorerView folderExplorerView;
+    private final Supplier<FxExplorerView> folderExplorerViewSupplier;
+    private FxExplorerView folderExplorerView;
 
     @FXML
     private Button loginButton;
@@ -31,7 +32,7 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     @FXML
     private StackPane explorerContainer;
 
-    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier, Supplier<FxFolderExplorerView> folderExplorerViewSupplier) {
+    public FxHomeView(FxHomeViewController controller, UserModel userModel, Supplier<FxUserBoxView> userBoxViewSupplier, Supplier<FxExplorerView> folderExplorerViewSupplier) {
         this.userModel = userModel;
         this.userBoxViewSupplier = userBoxViewSupplier;
         this.folderExplorerViewSupplier = folderExplorerViewSupplier;
@@ -45,7 +46,9 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
 
     @Override
     protected void onLoaded() {
+
         subscribe(userModel.addListener(this));
+
         loginButton.setOnAction(_ -> controller.onLoginButtonClicked());
         controller.tryLoginUsingToken();
 

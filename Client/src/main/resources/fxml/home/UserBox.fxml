@@ -11,7 +11,7 @@
         <Image url="@../styles/icons/user.png"/>
     </ImageView>
 
-    <Label fx:id="usernameLabel" text="Username" styleClass="subtitle"/>
+    <Label fx:id="usernameLabel" text="%username" styleClass="subtitle"/>
 
     <Label fx:id="coinsLabel" text="0" styleClass="coins-label" visible="false" managed="false">
         <graphic>

@@ -41,7 +41,8 @@
             **/Services.java,
             **/exceptions/**,
             **/AuthServiceError.java,
-            **/WalletServiceError.java
+            **/WalletServiceError.java,
+            **/ExplorerMode.java
         </sonar.coverage.exclusions>
         <!-- Excluding views from code duplication checks -->
         <sonar.cpd.exclusions>**/views/fx/**</sonar.cpd.exclusions>

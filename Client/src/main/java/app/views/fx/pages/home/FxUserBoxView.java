@@ -61,7 +61,7 @@ public class FxUserBoxView extends FxView<FxUserBoxController> implements UserMo
             coinsLabel.setManaged(true);
             coinsLabel.setVisible(true);
 
-            coinsLabel.setText(String.format("%s",walletModel.getBalance()));
+            coinsLabel.setText(String.format("%s", walletModel.getBalance()));
         }
     }
 

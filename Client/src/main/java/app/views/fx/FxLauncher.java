@@ -2,6 +2,7 @@ package app.views.fx;
 
 import app.appcontrollers.AppControllers;
 import app.models.Models;
+import app.utils.Locales;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -49,7 +50,7 @@ public class FxLauncher extends Application {
         stage.setMinHeight(minHeight);
 
         stage.setScene(scene);
-        stage.setTitle("NoteShare");
+        stage.setTitle(Locales.get("noteshare"));
         stage.show();
 
         navigator.resetToPage(viewFactory.createFxHomeView());

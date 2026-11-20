@@ -4,6 +4,10 @@ import app.utils.ListenerHelper;
 import app.utils.NotificationType;
 import app.utils.Subscription;
 
+/**
+ * This model represents notifications in the app. When a new notification arrives, it should notify the listeners
+ * to create the proper notification view to display that notification.
+ */
 public class NotificationModel {
 
     private final ListenerHelper<NotificationModelListener> listeners = new ListenerHelper<>();

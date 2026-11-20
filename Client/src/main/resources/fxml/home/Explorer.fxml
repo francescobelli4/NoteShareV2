@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="Infinity" maxWidth="Infinity" spacing="16" styleClass="explorer-root" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+
+    <stylesheets>
+        <URL value="@../styles/explorer.css" />
+    </stylesheets>
+
+    <padding>
+        <Insets bottom="32" left="40" right="40" top="32" />
+    </padding>
+
+    <StackPane fx:id="topBarContainer" />
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <ScrollPane fitToWidth="true" styleClass="explorer-scroll">
+            <FlowPane fx:id="itemsPane" hgap="16" styleClass="explorer-items" vgap="16">
+                <padding>
+                    <Insets bottom="8" left="8" right="8" top="8" />
+                </padding>
+            </FlowPane>
+        </ScrollPane>
+
+        <Label fx:id="emptyLabel" managed="false" styleClass="text-muted" text="%folder_empty" visible="false" />
+    </StackPane>
+</VBox>
