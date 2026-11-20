@@ -36,10 +36,12 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
         FxDialogView dialog = factory.createFxDialogView();
         DialogSpecs dialogSpecs = new DialogSpecs();
         dialogSpecs.addTextField("name", Locales.get("dialog.note_name"));
+        dialogSpecs.addFileChooser("chosen_file");
 
         dialog.populate(Locales.get("dialog.create_new_note"), dialogSpecs, output -> {
 
             String name = output.get("name");
+            String chosenFile = output.get("chosen_file");
 
             Optional<LibraryError> nameError = LibraryRules.isNameValid(name);
 
@@ -56,8 +58,13 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
                 return;
             }
 
+            if (chosenFile == null) {
+                notificationController.showError(Locales.get("error"), Locales.get("dialog.file_not_chosen"));
+                return;
+            }
+
             try {
-                libraryController.createNoteInActive(name);
+                libraryController.createNoteInActive(name, chosenFile);
                 notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.note_created", name));
             } catch (LibraryException _) {
                 notificationController.showError(Locales.get("error"), Locales.get("dialog.note_already_exists"));

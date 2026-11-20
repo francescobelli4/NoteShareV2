@@ -3,9 +3,11 @@ package app.entities;
 public final class LibraryNoteEntity extends ExplorerItemEntity {
 
     private LibraryFolderEntity parentFolder;
+    private final String path;
 
-    public LibraryNoteEntity(String name) {
+    public LibraryNoteEntity(String name, String path) {
         super(name);
+        this.path = path;
     }
 
     public LibraryFolderEntity getParentFolder() {
@@ -14,5 +16,9 @@ public final class LibraryNoteEntity extends ExplorerItemEntity {
 
     public void setParentFolder(LibraryFolderEntity parentFolder) {
         this.parentFolder = parentFolder;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

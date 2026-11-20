@@ -99,10 +99,11 @@ public class LibraryController {
      * exists.
      * In demo mode, creating a new note only consists in adding that new note to the active folder's notes
      * @param name the new note's name
+     * @param path the PDF file path
      * @throws LibraryException in case a note with that name already exists
      */
-    public void createNoteInActive(String name) throws LibraryException {
-        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, libraryModel.getActiveFolder());
+    public void createNoteInActive(String name, String path) throws LibraryException {
+        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, path, libraryModel.getActiveFolder());
 
         List<String> siblings = new ArrayList<>();
         libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));

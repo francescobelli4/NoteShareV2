@@ -18,7 +18,9 @@ public class FxExplorerController implements GraphicController {
 
         switch (itemEntity) {
             case LibraryFolderEntity libFolder -> libraryController.setActiveFolder(libFolder);
-            case LibraryNoteEntity _ -> { /* ... */ }
+            case LibraryNoteEntity libNote -> {
+
+            }
         }
     }
 }

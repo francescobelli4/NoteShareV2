@@ -1,10 +1,8 @@
 package app.views.fx.pages.dialog;
 
 import app.utils.Locales;
-import app.utils.dialogs.DialogComboBoxField;
-import app.utils.dialogs.DialogField;
-import app.utils.dialogs.DialogSpecs;
-import app.utils.dialogs.DialogTextField;
+import app.utils.Utils;
+import app.utils.dialogs.*;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.dialog.FxDialogViewController;
 import javafx.collections.FXCollections;
@@ -60,6 +58,10 @@ public class FxDialogView extends FxView<FxDialogViewController> {
 
                     case ComboBox<?> cb -> inputs.put(entry.getKey(), cb.getValue() == null ? "" : cb.getValue().toString());
 
+                    case Button _ -> {
+                        // No-op: buttons will populate inputs from the functions in controller
+                    }
+
                     default -> throw new IllegalStateException("Unsupported input node: " + entry.getValue());
                 }
             }
@@ -87,6 +89,11 @@ public class FxDialogView extends FxView<FxDialogViewController> {
                     cb.setMaxWidth(Double.MAX_VALUE);
                     cb.setPromptText(Locales.get("dialog.select"));
                     yield cb;
+                }
+                case DialogFileChooserField dfcf -> {
+                    Button button = new Button(Locales.get("choose_file"));
+                    button.setOnAction(_ -> controller.fileChooserButtonPressed(dfcf.getId(), inputs, button.getScene().getWindow()));
+                    yield button;
                 }
                 default -> null;
             };

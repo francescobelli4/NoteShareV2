@@ -1,5 +1,9 @@
 package app.utils;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -74,5 +78,12 @@ public class Utils {
         }
 
         return dir.mkdirs();
+    }
+
+    public static File openFileChooser(Window window) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(Locales.get("choose_file"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf"));
+        return fileChooser.showOpenDialog(window);
     }
 }
