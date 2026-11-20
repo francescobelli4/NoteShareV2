@@ -38,8 +38,7 @@ public class FxUserBoxView extends FxView<FxUserBoxController> implements UserMo
 
         if (userModel.hasPermission(Permission.USE_COINS)) {
             controller.getBalance().exceptionally(_ -> {
-                //Throwable cause = error.getCause() != null ? error.getCause() : error;
-                // Still not done, we'll need a notification system!
+                controller.notifyBalanceError();
                 return null;
             });
         }
