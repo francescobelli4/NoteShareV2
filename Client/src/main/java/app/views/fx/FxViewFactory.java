@@ -11,6 +11,7 @@ import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.home.FxUserBoxController;
 import app.views.fx.graphiccontrollers.home.explorer.FxLibraryExplorerTopBarController;
 import app.views.fx.graphiccontrollers.notification.FxNotificationController;
+import app.views.fx.graphiccontrollers.viewer.FxViewerController;
 import app.views.fx.pages.auth.FxAuthLoginView;
 import app.views.fx.pages.auth.FxAuthRegisterView;
 import app.views.fx.pages.auth.FxAuthView;
@@ -20,6 +21,7 @@ import app.views.fx.pages.home.FxHomeView;
 import app.views.fx.pages.home.FxUserBoxView;
 import app.views.fx.pages.home.explorer.FxLibraryExplorerTopBarView;
 import app.views.fx.pages.notification.FxNotificationView;
+import app.views.fx.pages.viewer.FxViewerView;
 
 /**
  * This class should be the factory that creates every FX view. In this way, editing a view only affects this class.
@@ -62,7 +64,7 @@ public class FxViewFactory {
     }
 
     public FxExplorerView createFxExplorerView() {
-        FxExplorerController graphicsController = new FxExplorerController(appControllers.libraryController());
+        FxExplorerController graphicsController = new FxExplorerController(appControllers.libraryController(), navigator, this);
         return new FxExplorerView(graphicsController, models.explorerModel(), this::createFxLibraryExplorerTopBarView);
     }
 
@@ -79,5 +81,10 @@ public class FxViewFactory {
     public FxDialogView createFxDialogView() {
         FxDialogViewController graphicsController = new FxDialogViewController(navigator);
         return new FxDialogView(graphicsController);
+    }
+
+    public FxViewerView createFxViewerView() {
+        FxViewerController graphicsController = new FxViewerController(appControllers.notesController());
+        return new FxViewerView(graphicsController, models.noteModel());
     }
 }

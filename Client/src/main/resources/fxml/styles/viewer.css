@@ -1,0 +1,30 @@
+.viewer-background {
+    -fx-background-color: rgba(0, 0, 0, 0.65);
+}
+
+.viewer-scroll,
+.viewer-scroll > .viewport,
+.viewer-pages {
+    -fx-background-color: transparent;
+}
+
+.viewer-scroll {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.viewer-page {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 16, 0.0, 0, 4);
+}
+
+.viewer-close-button {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-radius: 20;
+    -fx-padding: 0.4em;
+    -fx-cursor: hand;
+}
+
+.viewer-close-button:hover {
+    -fx-background-color: white;
+}

@@ -10,6 +10,7 @@ import app.daos.library.LibraryDAO;
 import app.models.Models;
 import app.models.explorermodel.ExplorerModel;
 import app.models.librarymodel.LibraryModel;
+import app.models.notemodel.NoteModel;
 import app.models.notificationmodel.NotificationModel;
 import app.models.usermodel.UserModel;
 import app.models.walletmodel.WalletModel;
@@ -64,14 +65,16 @@ public class App {
                 new WalletModel(),
                 new ExplorerModel(),
                 new LibraryModel(),
-                new NotificationModel()
+                new NotificationModel(),
+                new NoteModel()
         );
 
         AppControllers appControllers = new AppControllers(
                 new AuthController(models.userModel()),
                 new ProfileController(models.walletModel()),
                 new LibraryController(models.userModel(), models.explorerModel(), models.libraryModel(), libraryDAO),
-                new NotificationController(models.notificationModel())
+                new NotificationController(models.notificationModel()),
+                new NotesController(models.noteModel())
         );
 
         if (APPCONFIG.guiType() == GuiType.FX) {

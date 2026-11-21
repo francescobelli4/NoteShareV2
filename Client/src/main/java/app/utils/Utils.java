@@ -79,11 +79,4 @@ public class Utils {
 
         return dir.mkdirs();
     }
-
-    public static File openFileChooser(Window window) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(Locales.get("choose_file"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf"));
-        return fileChooser.showOpenDialog(window);
-    }
 }
