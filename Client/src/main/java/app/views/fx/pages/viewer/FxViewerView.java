@@ -18,10 +18,15 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class FxViewerView extends FxView<FxViewerController> implements NoteModelListener {
@@ -38,6 +43,7 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
     private PDFObject pdfObject;
     private final ScrollbarManager scrollbarManager = new ScrollbarManager();
     private int mainPageIndex = 0;
+    private final List<ImageView> pageViews = new ArrayList<>();
 
     public FxViewerView(FxViewerController controller, NoteModel noteModel) {
         super(controller);
@@ -64,7 +70,7 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
 
     @Override
     protected void onClose() {
-        // Still not done :D
+        controller.onViewerClose();
     }
 
     @Override
@@ -81,16 +87,31 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
         scrollPane.vvalueProperty().addListener(_ -> onScroll());
     }
 
+    @Override
+    public void onPageRendered(int pageIndex, byte[] imageBytes) {
+        Image image = new Image(new ByteArrayInputStream(imageBytes));
+        updateUI(() -> pageViews.get(pageIndex).setImage(image));
+    }
+
+    @Override
+    public void onPageDeleted(int pageIndex) {
+        updateUI(() -> pageViews.get(pageIndex).setImage(null));
+    }
+
     private void addPage(PageInfo pageInfo) {
 
-        StackPane page = new StackPane();
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(pageInfo.widthPx());
+        imageView.setFitHeight(pageInfo.heightPx());
+        imageView.setPreserveRatio(true);
+
+        StackPane page = new StackPane(imageView);
+        page.getStyleClass().add("viewer-page");
         page.setPrefSize(pageInfo.widthPx(), pageInfo.heightPx());
         page.setMinSize(pageInfo.widthPx(), pageInfo.heightPx());
         page.setMaxSize(pageInfo.widthPx(), pageInfo.heightPx());
-        page.setStyle(
-                "-fx-background-color: white;"
-        );
 
+        pageViews.add(imageView);
         pagesBox.getChildren().add(page);
     }
 

@@ -16,6 +16,10 @@ public class FxViewerController implements GraphicController {
     }
 
     public void onNewPageChanged(int pageIndex) {
+        notesController.renderRange(pageIndex);
+    }
 
+    public void onViewerClose() {
+        notesController.closeNote();
     }
 }

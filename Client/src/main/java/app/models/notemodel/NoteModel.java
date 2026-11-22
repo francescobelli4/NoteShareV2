@@ -15,4 +15,12 @@ public class NoteModel {
     public void pdfOpened(PDFObject pdfObject) {
         listeners.triggerEvent(listener -> listener.onPdfOpened(pdfObject));
     }
+
+    public void pageRendered(int index, byte[] image) {
+        listeners.triggerEvent(listener -> listener.onPageRendered(index, image));
+    }
+
+    public void pageDeleted(int index) {
+        listeners.triggerEvent(listener -> listener.onPageDeleted(index));
+    }
 }
