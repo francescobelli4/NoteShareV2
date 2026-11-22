@@ -79,4 +79,8 @@ public class Utils {
 
         return dir.mkdirs();
     }
+
+    public static boolean inInterval(double n, double min, double max) {
+        return (n > min && n < max);
+    }
 }

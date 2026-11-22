@@ -7,6 +7,8 @@ import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import app.utils.PDFObject;
 import app.utils.PageInfo;
+import app.utils.ScrollbarManager;
+import app.utils.Utils;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.viewer.FxViewerController;
@@ -24,6 +26,8 @@ import java.util.function.Supplier;
 
 public class FxViewerView extends FxView<FxViewerController> implements NoteModelListener {
 
+    private static final double SPACING = 16;
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -31,6 +35,9 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
 
     private LibraryNoteEntity noteEntity;
     private final NoteModel noteModel;
+    private PDFObject pdfObject;
+    private final ScrollbarManager scrollbarManager = new ScrollbarManager();
+    private int mainPageIndex = 0;
 
     public FxViewerView(FxViewerController controller, NoteModel noteModel) {
         super(controller);
@@ -45,8 +52,8 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
     @Override
     protected void onLoaded() {
 
+        pagesBox.setSpacing(SPACING);
         subscribe(noteModel.addListener(this));
-        //scrollPane.vvalueProperty().addListener(_ -> calculateNewVisiblePage());
     }
 
     public void setNote(LibraryNoteEntity noteEntity) {
@@ -63,10 +70,15 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
     @Override
     public void onPdfOpened(PDFObject pdfObject) {
 
+        this.pdfObject = pdfObject;
+
+        prepareScrollbarManager(pdfObject);
+
         for (PageInfo pageInfo : pdfObject.pages()) {
-            System.out.println(String.format("W: %s | H: %s", pageInfo.widthPx(), pageInfo.heightPx()));
             addPage(pageInfo);
         }
+
+        scrollPane.vvalueProperty().addListener(_ -> onScroll());
     }
 
     private void addPage(PageInfo pageInfo) {
@@ -81,4 +93,34 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
 
         pagesBox.getChildren().add(page);
     }
+
+    private void prepareScrollbarManager(PDFObject pdfObject) {
+        double[] heights = new double[pdfObject.getPageCount()];
+        heights[0] = 0;
+
+        for (int i = 1; i < pdfObject.getPageCount(); i++) {
+            heights[i] = heights[i-1] + SPACING + pdfObject.getPage(i-1).heightPx();
+        }
+
+        scrollbarManager.setHeights(heights);
+    }
+
+    private void onScroll() {
+        // "Window height"
+        double viewportHeight = scrollPane.getViewportBounds().getHeight();
+        // The max amount of pixels that can be scrolled down with that "window height"
+        double maxScrollablePixels = Math.max(0, pagesBox.getHeight() - viewportHeight);
+        // The current amount of scrolled down pixels referring to the center of the window
+        double currentY = (scrollPane.getVvalue() * maxScrollablePixels) + viewportHeight / 2.0;
+
+
+        double min = scrollbarManager.getHeights()[mainPageIndex];
+        double max = mainPageIndex + 1 >= pdfObject.getPageCount() ? Double.POSITIVE_INFINITY : scrollbarManager.getHeights()[mainPageIndex + 1];
+
+        if (Utils.inInterval(currentY, min, max)) return;
+
+        mainPageIndex = scrollbarManager.pageIndexForHeight(currentY);
+        controller.onNewPageChanged(mainPageIndex);
+    }
+
 }
