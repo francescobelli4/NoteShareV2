@@ -1,8 +1,11 @@
 package app.appcontrollers;
 
 import app.models.notemodel.NoteModel;
+import app.models.notificationmodel.NotificationModel;
+import app.utils.PDFObject;
 import app.utils.PDFRenderer;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class NotesController {
@@ -14,9 +17,10 @@ public class NotesController {
         this.noteModel = noteModel;
     }
 
-    public void openPDF(String path) {
+    public void openPDF(String path) throws IOException {
         renderer = new PDFRenderer(this);
-        noteModel.pdfOpened(renderer.open(Path.of(path)));
+        PDFObject pdfObject = renderer.open(Path.of(path));
+        noteModel.pdfOpened(pdfObject);
     }
 
     public void renderRange(int visiblePage) {

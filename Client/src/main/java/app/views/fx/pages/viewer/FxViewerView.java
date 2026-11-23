@@ -85,6 +85,8 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
         }
 
         scrollPane.vvalueProperty().addListener(_ -> onScroll());
+
+        controller.onNewPageChanged(0);
     }
 
     @Override
