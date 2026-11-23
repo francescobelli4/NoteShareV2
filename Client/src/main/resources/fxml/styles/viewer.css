@@ -3,7 +3,6 @@
 }
 
 .viewer-scroll,
-.viewer-scroll > .viewport,
 .viewer-pages {
     -fx-background-color: transparent;
 }

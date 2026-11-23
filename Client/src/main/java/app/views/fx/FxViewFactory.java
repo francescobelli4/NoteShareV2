@@ -84,7 +84,7 @@ public class FxViewFactory {
     }
 
     public FxViewerView createFxViewerView() {
-        FxViewerController graphicsController = new FxViewerController(appControllers.notesController(), appControllers.notificationController());
+        FxViewerController graphicsController = new FxViewerController(appControllers.notesController(), appControllers.notificationController(), navigator);
         return new FxViewerView(graphicsController, models.noteModel());
     }
 }

@@ -1,7 +1,6 @@
 package app.appcontrollers;
 
 import app.models.notemodel.NoteModel;
-import app.models.notificationmodel.NotificationModel;
 import app.utils.PDFObject;
 import app.utils.PDFRenderer;
 

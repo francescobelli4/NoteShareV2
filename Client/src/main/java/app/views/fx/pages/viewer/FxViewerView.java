@@ -3,31 +3,23 @@ package app.views.fx.pages.viewer;
 import app.entities.LibraryNoteEntity;
 import app.models.notemodel.NoteModel;
 import app.models.notemodel.NoteModelListener;
-import app.models.usermodel.UserModel;
-import app.models.usermodel.UserModelListener;
 import app.utils.PDFObject;
 import app.utils.PageInfo;
 import app.utils.ScrollbarManager;
 import app.utils.Utils;
 import app.views.fx.FxView;
-import app.views.fx.graphiccontrollers.home.FxHomeViewController;
 import app.views.fx.graphiccontrollers.viewer.FxViewerController;
-import app.views.fx.pages.home.FxUserBoxView;
-import app.views.fx.pages.home.explorer.FxExplorerView;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class FxViewerView extends FxView<FxViewerController> implements NoteModelListener {
 
@@ -37,8 +29,9 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
     private ScrollPane scrollPane;
     @FXML
     private VBox pagesBox;
+    @FXML
+    private Button closeButton;
 
-    private LibraryNoteEntity noteEntity;
     private final NoteModel noteModel;
     private PDFObject pdfObject;
     private final ScrollbarManager scrollbarManager = new ScrollbarManager();
@@ -59,12 +52,12 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
     protected void onLoaded() {
 
         pagesBox.setSpacing(SPACING);
+        closeButton.setOnAction(_ -> controller.closeViewer());
+
         subscribe(noteModel.addListener(this));
     }
 
     public void setNote(LibraryNoteEntity noteEntity) {
-
-        this.noteEntity = noteEntity;
         controller.openNote(noteEntity);
     }
 

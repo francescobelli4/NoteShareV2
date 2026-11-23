@@ -14,7 +14,7 @@
         <URL value="@../styles/viewer.css"/>
     </stylesheets>
 
-    <ScrollPane fx:id="scrollPane" styleClass="viewer-scroll" fitToWidth="true" hbarPolicy="NEVER" maxWidth="900" maxHeight="Infinity">
+    <ScrollPane fx:id="scrollPane" styleClass="viewer-scroll" fitToWidth="true" maxWidth="Infinity" maxHeight="Infinity">
         <VBox fx:id="pagesBox" alignment="TOP_CENTER" spacing="16" styleClass="viewer-pages">
             <padding>
                 <Insets bottom="24" left="24" right="24" top="24"/>
