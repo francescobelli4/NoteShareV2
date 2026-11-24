@@ -2,14 +2,22 @@
     -fx-background-color: rgba(0, 0, 0, 0.65);
 }
 
-.viewer-scroll,
-.viewer-pages {
-    -fx-background-color: transparent;
+.viewer-page-counter {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+    -fx-background-radius: 16;
+    -fx-text-fill: white;
+    -fx-padding: 0.3em 0.9em 0.3em 0.9em;
+    -fx-font-size: 0.9em;
 }
 
 .viewer-scroll {
     -fx-background-insets: 0;
     -fx-padding: 0;
+}
+
+.viewer-scroll,
+.viewer-scroll > .viewport {
+    -fx-background-color: transparent;
 }
 
 .viewer-page {

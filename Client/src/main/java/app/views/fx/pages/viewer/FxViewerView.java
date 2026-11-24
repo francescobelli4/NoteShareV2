@@ -11,6 +11,7 @@ import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.viewer.FxViewerController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +32,8 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
     private VBox pagesBox;
     @FXML
     private Button closeButton;
+    @FXML
+    private Label pageCounterLabel;
 
     private final NoteModel noteModel;
     private PDFObject pdfObject;
@@ -80,6 +83,8 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
         scrollPane.vvalueProperty().addListener(_ -> onScroll());
 
         controller.onNewPageChanged(0);
+
+        updatePageCounter();
     }
 
     @Override
@@ -129,14 +134,18 @@ public class FxViewerView extends FxView<FxViewerController> implements NoteMode
         // The current amount of scrolled down pixels referring to the center of the window
         double currentY = (scrollPane.getVvalue() * maxScrollablePixels) + viewportHeight / 2.0;
 
-
         double min = scrollbarManager.getHeights()[mainPageIndex];
         double max = mainPageIndex + 1 >= pdfObject.getPageCount() ? Double.POSITIVE_INFINITY : scrollbarManager.getHeights()[mainPageIndex + 1];
 
         if (Utils.inInterval(currentY, min, max)) return;
 
         mainPageIndex = scrollbarManager.pageIndexForHeight(currentY);
+
+        updatePageCounter();
         controller.onNewPageChanged(mainPageIndex);
     }
 
+    private void updatePageCounter() {
+        pageCounterLabel.setText((mainPageIndex + 1) + " / " + pdfObject.getPageCount());
+    }
 }

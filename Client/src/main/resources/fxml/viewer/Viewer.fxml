@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Label?>
 <StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:id="background" styleClass="viewer-background" maxWidth="Infinity" maxHeight="Infinity">
 
     <stylesheets>
@@ -21,6 +22,12 @@
             </padding>
         </VBox>
     </ScrollPane>
+
+    <Label fx:id="pageCounterLabel" styleClass="viewer-page-counter" mouseTransparent="true" StackPane.alignment="BOTTOM_CENTER">
+        <StackPane.margin>
+            <Insets bottom="24"/>
+        </StackPane.margin>
+    </Label>
 
     <Button fx:id="closeButton" styleClass="viewer-close-button" StackPane.alignment="TOP_RIGHT">
         <StackPane.margin>
