@@ -9,6 +9,7 @@ import app.models.explorermodel.ExplorerMode;
 import app.models.explorermodel.ExplorerModel;
 import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
+import app.models.usermodel.UserModelListener;
 import utils.LibraryError;
 import utils.LibraryRules;
 
@@ -32,6 +33,19 @@ public class LibraryController {
         this.explorerModel = explorerModel;
         this.libraryModel = libraryModel;
         this.libraryDAO = libraryDAO;
+
+        userModel.addListener(new UserModelListener() {
+
+            @Override
+            public void onLoggedIn() {
+                loadLibrary();
+            }
+
+            @Override
+            public void onLoggedOut() {
+                loadLibrary();
+            }
+        });
     }
 
     /**

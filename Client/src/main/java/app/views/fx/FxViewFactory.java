@@ -70,7 +70,7 @@ public class FxViewFactory {
 
     public FxLibraryExplorerTopBarView createFxLibraryExplorerTopBarView() {
         FxLibraryExplorerTopBarController graphicsController = new FxLibraryExplorerTopBarController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
-        return new FxLibraryExplorerTopBarView(graphicsController, models.libraryModel());
+        return new FxLibraryExplorerTopBarView(graphicsController, models.libraryModel(), models.userModel());
     }
 
     public FxNotificationView createFxNotificationView() {
