@@ -1,5 +1,6 @@
 package app.utils;
 
+import jdk.jshell.execution.Util;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -52,5 +53,11 @@ class UtilsTest {
     @Test
     void createDir_AlreadyExists() {
         assertFalse(Utils.createDir(tempDir.toString()));
+    }
+
+    @Test
+    void inIntervalTest() {
+        assertTrue(Utils.inInterval(5, 0, 10));
+        assertFalse(Utils.inInterval(5, 6, 10));
     }
 }

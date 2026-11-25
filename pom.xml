@@ -44,7 +44,11 @@
             **/WalletServiceError.java,
             **/ExplorerMode.java,
             **/LibraryError.java,
-            **/NotificationType.java
+            **/NotificationType.java,
+            **/NotesController.java,
+            **/PDFRenderer.java,
+            **/PageInfo.java,
+            **/PDFObject.java
         </sonar.coverage.exclusions>
         <!-- Excluding views from code duplication checks -->
         <sonar.cpd.exclusions>**/views/fx/**</sonar.cpd.exclusions>

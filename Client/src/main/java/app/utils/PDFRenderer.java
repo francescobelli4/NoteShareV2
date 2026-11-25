@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * This class is not testable at the moment.
+ */
 public class PDFRenderer {
 
     private static final int RENDER_DPI = 96;

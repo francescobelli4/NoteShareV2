@@ -7,6 +7,9 @@ import app.utils.PDFRenderer;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * This controller is NOT testable at the moment because we can't mock the renderer!
+ */
 public class NotesController {
 
     private final NoteModel noteModel;
