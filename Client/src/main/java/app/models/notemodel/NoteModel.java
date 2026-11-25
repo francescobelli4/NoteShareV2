@@ -4,6 +4,10 @@ import app.utils.ListenerHelper;
 import app.utils.PDFObject;
 import app.utils.Subscription;
 
+/**
+ * This model represents a note in the app. Actually, we only need to be able to view the note, so this class should
+ * only provide events to notify the view when a page is rendered or deleted from memory.
+ */
 public class NoteModel {
 
     private final ListenerHelper<NoteModelListener> listeners = new ListenerHelper<>();
