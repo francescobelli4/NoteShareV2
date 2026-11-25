@@ -62,7 +62,7 @@ class LibraryModelTest {
         LibraryFolderEntity newActiveFolder = new LibraryFolderEntity("newActiveFolder");
         libraryModel.changeActiveFolder(newActiveFolder);
 
-        LibraryNoteEntity childNote = new LibraryNoteEntity("childNote");
+        LibraryNoteEntity childNote = new LibraryNoteEntity("childNote", "childPath");
         libraryModel.addNoteToActive(childNote);
 
         assertEquals(1, newActiveFolder.getNotes().size());

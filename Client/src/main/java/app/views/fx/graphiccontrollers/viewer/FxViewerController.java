@@ -26,6 +26,7 @@ public class FxViewerController implements GraphicController {
             notesController.openPDF(noteEntity.getPath());
         } catch (IOException _) {
             notificationController.showError(Locales.get("error"), Locales.get("could_not_open_note"));
+            closeViewer();
         }
     }
 
