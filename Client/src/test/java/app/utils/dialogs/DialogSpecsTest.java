@@ -37,6 +37,15 @@ class DialogSpecsTest {
         assertEquals(1, dialogSpecs.getFields().size());
         assertInstanceOf(DialogComboBoxField.class, dialogSpecs.getFields().getFirst());
         assertEquals("testId", dialogSpecs.getFields().getFirst().getId());
+    }
 
+    @Test
+    void addFileChooser() {
+
+        dialogSpecs.addFileChooser("testId");
+
+        assertEquals(1, dialogSpecs.getFields().size());
+        assertInstanceOf(DialogFileChooserField.class, dialogSpecs.getFields().getFirst());
+        assertEquals("testId", dialogSpecs.getFields().getFirst().getId());
     }
 }

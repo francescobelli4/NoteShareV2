@@ -1,0 +1,37 @@
+.viewer-background {
+    -fx-background-color: rgba(0, 0, 0, 0.65);
+}
+
+.viewer-page-counter {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+    -fx-background-radius: 16;
+    -fx-text-fill: white;
+    -fx-padding: 0.3em 0.9em 0.3em 0.9em;
+    -fx-font-size: 0.9em;
+}
+
+.viewer-scroll {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.viewer-scroll,
+.viewer-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.viewer-page {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 16, 0.0, 0, 4);
+}
+
+.viewer-close-button {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-radius: 20;
+    -fx-padding: 0.4em;
+    -fx-cursor: hand;
+}
+
+.viewer-close-button:hover {
+    -fx-background-color: white;
+}

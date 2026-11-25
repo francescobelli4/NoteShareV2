@@ -1,4 +1,4 @@
 package app.appcontrollers;
 
-public record AppControllers(AuthController authController, ProfileController profileController, LibraryController libraryController, NotificationController notificationController) {
+public record AppControllers(AuthController authController, ProfileController profileController, LibraryController libraryController, NotificationController notificationController, NotesController notesController) {
 }

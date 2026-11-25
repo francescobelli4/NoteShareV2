@@ -26,7 +26,7 @@ class DemoLibraryDAOTest {
 
     @Test
     void createNote() {
-        LibraryNoteEntity newNote = demoLibraryDAO.createNote("testNote", new LibraryFolderEntity("dcc"));
+        LibraryNoteEntity newNote = demoLibraryDAO.createNote("testNote", "testPath", new LibraryFolderEntity("dcc"));
         assertNotNull(newNote);
         assertEquals("testNote", newNote.getName());
     }

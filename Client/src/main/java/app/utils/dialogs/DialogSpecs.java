@@ -15,6 +15,10 @@ public class DialogSpecs {
         fields.add(new DialogComboBoxField(id, options));
     }
 
+    public void addFileChooser(String id) {
+        fields.add(new DialogFileChooserField(id));
+    }
+
     public List<DialogField> getFields() {
         return fields;
     }

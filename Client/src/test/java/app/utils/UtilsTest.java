@@ -53,4 +53,10 @@ class UtilsTest {
     void createDir_AlreadyExists() {
         assertFalse(Utils.createDir(tempDir.toString()));
     }
+
+    @Test
+    void inIntervalTest() {
+        assertTrue(Utils.inInterval(5, 0, 10));
+        assertFalse(Utils.inInterval(5, 6, 10));
+    }
 }

@@ -32,11 +32,12 @@ public class DemoLibraryDAO implements LibraryDAO {
      * This function should create a new note (IN PERSISTENT MEMORY) in a specified parent folder. In demo mode,
      * persistent memory is not used, so it should only return a new LibraryNoteEntity
      * @param name the new note's name
+     * @param path the actual PDF path
      * @param parentFolder the new note's parent folder
      * @return the LibraryNoteEntity associated with the new note that was created.
      */
     @Override
-    public LibraryNoteEntity createNote(String name, LibraryFolderEntity parentFolder) {
-        return new LibraryNoteEntity(name);
+    public LibraryNoteEntity createNote(String name, String path, LibraryFolderEntity parentFolder) {
+        return new LibraryNoteEntity(name, path);
     }
 }

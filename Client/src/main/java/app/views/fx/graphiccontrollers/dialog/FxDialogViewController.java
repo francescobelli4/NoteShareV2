@@ -2,7 +2,6 @@ package app.views.fx.graphiccontrollers.dialog;
 
 import app.views.GraphicController;
 import app.views.fx.FxNavigator;
-
 import java.util.Map;
 import java.util.function.Consumer;
 

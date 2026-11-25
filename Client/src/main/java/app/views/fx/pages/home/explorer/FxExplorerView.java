@@ -8,7 +8,6 @@ import app.models.explorermodel.ExplorerModel;
 import app.models.explorermodel.ExplorerModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.explorer.FxExplorerController;
-import app.views.fx.pages.home.ExplorerItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -69,7 +68,7 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
                 case LibraryNoteEntity _ -> noteIcon;
             };
 
-            itemsPane.getChildren().add(new ExplorerItem(item.getName(), icon, () -> controller.onItemDoubleClicked(item)));
+            itemsPane.getChildren().add(new FxExplorerItem(item.getName(), icon, () -> controller.onItemDoubleClicked(item)));
         }
 
         boolean empty = itemsPane.getChildren().isEmpty();

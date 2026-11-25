@@ -38,7 +38,7 @@ class LibraryControllerTest {
         DemoLibraryDAO mockedLibraryDAO = mock(DemoLibraryDAO.class);
         when(mockedLibraryDAO.loadFullLibrary("username")).thenReturn(rootFolder);
         when(mockedLibraryDAO.createFolder(eq("newFolder"), any())).thenReturn(new LibraryFolderEntity("newFolder"));
-        when(mockedLibraryDAO.createNote(eq("newNote"), any())).thenReturn(new LibraryNoteEntity("newNote"));
+        when(mockedLibraryDAO.createNote(eq("newNote"), any(), any())).thenReturn(new LibraryNoteEntity("newNote", "newPath"));
 
 
         libraryController = new LibraryController(userModel, mockedExplorerModel, libraryModel, mockedLibraryDAO);
@@ -126,7 +126,7 @@ class LibraryControllerTest {
 
         libraryController.setActiveFolder(activeFolder);
 
-        libraryController.createNoteInActive("newNote");
+        libraryController.createNoteInActive("newNote", "newPath");
 
         assertEquals(1, activeFolder.getNotes().size());
         assertEquals("newNote", activeFolder.getNotes().getFirst().getName());
@@ -140,8 +140,8 @@ class LibraryControllerTest {
 
         libraryController.setActiveFolder(activeFolder);
 
-        libraryController.createNoteInActive("newNote");
+        libraryController.createNoteInActive("newNote", "newPath");
 
-        assertThrows(LibraryException.class, () -> libraryController.createNoteInActive("newNote"));
+        assertThrows(LibraryException.class, () -> libraryController.createNoteInActive("newNote", "newPath"));
     }
 }

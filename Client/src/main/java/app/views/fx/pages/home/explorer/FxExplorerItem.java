@@ -1,13 +1,13 @@
-package app.views.fx.pages.home;
+package app.views.fx.pages.home.explorer;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-public class ExplorerItem extends VBox {
+public class FxExplorerItem extends VBox {
 
-    public ExplorerItem(String name, Image icon, Runnable onDoubleClick) {
+    public FxExplorerItem(String name, Image icon, Runnable onDoubleClick) {
         super(5);
 
         ImageView imageView = new ImageView(icon);

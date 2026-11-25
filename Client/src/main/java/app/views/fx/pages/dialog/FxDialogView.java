@@ -1,10 +1,7 @@
 package app.views.fx.pages.dialog;
 
 import app.utils.Locales;
-import app.utils.dialogs.DialogComboBoxField;
-import app.utils.dialogs.DialogField;
-import app.utils.dialogs.DialogSpecs;
-import app.utils.dialogs.DialogTextField;
+import app.utils.dialogs.*;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.dialog.FxDialogViewController;
 import javafx.collections.FXCollections;
@@ -15,7 +12,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -60,6 +60,10 @@ public class FxDialogView extends FxView<FxDialogViewController> {
 
                     case ComboBox<?> cb -> inputs.put(entry.getKey(), cb.getValue() == null ? "" : cb.getValue().toString());
 
+                    case Button _ -> {
+                        // No-op: buttons will populate inputs by themselves
+                    }
+
                     default -> throw new IllegalStateException("Unsupported input node: " + entry.getValue());
                 }
             }
@@ -88,6 +92,17 @@ public class FxDialogView extends FxView<FxDialogViewController> {
                     cb.setPromptText(Locales.get("dialog.select"));
                     yield cb;
                 }
+                case DialogFileChooserField dfcf -> {
+                    Button button = new Button(Locales.get("choose_file"));
+                    button.setOnAction(_ -> {
+                        File file = choosePdf(button.getScene().getWindow());
+                        if (file == null) return;
+
+                        inputs.put(dfcf.getId(), file.getAbsolutePath());
+                        button.setText(file.getName());
+                    });
+                    yield button;
+                }
                 default -> null;
             };
 
@@ -101,5 +116,12 @@ public class FxDialogView extends FxView<FxDialogViewController> {
     @Override
     protected void onClose() {
         // No-op
+    }
+
+    private File choosePdf(Window window) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(Locales.get("choose_file"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf"));
+        return fileChooser.showOpenDialog(window);
     }
 }

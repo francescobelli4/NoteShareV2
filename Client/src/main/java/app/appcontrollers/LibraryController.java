@@ -9,6 +9,7 @@ import app.models.explorermodel.ExplorerMode;
 import app.models.explorermodel.ExplorerModel;
 import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
+import app.models.usermodel.UserModelListener;
 import utils.LibraryError;
 import utils.LibraryRules;
 
@@ -32,6 +33,19 @@ public class LibraryController {
         this.explorerModel = explorerModel;
         this.libraryModel = libraryModel;
         this.libraryDAO = libraryDAO;
+
+        userModel.addListener(new UserModelListener() {
+
+            @Override
+            public void onLoggedIn() {
+                loadLibrary();
+            }
+
+            @Override
+            public void onLoggedOut() {
+                loadLibrary();
+            }
+        });
     }
 
     /**
@@ -99,10 +113,11 @@ public class LibraryController {
      * exists.
      * In demo mode, creating a new note only consists in adding that new note to the active folder's notes
      * @param name the new note's name
+     * @param path the PDF file path
      * @throws LibraryException in case a note with that name already exists
      */
-    public void createNoteInActive(String name) throws LibraryException {
-        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, libraryModel.getActiveFolder());
+    public void createNoteInActive(String name, String path) throws LibraryException {
+        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, path, libraryModel.getActiveFolder());
 
         List<String> siblings = new ArrayList<>();
         libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));

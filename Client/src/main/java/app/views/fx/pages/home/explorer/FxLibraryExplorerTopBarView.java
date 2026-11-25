@@ -3,6 +3,8 @@ package app.views.fx.pages.home.explorer;
 import app.entities.LibraryFolderEntity;
 import app.models.librarymodel.LibraryModel;
 import app.models.librarymodel.LibraryModelListener;
+import app.models.usermodel.UserModel;
+import app.models.usermodel.UserModelListener;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.explorer.FxLibraryExplorerTopBarController;
 import javafx.fxml.FXML;
@@ -11,7 +13,7 @@ import javafx.scene.control.Label;
 
 
 
-public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarController> implements LibraryModelListener {
+public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarController> implements LibraryModelListener, UserModelListener {
 
     @FXML
     private Button backButton;
@@ -23,10 +25,12 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
     private Label pathLabel;
 
     private final LibraryModel libraryModel;
+    private final UserModel userModel;
 
-    public FxLibraryExplorerTopBarView(FxLibraryExplorerTopBarController controller, LibraryModel libraryModel) {
+    public FxLibraryExplorerTopBarView(FxLibraryExplorerTopBarController controller, LibraryModel libraryModel, UserModel userModel) {
         super(controller);
         this.libraryModel = libraryModel;
+        this.userModel = userModel;
     }
 
     @Override
@@ -37,6 +41,8 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
     @Override
     protected void onLoaded() {
         subscribe(libraryModel.addListener(this));
+        subscribe(userModel.addListener(this));
+
         controller.loadLibrary();
 
         newFolderButton.setOnAction(_ -> controller.onNewFolderButtonPressed());
@@ -57,5 +63,15 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
     @Override
     public void activeFolderUpdated(LibraryFolderEntity activeFolder) {
         updateUI(() -> update(activeFolder));
+    }
+
+    @Override
+    public void onLoggedIn() {
+        updateUI(() -> update(libraryModel.getActiveFolder()));
+    }
+
+    @Override
+    public void onLoggedOut() {
+        updateUI(() -> update(libraryModel.getActiveFolder()));
     }
 }
