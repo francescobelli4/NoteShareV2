@@ -1,5 +1,6 @@
 package app.models.librarymodel;
 
+import app.entities.ExplorerItemEntity;
 import app.entities.LibraryFolderEntity;
 import app.entities.LibraryNoteEntity;
 import app.utils.ListenerHelper;
@@ -15,6 +16,7 @@ public class LibraryModel {
 
     private LibraryFolderEntity rootFolder;
     private LibraryFolderEntity activeFolder;
+    private ExplorerItemEntity clipboardItem;
 
     public Subscription addListener(LibraryModelListener listener) {
         return listeners.subscribe(listener);
@@ -37,6 +39,15 @@ public class LibraryModel {
     public void addNoteToActive(LibraryNoteEntity libraryNoteEntity) {
         activeFolder.addNote(libraryNoteEntity);
         listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
+    }
+
+    public void setClipboardItem(ExplorerItemEntity item) {
+        this.clipboardItem = item;
+        listeners.triggerEvent(l -> l.clipboardUpdated(item));
+    }
+
+    public ExplorerItemEntity getClipboardItem() {
+        return clipboardItem;
     }
 
     public LibraryFolderEntity getActiveFolder() {

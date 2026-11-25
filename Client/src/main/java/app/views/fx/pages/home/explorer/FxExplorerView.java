@@ -68,7 +68,10 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
                 case LibraryNoteEntity _ -> noteIcon;
             };
 
-            itemsPane.getChildren().add(new FxExplorerItem(item.getName(), icon, () -> controller.onItemDoubleClicked(item)));
+            itemsPane.getChildren().add(new FxExplorerItem(item.getName(), icon,
+                    () -> controller.onItemClicked(item),
+                    () -> controller.onItemDoubleClicked(item))
+            );
         }
 
         boolean empty = itemsPane.getChildren().isEmpty();
@@ -91,6 +94,11 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
     @Override
     public void explorerModeUpdated(ExplorerMode mode) {
         updateUI(() -> updateTopBar(mode));
+    }
+
+    @Override
+    public void onItemSelected(ExplorerItemEntity itemEntity) {
+        // No-op
     }
 
     private void updateTopBar(ExplorerMode mode) {

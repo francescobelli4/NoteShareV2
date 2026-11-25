@@ -74,7 +74,8 @@ public class App {
                 new ProfileController(models.walletModel()),
                 new LibraryController(models.userModel(), models.explorerModel(), models.libraryModel(), libraryDAO),
                 new NotificationController(models.notificationModel()),
-                new NotesController(models.noteModel())
+                new NotesController(models.noteModel()),
+                new ExplorerController(models.explorerModel())
         );
 
         if (APPCONFIG.guiType() == GuiType.FX) {

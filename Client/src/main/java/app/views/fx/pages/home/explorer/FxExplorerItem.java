@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 
 public class FxExplorerItem extends VBox {
 
-    public FxExplorerItem(String name, Image icon, Runnable onDoubleClick) {
+    public FxExplorerItem(String name, Image icon, Runnable onClick, Runnable onDoubleClick) {
         super(5);
 
         ImageView imageView = new ImageView(icon);
@@ -23,6 +23,7 @@ public class FxExplorerItem extends VBox {
 
         setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) onDoubleClick.run();
+            if (e.getClickCount() == 1) onClick.run();
         });
     }
 }

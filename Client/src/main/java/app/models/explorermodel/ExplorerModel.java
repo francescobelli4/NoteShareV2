@@ -18,6 +18,7 @@ public class ExplorerModel {
 
     private final List<ExplorerItemEntity> items = new ArrayList<>();
     private ExplorerMode mode = ExplorerMode.LIBRARY;
+    private ExplorerItemEntity selectedItem;
 
     public Subscription addListener(ExplorerModelListener listener) {
         return listeners.subscribe(listener);
@@ -41,7 +42,17 @@ public class ExplorerModel {
      */
     public void setMode(ExplorerMode mode) {
         this.mode = mode;
+        selectedItem = null;
         listeners.triggerEvent(listener -> listener.explorerModeUpdated(mode));
+    }
+
+    public void setSelectedItem(ExplorerItemEntity selectedItem) {
+        this.selectedItem = selectedItem;
+        listeners.triggerEvent(listener -> listener.onItemSelected(selectedItem));
+    }
+
+    public ExplorerItemEntity getSelectedItem() {
+        return selectedItem;
     }
 
     public ExplorerMode getMode() {

@@ -64,13 +64,13 @@ public class FxViewFactory {
     }
 
     public FxExplorerView createFxExplorerView() {
-        FxExplorerController graphicsController = new FxExplorerController(appControllers.libraryController(), navigator, this);
+        FxExplorerController graphicsController = new FxExplorerController(appControllers.explorerController(), appControllers.libraryController(), navigator, this);
         return new FxExplorerView(graphicsController, models.explorerModel(), this::createFxLibraryExplorerTopBarView);
     }
 
     public FxLibraryExplorerTopBarView createFxLibraryExplorerTopBarView() {
         FxLibraryExplorerTopBarController graphicsController = new FxLibraryExplorerTopBarController(appControllers.libraryController(), appControllers.notificationController(), this, navigator);
-        return new FxLibraryExplorerTopBarView(graphicsController, models.libraryModel(), models.userModel());
+        return new FxLibraryExplorerTopBarView(graphicsController, models.libraryModel(), models.userModel(), models.explorerModel());
     }
 
     public FxNotificationView createFxNotificationView() {

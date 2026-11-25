@@ -132,6 +132,61 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }
 
+    public void setClipboardItem() {
+
+        ExplorerItemEntity selectedItem = explorerModel.getSelectedItem();
+
+        if (selectedItem == null) return;
+
+        libraryModel.setClipboardItem(explorerModel.getSelectedItem());
+    }
+
+    public void pasteClipboardIntoActive() throws LibraryException {
+
+        ExplorerItemEntity clipboardItem = libraryModel.getClipboardItem();
+
+        if (clipboardItem == null) return;
+
+        switch (clipboardItem) {
+            case LibraryFolderEntity libFolder -> pasteFolderIntoActive(libFolder);
+            case LibraryNoteEntity libNote -> pasteNoteIntoActive(libNote);
+        }
+    }
+
+    private void pasteNoteIntoActive(LibraryNoteEntity noteEntity) throws LibraryException {
+
+        List<String> siblings = new ArrayList<>();
+        libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
+        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(noteEntity.getName(), siblings);
+
+        if (duplicateError.isPresent()) {
+            throw new LibraryException(duplicateError.get());
+        }
+
+        libraryDAO.pasteNote(noteEntity, libraryModel.getActiveFolder());
+
+        libraryModel.addNoteToActive(noteEntity);
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+    }
+
+    private void pasteFolderIntoActive(LibraryFolderEntity folderEntity) throws LibraryException {
+
+        List<String> siblings = new ArrayList<>();
+        libraryModel.getActiveFolder().getSubFolders().forEach(subFolder -> siblings.add(subFolder.getName()));
+        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(folderEntity.getName(), siblings);
+
+        if (duplicateError.isPresent()) {
+            throw new LibraryException(duplicateError.get());
+        }
+
+        libraryDAO.pasteFolder(folderEntity, libraryModel.getActiveFolder());
+
+        libraryModel.addFolderToActive(folderEntity);
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+    }
+
     /* UTILS */
 
     private List<ExplorerItemEntity> toExplorerItemEntityList(LibraryFolderEntity folder) {
