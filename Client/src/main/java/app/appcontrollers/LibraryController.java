@@ -93,15 +93,11 @@ public class LibraryController {
      * @throws LibraryException in case a folder with that name already exists
      */
     public void createFolderInActive(String name) throws LibraryException {
+
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
         LibraryFolderEntity folder = libraryDAO.createFolder(name, libraryModel.getActiveFolder());
 
-        List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getSubFolders().forEach(folderEntity -> siblings.add(folderEntity.getName()));
-        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
-
-        if (duplicateError.isPresent()) {
-            throw new LibraryException(duplicateError.get());
-        }
+        if (activeFolder.hasSubFolderNamed(name)) throw new LibraryException(LibraryError.FOLDER_ALREADY_EXISTS);
 
         libraryModel.addFolderToActive(folder);
 
@@ -117,19 +113,15 @@ public class LibraryController {
      * @throws LibraryException in case a note with that name already exists
      */
     public void createNoteInActive(String name, String path) throws LibraryException {
-        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, path, libraryModel.getActiveFolder());
 
-        List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
-        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
+        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, path, activeFolder);
 
-        if (duplicateError.isPresent()) {
-            throw new LibraryException(duplicateError.get());
-        }
+        if (activeFolder.hasNoteNamed(name)) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS);
 
         libraryModel.addNoteToActive(libraryNoteEntity);
 
-        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
     }
 
     public void setClipboardItem() {
@@ -155,30 +147,23 @@ public class LibraryController {
 
     private void pasteNoteIntoActive(LibraryNoteEntity noteEntity) throws LibraryException {
 
-        List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
-        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(noteEntity.getName(), siblings);
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
+        if (activeFolder.hasNoteNamed(noteEntity.getName())) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS);
 
-        if (duplicateError.isPresent()) {
-            throw new LibraryException(duplicateError.get());
-        }
-
-        libraryDAO.pasteNote(noteEntity, libraryModel.getActiveFolder());
+        libraryDAO.pasteNote(noteEntity, activeFolder);
 
         libraryModel.addNoteToActive(noteEntity);
 
-        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
     }
 
     private void pasteFolderIntoActive(LibraryFolderEntity folderEntity) throws LibraryException {
 
-        List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getSubFolders().forEach(subFolder -> siblings.add(subFolder.getName()));
-        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(folderEntity.getName(), siblings);
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
+        if (activeFolder.hasSubFolderNamed(folderEntity.getName())) throw new LibraryException(LibraryError.FOLDER_ALREADY_EXISTS);
 
-        if (duplicateError.isPresent()) {
-            throw new LibraryException(duplicateError.get());
-        }
+        // We should check if we are pasting the folder in the same folder or in a descendant to prevent loops
+        if (activeFolder.isDescendantOf(folderEntity)) throw new LibraryException(LibraryError.PASTE_IN_SAME_OR_DESCENDANT);
 
         libraryDAO.pasteFolder(folderEntity, libraryModel.getActiveFolder());
 

@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class LibraryFolderEntity extends ExplorerItemEntity {
     private LibraryFolderEntity parentFolder;
@@ -28,6 +29,33 @@ public final class LibraryFolderEntity extends ExplorerItemEntity {
     public void addNote(LibraryNoteEntity libraryNoteEntity) {
         libraryNoteEntity.setParentFolder(this);
         notes.add(libraryNoteEntity);
+    }
+
+    public boolean hasSubFolderNamed(String name) {
+        for (LibraryFolderEntity folder : subFolders) {
+            if (Objects.equals(folder.getName(), name)) return true;
+        }
+
+        return false;
+    }
+
+    public boolean hasNoteNamed(String name) {
+        for (LibraryNoteEntity note : notes) {
+            if (Objects.equals(note.getName(), name)) return true;
+        }
+
+        return false;
+    }
+
+    public boolean isDescendantOf(LibraryFolderEntity folder) {
+        LibraryFolderEntity temp = this;
+
+        while (temp != null) {
+            if (temp == folder) return true;
+            temp = temp.getParentFolder();
+        }
+
+        return false;
     }
 
     public LibraryFolderEntity getParentFolder() {

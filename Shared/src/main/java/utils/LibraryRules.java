@@ -23,10 +23,4 @@ public class LibraryRules {
 
         return Optional.empty();
     }
-
-    public static Optional<LibraryError> isDuplicate(String name, List<String> siblings) {
-
-        if (siblings.contains(name)) return Optional.of(LibraryError.FOLDER_ALREADY_EXISTS);
-        return Optional.empty();
-    }
 }
