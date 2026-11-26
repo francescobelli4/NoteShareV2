@@ -80,6 +80,7 @@ public class LibraryModel {
         clipboardItem = null;
         listeners.triggerEvent(LibraryModelListener::clipboardUnset);
     }
+
     private boolean isInside(ExplorerItemEntity checkingItem, LibraryFolderEntity deletingFolder) {
         return switch (checkingItem) {
             case LibraryFolderEntity checkingFolder -> checkingFolder.isDescendantOf(deletingFolder);

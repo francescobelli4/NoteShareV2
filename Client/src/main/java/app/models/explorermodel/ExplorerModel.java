@@ -42,9 +42,8 @@ public class ExplorerModel {
      */
     public void setMode(ExplorerMode mode) {
         this.mode = mode;
-        selectedItem = null;
 
-        listeners.triggerEvent(ExplorerModelListener::onItemDeSelected);
+        deSelectItem();
         listeners.triggerEvent(listener -> listener.explorerModeUpdated(mode));
     }
 
