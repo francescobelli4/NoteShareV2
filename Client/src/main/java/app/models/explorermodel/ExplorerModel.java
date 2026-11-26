@@ -47,11 +47,18 @@ public class ExplorerModel {
         listeners.triggerEvent(listener -> listener.explorerModeUpdated(mode));
     }
 
+    /**
+     * This function should set the selectedItem and notify the listeners.
+     * @param selectedItem the new selected item
+     */
     public void setSelectedItem(ExplorerItemEntity selectedItem) {
         this.selectedItem = selectedItem;
         listeners.triggerEvent(listener -> listener.onItemSelected(selectedItem));
     }
 
+    /**
+     * This function should clear the selectedItem and notify the listeners
+     */
     public void deSelectItem() {
         selectedItem = null;
         listeners.triggerEvent(ExplorerModelListener::onItemDeSelected);

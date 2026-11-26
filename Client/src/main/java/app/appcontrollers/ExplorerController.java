@@ -11,6 +11,10 @@ public class ExplorerController {
         this.explorerModel = explorerModel;
     }
 
+    /**
+     * This function should set a new selectedItem in the explorer model.
+     * @param itemEntity the new selected item
+     */
     public void itemClicked(ExplorerItemEntity itemEntity) {
         explorerModel.setSelectedItem(itemEntity);
     }

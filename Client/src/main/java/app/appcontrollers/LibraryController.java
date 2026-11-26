@@ -124,6 +124,10 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
     }
 
+    /**
+     * This function should set the explorer's selected item as the clipboard item when the user copies a note or a
+     * folder.
+     */
     public void setClipboardItem() {
 
         ExplorerItemEntity selectedItem = explorerModel.getSelectedItem();
@@ -133,6 +137,10 @@ public class LibraryController {
         libraryModel.setClipboardItem(explorerModel.getSelectedItem());
     }
 
+    /**
+     * This function should paste the clipboard item (a folder or a note) in the active folder
+     * @throws LibraryException in case the item already exists or the user is trying to paste a folder in a descendant.
+     */
     public void pasteClipboardIntoActive() throws LibraryException {
 
         ExplorerItemEntity clipboardItem = libraryModel.getClipboardItem();
@@ -145,6 +153,12 @@ public class LibraryController {
         }
     }
 
+    /**
+     * This function should paste a note in the active folder. Simply it adds the note in the active folder if another
+     * note with the same name does not exist in the active folder.
+     * @param noteEntity the note that the user wants to paste
+     * @throws LibraryException in case a note with that name already exists
+     */
     private void pasteNoteIntoActive(LibraryNoteEntity noteEntity) throws LibraryException {
 
         LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
@@ -156,6 +170,14 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
     }
 
+    /**
+     * This function should paste a folder in the active folder. It should only add that folder to the active folder if
+     * active folder is not a descendant of the folder the user wants to past (otherwise it would create a loop!) and
+     * there isn't any other folder with that name in the active folder.
+     * @param folderEntity the folder the user wants to paste.
+     * @throws LibraryException in case a folder with that name already exists or active folder is a descendant of the
+     * folder the user wants to paste.
+     */
     private void pasteFolderIntoActive(LibraryFolderEntity folderEntity) throws LibraryException {
 
         LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
@@ -170,6 +192,9 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }
 
+    /**
+     * This function should delete the selected item (a folder or a note).
+     */
     public void deleteSelectedItem() {
         ExplorerItemEntity selectedItem = explorerModel.getSelectedItem();
 
@@ -181,6 +206,10 @@ public class LibraryController {
         }
     }
 
+    /**
+     * This function should delete a folder and clear explorer model's selected item.
+     * @param folderEntity the folder the user wants to delete.
+     */
     private void deleteFolder(LibraryFolderEntity folderEntity) {
 
         libraryModel.deleteFolderFromActive(folderEntity);
@@ -191,6 +220,10 @@ public class LibraryController {
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }
 
+    /**
+     * This function should delete a note and clear the explorer model's selected item.
+     * @param noteEntity the note the user wants to delete.
+     */
     private void deleteNote(LibraryNoteEntity noteEntity) {
 
         libraryModel.deleteNoteFromActive(noteEntity);

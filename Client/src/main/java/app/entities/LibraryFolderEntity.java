@@ -31,14 +31,27 @@ public final class LibraryFolderEntity extends ExplorerItemEntity {
         notes.add(libraryNoteEntity);
     }
 
+    /**
+     * This function should remove a folder from subFolders.
+     * @param libraryFolderEntity the folder that has to be removed
+     */
     public void deleteSubFolder(LibraryFolderEntity libraryFolderEntity) {
         subFolders.remove(libraryFolderEntity);
     }
 
+    /**
+     * This function should remove a note from notes.
+     * @param libraryNoteEntity the note that has to be removed.
+     */
     public void deleteNote(LibraryNoteEntity libraryNoteEntity) {
         notes.remove(libraryNoteEntity);
     }
 
+    /**
+     * This function should check if a subfolder with a given name exists in this folder.
+     * @param name the name we want to check
+     * @return true if a subfolder with that name exists.
+     */
     public boolean hasSubFolderNamed(String name) {
         for (LibraryFolderEntity folder : subFolders) {
             if (Objects.equals(folder.getName(), name)) return true;
@@ -47,6 +60,11 @@ public final class LibraryFolderEntity extends ExplorerItemEntity {
         return false;
     }
 
+    /**
+     * This function should check if a note with a given name exists in this folder.
+     * @param name the name we want to check
+     * @return true if a note with that name exists.
+     */
     public boolean hasNoteNamed(String name) {
         for (LibraryNoteEntity note : notes) {
             if (Objects.equals(note.getName(), name)) return true;
@@ -55,6 +73,11 @@ public final class LibraryFolderEntity extends ExplorerItemEntity {
         return false;
     }
 
+    /**
+     * This function should check if this folder is a descendant (or is the same) of a specified LibraryFolderEntity.
+     * @param folder the folder we want to check
+     * @return true if this folder is a descendant of the specified folder.
+     */
     public boolean isDescendantOf(LibraryFolderEntity folder) {
         LibraryFolderEntity temp = this;
 
