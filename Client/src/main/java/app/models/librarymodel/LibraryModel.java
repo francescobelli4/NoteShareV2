@@ -49,20 +49,16 @@ public class LibraryModel {
 
     public void deleteFolderFromActive(LibraryFolderEntity libraryFolderEntity) {
 
-        if (clipboardItem == libraryFolderEntity) {
-            clipboardItem = null;
-            listeners.triggerEvent(LibraryModelListener::clipboardUnset);
-        }
+        // When deleting a folder, we should check if clipboardItem is inside that folder (at any depth) and unset it
+        if (clipboardItem != null && isInside(clipboardItem, libraryFolderEntity)) clearClipboard();
 
         activeFolder.deleteSubFolder(libraryFolderEntity);
         listeners.triggerEvent(l -> l.folderDeleted(libraryFolderEntity));
     }
 
     public void deleteNoteFromActive(LibraryNoteEntity libraryNoteEntity) {
-        if (clipboardItem == libraryNoteEntity) {
-            clipboardItem = null;
-            listeners.triggerEvent(LibraryModelListener::clipboardUnset);
-        }
+
+        if (clipboardItem == libraryNoteEntity) clearClipboard();
 
         activeFolder.deleteNote(libraryNoteEntity);
         listeners.triggerEvent(l -> l.noteDeleted(libraryNoteEntity));
@@ -78,5 +74,16 @@ public class LibraryModel {
 
     public LibraryFolderEntity getRootFolder() {
         return rootFolder;
+    }
+
+    private void clearClipboard() {
+        clipboardItem = null;
+        listeners.triggerEvent(LibraryModelListener::clipboardUnset);
+    }
+    private boolean isInside(ExplorerItemEntity checkingItem, LibraryFolderEntity deletingFolder) {
+        return switch (checkingItem) {
+            case LibraryFolderEntity checkingFolder -> checkingFolder.isDescendantOf(deletingFolder);
+            case LibraryNoteEntity checkingNote -> checkingNote.getParentFolder().isDescendantOf(deletingFolder);
+        };
     }
 }

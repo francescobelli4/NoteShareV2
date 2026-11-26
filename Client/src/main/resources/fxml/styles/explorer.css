@@ -29,8 +29,14 @@
     -fx-background-radius: 12;
     -fx-padding: 0.6em;
     -fx-cursor: hand;
-    -fx-alignment: center;
+    -fx-alignment: top-center;
+
+    -fx-min-width: 110;
     -fx-pref-width: 110;
+    -fx-max-width: 110;
+    -fx-min-height: 120;
+    -fx-pref-height: 120;
+    -fx-max-height: 120;
 }
 
 .explorer-item:hover {

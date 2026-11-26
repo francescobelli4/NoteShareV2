@@ -184,6 +184,8 @@ public class LibraryController {
     private void deleteFolder(LibraryFolderEntity folderEntity) {
 
         libraryModel.deleteFolderFromActive(folderEntity);
+        libraryDAO.deleteFolder(folderEntity);
+
         explorerModel.deSelectItem();
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
@@ -192,6 +194,8 @@ public class LibraryController {
     private void deleteNote(LibraryNoteEntity noteEntity) {
 
         libraryModel.deleteNoteFromActive(noteEntity);
+        libraryDAO.deleteNote(noteEntity);
+
         explorerModel.deSelectItem();
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
