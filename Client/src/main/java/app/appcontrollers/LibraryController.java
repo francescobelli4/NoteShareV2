@@ -137,7 +137,6 @@ public class LibraryController {
 
         ExplorerItemEntity clipboardItem = libraryModel.getClipboardItem();
 
-        System.out.println("ISNULL? " + clipboardItem == null);
         if (clipboardItem == null) return;
 
         switch (clipboardItem) {

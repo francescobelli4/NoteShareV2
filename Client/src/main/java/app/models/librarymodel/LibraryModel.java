@@ -28,7 +28,6 @@ public class LibraryModel {
 
     public void changeActiveFolder(LibraryFolderEntity libraryFolderEntity) {
         activeFolder = libraryFolderEntity;
-        clipboardItem = null;
 
         listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
     }
