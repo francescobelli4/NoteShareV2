@@ -8,4 +8,5 @@ public interface ExplorerModelListener {
     void itemsUpdated(List<ExplorerItemEntity> newItems);
     void explorerModeUpdated(ExplorerMode mode);
     void onItemSelected(ExplorerItemEntity itemEntity);
+    void onItemDeSelected();
 }

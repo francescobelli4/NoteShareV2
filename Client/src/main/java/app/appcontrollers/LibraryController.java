@@ -11,11 +11,9 @@ import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import utils.LibraryError;
-import utils.LibraryRules;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This class is an application controller which manages the creation of folders and notes. It should also update
@@ -66,6 +64,8 @@ public class LibraryController {
      * @param libraryFolderEntity the new active folder
      */
     public void setActiveFolder(LibraryFolderEntity libraryFolderEntity) {
+
+        explorerModel.deSelectItem();
         libraryModel.changeActiveFolder(libraryFolderEntity);
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryFolderEntity));
@@ -137,6 +137,7 @@ public class LibraryController {
 
         ExplorerItemEntity clipboardItem = libraryModel.getClipboardItem();
 
+        System.out.println("ISNULL? " + clipboardItem == null);
         if (clipboardItem == null) return;
 
         switch (clipboardItem) {
@@ -151,7 +152,6 @@ public class LibraryController {
         if (activeFolder.hasNoteNamed(noteEntity.getName())) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS);
 
         libraryDAO.pasteNote(noteEntity, activeFolder);
-
         libraryModel.addNoteToActive(noteEntity);
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
@@ -166,8 +166,34 @@ public class LibraryController {
         if (activeFolder.isDescendantOf(folderEntity)) throw new LibraryException(LibraryError.PASTE_IN_SAME_OR_DESCENDANT);
 
         libraryDAO.pasteFolder(folderEntity, libraryModel.getActiveFolder());
-
         libraryModel.addFolderToActive(folderEntity);
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+    }
+
+    public void deleteSelectedItem() {
+        ExplorerItemEntity selectedItem = explorerModel.getSelectedItem();
+
+        if (selectedItem == null) return;
+
+        switch (selectedItem) {
+            case LibraryFolderEntity libFolder -> deleteFolder(libFolder);
+            case LibraryNoteEntity libNote -> deleteNote(libNote);
+        }
+    }
+
+    private void deleteFolder(LibraryFolderEntity folderEntity) {
+
+        libraryModel.deleteFolderFromActive(folderEntity);
+        explorerModel.deSelectItem();
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+    }
+
+    private void deleteNote(LibraryNoteEntity noteEntity) {
+
+        libraryModel.deleteNoteFromActive(noteEntity);
+        explorerModel.deSelectItem();
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }

@@ -50,4 +50,14 @@ public class DemoLibraryDAO implements LibraryDAO {
     public void pasteNote(LibraryNoteEntity note, LibraryFolderEntity parentFolder) {
         // No-op in DEMO
     }
+
+    @Override
+    public void deleteFolder(LibraryFolderEntity folderEntity) {
+        // No-op in DEMO
+    }
+
+    @Override
+    public void deleteNote(LibraryNoteEntity noteEntity) {
+        // No-op in DEMO
+    }
 }

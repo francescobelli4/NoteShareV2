@@ -32,6 +32,8 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
     @FXML
     private Button pasteButton;
     @FXML
+    private Button deleteButton;
+    @FXML
     private Label pathLabel;
 
     private final LibraryModel libraryModel;
@@ -64,6 +66,7 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
 
         copyButton.setOnAction(_ -> controller.onCopyButtonPressed());
         pasteButton.setOnAction(_ -> controller.onPasteButtonPressed());
+        deleteButton.setOnAction(_ -> controller.onDeleteButtonPressed());
     }
 
     private void update(LibraryFolderEntity activeFolder) {
@@ -82,8 +85,23 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
     }
 
     @Override
-    public void clipboardUpdated(ExplorerItemEntity item) {
+    public void clipboardSet(ExplorerItemEntity item) {
         updateUI(() -> pasteButton.setDisable(false));
+    }
+
+    @Override
+    public void clipboardUnset() {
+        updateUI(() -> pasteButton.setDisable(true));
+    }
+
+    @Override
+    public void folderDeleted(LibraryFolderEntity folderEntity) {
+        // No-op
+    }
+
+    @Override
+    public void noteDeleted(LibraryNoteEntity noteEntity) {
+        // No-op
     }
 
     @Override
@@ -98,17 +116,26 @@ public class FxLibraryExplorerTopBarView extends FxView<FxLibraryExplorerTopBarC
 
     @Override
     public void itemsUpdated(List<ExplorerItemEntity> newItems) {
-        updateUI(() -> copyButton.setDisable(true));
+        updateUI(() -> updateCopyAndDeleteButtons(false));
     }
 
     @Override
     public void explorerModeUpdated(ExplorerMode mode) {
-        updateUI(() -> copyButton.setDisable(true));
+        updateUI(() -> updateCopyAndDeleteButtons(false));
     }
 
     @Override
     public void onItemSelected(ExplorerItemEntity itemEntity) {
-        updateUI(() -> copyButton.setDisable(false));
+        updateUI(() -> updateCopyAndDeleteButtons(true));
     }
 
+    @Override
+    public void onItemDeSelected() {
+        updateUI(() -> updateCopyAndDeleteButtons(false));
+    }
+
+    private void updateCopyAndDeleteButtons(boolean enable) {
+        copyButton.setDisable(!enable);
+        deleteButton.setDisable(!enable);
+    }
 }

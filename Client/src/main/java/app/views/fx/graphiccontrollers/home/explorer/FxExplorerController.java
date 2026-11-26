@@ -39,7 +39,6 @@ public class FxExplorerController implements GraphicController {
     }
 
     public void onItemClicked(ExplorerItemEntity itemEntity) {
-        System.out.println("AOAOSAOAODOSOSDSADSDA");
         explorerController.itemClicked(itemEntity);
     }
 }

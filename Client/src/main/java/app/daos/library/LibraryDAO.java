@@ -10,4 +10,6 @@ public interface LibraryDAO {
 
     void pasteFolder(LibraryFolderEntity folder, LibraryFolderEntity parentFolder);
     void pasteNote(LibraryNoteEntity note, LibraryFolderEntity parentFolder);
+    void deleteFolder(LibraryFolderEntity folderEntity);
+    void deleteNote(LibraryNoteEntity noteEntity);
 }

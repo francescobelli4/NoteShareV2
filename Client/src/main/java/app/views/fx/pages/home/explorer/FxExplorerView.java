@@ -101,6 +101,11 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
         // No-op
     }
 
+    @Override
+    public void onItemDeSelected() {
+        // No-op
+    }
+
     private void updateTopBar(ExplorerMode mode) {
 
         if (Objects.requireNonNull(mode) == ExplorerMode.LIBRARY) {

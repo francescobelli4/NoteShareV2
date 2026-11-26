@@ -31,6 +31,14 @@ public final class LibraryFolderEntity extends ExplorerItemEntity {
         notes.add(libraryNoteEntity);
     }
 
+    public void deleteSubFolder(LibraryFolderEntity libraryFolderEntity) {
+        subFolders.remove(libraryFolderEntity);
+    }
+
+    public void deleteNote(LibraryNoteEntity libraryNoteEntity) {
+        notes.remove(libraryNoteEntity);
+    }
+
     public boolean hasSubFolderNamed(String name) {
         for (LibraryFolderEntity folder : subFolders) {
             if (Objects.equals(folder.getName(), name)) return true;

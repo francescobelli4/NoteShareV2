@@ -122,8 +122,13 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
 
         try {
             libraryController.pasteClipboardIntoActive();
-        } catch (LibraryException _) {
-
+        } catch (LibraryException e) {
+            // Soluzione temporanea...
+            notificationController.showError(Locales.get("error"), e.getLibraryError().toString());
         }
+    }
+
+    public void onDeleteButtonPressed() {
+        libraryController.deleteSelectedItem();
     }
 }

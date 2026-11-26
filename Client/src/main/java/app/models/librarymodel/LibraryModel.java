@@ -28,6 +28,8 @@ public class LibraryModel {
 
     public void changeActiveFolder(LibraryFolderEntity libraryFolderEntity) {
         activeFolder = libraryFolderEntity;
+        clipboardItem = null;
+
         listeners.triggerEvent(listener -> listener.activeFolderUpdated(activeFolder));
     }
 
@@ -42,8 +44,29 @@ public class LibraryModel {
     }
 
     public void setClipboardItem(ExplorerItemEntity item) {
-        this.clipboardItem = item;
-        listeners.triggerEvent(l -> l.clipboardUpdated(item));
+        clipboardItem = item;
+        listeners.triggerEvent(l -> l.clipboardSet(item));
+    }
+
+    public void deleteFolderFromActive(LibraryFolderEntity libraryFolderEntity) {
+
+        if (clipboardItem == libraryFolderEntity) {
+            clipboardItem = null;
+            listeners.triggerEvent(LibraryModelListener::clipboardUnset);
+        }
+
+        activeFolder.deleteSubFolder(libraryFolderEntity);
+        listeners.triggerEvent(l -> l.folderDeleted(libraryFolderEntity));
+    }
+
+    public void deleteNoteFromActive(LibraryNoteEntity libraryNoteEntity) {
+        if (clipboardItem == libraryNoteEntity) {
+            clipboardItem = null;
+            listeners.triggerEvent(LibraryModelListener::clipboardUnset);
+        }
+
+        activeFolder.deleteNote(libraryNoteEntity);
+        listeners.triggerEvent(l -> l.noteDeleted(libraryNoteEntity));
     }
 
     public ExplorerItemEntity getClipboardItem() {

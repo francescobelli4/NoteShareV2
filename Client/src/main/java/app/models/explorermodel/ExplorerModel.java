@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This model represents the explorer in the app. The explorer should be able to display every type of item and it
+ * This model represents the explorer in the app. The explorer should be able to display every type of item, and it
  * should notify its listeners when the items list is updated.
  * The explorer is used to show the library, the shop, etc...
  */
@@ -43,12 +43,19 @@ public class ExplorerModel {
     public void setMode(ExplorerMode mode) {
         this.mode = mode;
         selectedItem = null;
+
+        listeners.triggerEvent(ExplorerModelListener::onItemDeSelected);
         listeners.triggerEvent(listener -> listener.explorerModeUpdated(mode));
     }
 
     public void setSelectedItem(ExplorerItemEntity selectedItem) {
         this.selectedItem = selectedItem;
         listeners.triggerEvent(listener -> listener.onItemSelected(selectedItem));
+    }
+
+    public void deSelectItem() {
+        selectedItem = null;
+        listeners.triggerEvent(ExplorerModelListener::onItemDeSelected);
     }
 
     public ExplorerItemEntity getSelectedItem() {
