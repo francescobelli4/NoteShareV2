@@ -113,4 +113,22 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
     public void onBackButtonClicked() {
         libraryController.goBackToParentFolder();
     }
+
+    public void onCopyButtonPressed() {
+        libraryController.setClipboardItem();
+    }
+
+    public void onPasteButtonPressed() {
+
+        try {
+            libraryController.pasteClipboardIntoActive();
+        } catch (LibraryException e) {
+            // Soluzione temporanea...
+            notificationController.showError(Locales.get("error"), e.getLibraryError().toString());
+        }
+    }
+
+    public void onDeleteButtonPressed() {
+        libraryController.deleteSelectedItem();
+    }
 }

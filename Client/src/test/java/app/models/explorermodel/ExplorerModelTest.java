@@ -3,6 +3,7 @@ package app.models.explorermodel;
 import app.entities.ExplorerItemEntity;
 import app.entities.LibraryFolderEntity;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -23,6 +24,11 @@ class ExplorerModelTest {
         explorerModel.addListener(explorerModelListener);
     }
 
+    @BeforeEach
+    void resetInvocations() {
+        clearInvocations(explorerModelListener);
+    }
+
     @Test
     void setItems() {
 
@@ -37,7 +43,33 @@ class ExplorerModelTest {
     @Test
     void setMode() {
         explorerModel.setMode(ExplorerMode.STORE);
+
+        assertNull(explorerModel.getSelectedItem());
         assertEquals(ExplorerMode.STORE, explorerModel.getMode());
+
+        verify(explorerModelListener).onItemDeSelected();
         verify(explorerModelListener).explorerModeUpdated(any());
+    }
+
+    @Test
+    void setSelectedItemTest() {
+
+        ExplorerItemEntity itemEntity = new LibraryFolderEntity("name");
+        explorerModel.setSelectedItem(itemEntity);
+
+        assertEquals(itemEntity, explorerModel.getSelectedItem());
+        verify(explorerModelListener).onItemSelected(itemEntity);
+    }
+
+    @Test
+    void deSelectItemTest() {
+
+        ExplorerItemEntity itemEntity = new LibraryFolderEntity("name");
+        explorerModel.setSelectedItem(itemEntity);
+
+        explorerModel.deSelectItem();
+
+        assertNull(explorerModel.getSelectedItem());
+        verify(explorerModelListener).onItemDeSelected();
     }
 }

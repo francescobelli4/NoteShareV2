@@ -1,5 +1,6 @@
 package app.views.fx.graphiccontrollers.home.explorer;
 
+import app.appcontrollers.ExplorerController;
 import app.appcontrollers.LibraryController;
 import app.entities.ExplorerItemEntity;
 import app.entities.LibraryFolderEntity;
@@ -11,11 +12,13 @@ import app.views.fx.pages.viewer.FxViewerView;
 
 public class FxExplorerController implements GraphicController {
 
+    private final ExplorerController explorerController;
     private final LibraryController libraryController;
     private final FxNavigator navigator;
     private final FxViewFactory factory;
 
-    public FxExplorerController(LibraryController libraryController, FxNavigator navigator, FxViewFactory factory) {
+    public FxExplorerController(ExplorerController explorerController, LibraryController libraryController, FxNavigator navigator, FxViewFactory factory) {
+        this.explorerController = explorerController;
         this.libraryController = libraryController;
         this.navigator = navigator;
         this.factory = factory;
@@ -33,5 +36,9 @@ public class FxExplorerController implements GraphicController {
                 fxViewerView.setNote(libNote);
             }
         }
+    }
+
+    public void onItemClicked(ExplorerItemEntity itemEntity) {
+        explorerController.itemClicked(itemEntity);
     }
 }

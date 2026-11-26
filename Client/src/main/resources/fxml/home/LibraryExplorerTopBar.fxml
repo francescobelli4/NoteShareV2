@@ -40,4 +40,25 @@
              </ImageView>
          </graphic>
       </Button>
+        <Button fx:id="copyButton" styleClass="icon-button" disable="true">
+            <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../styles/icons/file.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="pasteButton" styleClass="icon-button" disable="true">
+            <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../styles/icons/paste.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="deleteButton" styleClass="icon-button" disable="true">
+            <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../styles/icons/delete.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
     </HBox>

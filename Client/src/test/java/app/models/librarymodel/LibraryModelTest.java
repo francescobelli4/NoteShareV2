@@ -70,4 +70,95 @@ class LibraryModelTest {
 
         verify(libraryModelListener, times(2)).activeFolderUpdated(any(LibraryFolderEntity.class));
     }
+
+    @Test
+    void setClipboardItemTest() {
+        LibraryFolderEntity clipboardItem = new LibraryFolderEntity("newActiveFolder");
+        libraryModel.setClipboardItem(clipboardItem);
+
+        assertEquals(clipboardItem, libraryModel.getClipboardItem());
+        verify(libraryModelListener).clipboardSet(clipboardItem);
+    }
+
+    @Test
+    void deleteFolderFromActiveTest_Success() {
+
+        LibraryFolderEntity activeFolder = new LibraryFolderEntity("activeFolder");
+        LibraryFolderEntity deletingFolder = new LibraryFolderEntity("deletingFolder");
+
+        libraryModel.changeActiveFolder(activeFolder);
+        libraryModel.addFolderToActive(deletingFolder);
+
+        libraryModel.deleteFolderFromActive(deletingFolder);
+        assertEquals(0, activeFolder.getSubFolders().size());
+        verify(libraryModelListener).folderDeleted(deletingFolder);
+    }
+
+    @Test
+    void deleteFolderFromActiveTest_ClearsClipboardFolder() {
+
+        LibraryFolderEntity activeFolder = new LibraryFolderEntity("activeFolder");
+        LibraryFolderEntity deletingFolder = new LibraryFolderEntity("deletingFolder");
+        LibraryFolderEntity clipboardFolder = new LibraryFolderEntity("clipboardFolder");
+
+        deletingFolder.addSubFolder(clipboardFolder);
+        libraryModel.setClipboardItem(clipboardFolder);
+
+        libraryModel.changeActiveFolder(activeFolder);
+        libraryModel.addFolderToActive(deletingFolder);
+
+        libraryModel.deleteFolderFromActive(deletingFolder);
+        assertEquals(0, activeFolder.getSubFolders().size());
+        verify(libraryModelListener).folderDeleted(deletingFolder);
+        assertNull(libraryModel.getClipboardItem());
+    }
+
+    @Test
+    void deleteFolderFromActiveTest_ClearsClipboardNote() {
+
+        LibraryFolderEntity activeFolder = new LibraryFolderEntity("activeFolder");
+        LibraryFolderEntity deletingFolder = new LibraryFolderEntity("deletingFolder");
+        LibraryNoteEntity clipboardNote = new LibraryNoteEntity("clipboardNote", "path");
+
+        deletingFolder.addNote(clipboardNote);
+        libraryModel.setClipboardItem(clipboardNote);
+
+        libraryModel.changeActiveFolder(activeFolder);
+        libraryModel.addFolderToActive(deletingFolder);
+
+        libraryModel.deleteFolderFromActive(deletingFolder);
+        assertEquals(0, activeFolder.getNotes().size());
+        verify(libraryModelListener).folderDeleted(deletingFolder);
+        assertNull(libraryModel.getClipboardItem());
+    }
+
+    @Test
+    void deleteNoteFromActiveTest_Success() {
+
+        LibraryFolderEntity activeFolder = new LibraryFolderEntity("activeFolder");
+        LibraryNoteEntity deletingNote = new LibraryNoteEntity("deletingNote", "path");
+
+        libraryModel.changeActiveFolder(activeFolder);
+        libraryModel.addNoteToActive(deletingNote);
+
+        libraryModel.deleteNoteFromActive(deletingNote);
+        assertEquals(0, activeFolder.getNotes().size());
+        verify(libraryModelListener).noteDeleted(deletingNote);
+    }
+
+    @Test
+    void deleteNoteFromActiveTest_ClearsClipboard() {
+
+        LibraryFolderEntity activeFolder = new LibraryFolderEntity("activeFolder");
+        LibraryNoteEntity deletingNote = new LibraryNoteEntity("deletingNote", "path");
+
+        libraryModel.changeActiveFolder(activeFolder);
+        libraryModel.addNoteToActive(deletingNote);
+        libraryModel.setClipboardItem(deletingNote);
+
+        libraryModel.deleteNoteFromActive(deletingNote);
+        assertEquals(0, activeFolder.getNotes().size());
+        verify(libraryModelListener).noteDeleted(deletingNote);
+        assertNull(libraryModel.getClipboardItem());
+    }
 }

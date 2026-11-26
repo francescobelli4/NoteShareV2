@@ -30,4 +30,15 @@ class DemoLibraryDAOTest {
         assertNotNull(newNote);
         assertEquals("testNote", newNote.getName());
     }
+
+    @Test
+    void noOps() {
+        LibraryFolderEntity libFolder = new LibraryFolderEntity("name");
+        LibraryNoteEntity libNote = new LibraryNoteEntity("name", "path");
+        demoLibraryDAO.deleteFolder(libFolder);
+        demoLibraryDAO.deleteNote(libNote);
+        demoLibraryDAO.pasteFolder(libFolder, libFolder);
+        demoLibraryDAO.pasteNote(libNote, libFolder);
+        assertTrue(true);
+    }
 }

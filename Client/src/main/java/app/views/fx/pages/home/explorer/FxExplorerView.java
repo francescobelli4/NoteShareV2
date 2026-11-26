@@ -14,7 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -35,6 +37,7 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
     private Image noteIcon;
 
     private final ExplorerModel explorerModel;
+    private final Map<ExplorerItemEntity, FxExplorerItem> items = new HashMap<>();
 
     public FxExplorerView(FxExplorerController controller, ExplorerModel explorerModel, Supplier<FxLibraryExplorerTopBarView> libraryExplorerTopBarViewSupplier) {
         super(controller);
@@ -60,6 +63,7 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
     private void update(List<ExplorerItemEntity> newItems) {
 
         itemsPane.getChildren().clear();
+        items.clear();
 
         for (ExplorerItemEntity item : newItems) {
 
@@ -68,7 +72,12 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
                 case LibraryNoteEntity _ -> noteIcon;
             };
 
-            itemsPane.getChildren().add(new FxExplorerItem(item.getName(), icon, () -> controller.onItemDoubleClicked(item)));
+            FxExplorerItem fxItem = new FxExplorerItem(item.getName(), icon,
+                    () -> controller.onItemClicked(item),
+                    () -> controller.onItemDoubleClicked(item));
+
+            items.put(item, fxItem);
+            itemsPane.getChildren().add(fxItem);
         }
 
         boolean empty = itemsPane.getChildren().isEmpty();
@@ -91,6 +100,17 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
     @Override
     public void explorerModeUpdated(ExplorerMode mode) {
         updateUI(() -> updateTopBar(mode));
+    }
+
+    @Override
+    public void onItemSelected(ExplorerItemEntity itemEntity) {
+        items.values().forEach(fxItem -> fxItem.setSelected(false));
+        items.get(itemEntity).setSelected(true);
+    }
+
+    @Override
+    public void onItemDeSelected() {
+        items.values().forEach(fxItem -> fxItem.setSelected(false));
     }
 
     private void updateTopBar(ExplorerMode mode) {

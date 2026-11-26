@@ -11,11 +11,9 @@ import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import utils.LibraryError;
-import utils.LibraryRules;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This class is an application controller which manages the creation of folders and notes. It should also update
@@ -66,6 +64,8 @@ public class LibraryController {
      * @param libraryFolderEntity the new active folder
      */
     public void setActiveFolder(LibraryFolderEntity libraryFolderEntity) {
+
+        explorerModel.deSelectItem();
         libraryModel.changeActiveFolder(libraryFolderEntity);
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryFolderEntity));
@@ -93,15 +93,11 @@ public class LibraryController {
      * @throws LibraryException in case a folder with that name already exists
      */
     public void createFolderInActive(String name) throws LibraryException {
+
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
         LibraryFolderEntity folder = libraryDAO.createFolder(name, libraryModel.getActiveFolder());
 
-        List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getSubFolders().forEach(folderEntity -> siblings.add(folderEntity.getName()));
-        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
-
-        if (duplicateError.isPresent()) {
-            throw new LibraryException(duplicateError.get());
-        }
+        if (activeFolder.hasSubFolderNamed(name)) throw new LibraryException(LibraryError.FOLDER_ALREADY_EXISTS);
 
         libraryModel.addFolderToActive(folder);
 
@@ -117,17 +113,123 @@ public class LibraryController {
      * @throws LibraryException in case a note with that name already exists
      */
     public void createNoteInActive(String name, String path) throws LibraryException {
-        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, path, libraryModel.getActiveFolder());
 
-        List<String> siblings = new ArrayList<>();
-        libraryModel.getActiveFolder().getNotes().forEach(folderEntity -> siblings.add(folderEntity.getName()));
-        Optional<LibraryError> duplicateError = LibraryRules.isDuplicate(name, siblings);
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
+        LibraryNoteEntity libraryNoteEntity = libraryDAO.createNote(name, path, activeFolder);
 
-        if (duplicateError.isPresent()) {
-            throw new LibraryException(duplicateError.get());
-        }
+        if (activeFolder.hasNoteNamed(name)) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS);
 
         libraryModel.addNoteToActive(libraryNoteEntity);
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
+    }
+
+    /**
+     * This function should set the explorer's selected item as the clipboard item when the user copies a note or a
+     * folder.
+     */
+    public void setClipboardItem() {
+
+        ExplorerItemEntity selectedItem = explorerModel.getSelectedItem();
+
+        if (selectedItem == null) return;
+
+        libraryModel.setClipboardItem(explorerModel.getSelectedItem());
+    }
+
+    /**
+     * This function should paste the clipboard item (a folder or a note) in the active folder
+     * @throws LibraryException in case the item already exists or the user is trying to paste a folder in a descendant.
+     */
+    public void pasteClipboardIntoActive() throws LibraryException {
+
+        ExplorerItemEntity clipboardItem = libraryModel.getClipboardItem();
+
+        if (clipboardItem == null) return;
+
+        switch (clipboardItem) {
+            case LibraryFolderEntity libFolder -> pasteFolderIntoActive(libFolder);
+            case LibraryNoteEntity libNote -> pasteNoteIntoActive(libNote);
+        }
+    }
+
+    /**
+     * This function should paste a note in the active folder. Simply it adds the note in the active folder if another
+     * note with the same name does not exist in the active folder.
+     * @param noteEntity the note that the user wants to paste
+     * @throws LibraryException in case a note with that name already exists
+     */
+    private void pasteNoteIntoActive(LibraryNoteEntity noteEntity) throws LibraryException {
+
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
+        if (activeFolder.hasNoteNamed(noteEntity.getName())) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS);
+
+        libraryDAO.pasteNote(noteEntity, activeFolder);
+        libraryModel.addNoteToActive(noteEntity);
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(activeFolder));
+    }
+
+    /**
+     * This function should paste a folder in the active folder. It should only add that folder to the active folder if
+     * active folder is not a descendant of the folder the user wants to past (otherwise it would create a loop!) and
+     * there isn't any other folder with that name in the active folder.
+     * @param folderEntity the folder the user wants to paste.
+     * @throws LibraryException in case a folder with that name already exists or active folder is a descendant of the
+     * folder the user wants to paste.
+     */
+    private void pasteFolderIntoActive(LibraryFolderEntity folderEntity) throws LibraryException {
+
+        LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
+        if (activeFolder.hasSubFolderNamed(folderEntity.getName())) throw new LibraryException(LibraryError.FOLDER_ALREADY_EXISTS);
+
+        // We should check if we are pasting the folder in the same folder or in a descendant to prevent loops
+        if (activeFolder.isDescendantOf(folderEntity)) throw new LibraryException(LibraryError.PASTE_IN_SAME_OR_DESCENDANT);
+
+        libraryDAO.pasteFolder(folderEntity, libraryModel.getActiveFolder());
+        libraryModel.addFolderToActive(folderEntity);
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+    }
+
+    /**
+     * This function should delete the selected item (a folder or a note).
+     */
+    public void deleteSelectedItem() {
+        ExplorerItemEntity selectedItem = explorerModel.getSelectedItem();
+
+        if (selectedItem == null) return;
+
+        switch (selectedItem) {
+            case LibraryFolderEntity libFolder -> deleteFolder(libFolder);
+            case LibraryNoteEntity libNote -> deleteNote(libNote);
+        }
+    }
+
+    /**
+     * This function should delete a folder and clear explorer model's selected item.
+     * @param folderEntity the folder the user wants to delete.
+     */
+    private void deleteFolder(LibraryFolderEntity folderEntity) {
+
+        libraryModel.deleteFolderFromActive(folderEntity);
+        libraryDAO.deleteFolder(folderEntity);
+
+        explorerModel.deSelectItem();
+
+        if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
+    }
+
+    /**
+     * This function should delete a note and clear the explorer model's selected item.
+     * @param noteEntity the note the user wants to delete.
+     */
+    private void deleteNote(LibraryNoteEntity noteEntity) {
+
+        libraryModel.deleteNoteFromActive(noteEntity);
+        libraryDAO.deleteNote(noteEntity);
+
+        explorerModel.deSelectItem();
 
         if (shouldUpdateExplorer()) explorerModel.setItems(toExplorerItemEntityList(libraryModel.getActiveFolder()));
     }
