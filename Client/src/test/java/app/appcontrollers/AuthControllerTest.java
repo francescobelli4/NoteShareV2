@@ -10,7 +10,7 @@ import dtos.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import permissions.Role;
-import utils.AuthServiceError;
+import errors.AuthServiceError;
 
 import java.util.concurrent.CompletableFuture;
 

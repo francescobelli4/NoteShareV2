@@ -1,6 +1,6 @@
 package app.exceptions;
 
-import utils.ProfileError;
+import errors.ProfileError;
 
 public class ProfileException extends RuntimeException {
 

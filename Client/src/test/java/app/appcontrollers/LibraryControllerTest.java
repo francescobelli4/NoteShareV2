@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import permissions.Role;
-import utils.LibraryError;
+import errors.LibraryError;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

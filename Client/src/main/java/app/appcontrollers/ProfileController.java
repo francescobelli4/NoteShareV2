@@ -6,7 +6,7 @@ import app.network.ConnectionManager;
 import dtos.ErrorResponseDTO;
 import dtos.GetWalletBalanceRequestDTO;
 import dtos.GetWalletBalanceResponseDTO;
-import utils.ProfileError;
+import errors.ProfileError;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;

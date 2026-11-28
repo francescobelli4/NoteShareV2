@@ -1,4 +1,4 @@
-package utils;
+package errors;
 
 public enum AuthServiceError implements AuthError {
     USERNAME_TAKEN,

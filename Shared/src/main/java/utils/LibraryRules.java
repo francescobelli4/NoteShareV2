@@ -1,5 +1,7 @@
 package utils;
 
+import errors.LibraryError;
+
 import java.util.Optional;
 
 public class LibraryRules {

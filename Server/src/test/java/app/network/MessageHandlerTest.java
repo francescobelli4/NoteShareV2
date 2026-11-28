@@ -8,8 +8,8 @@ import dtos.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import permissions.Role;
-import utils.AuthServiceError;
-import utils.PasswordError;
+import errors.AuthServiceError;
+import errors.PasswordError;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

@@ -1,5 +1,8 @@
 package utils;
 
+import errors.PasswordError;
+import errors.UsernameError;
+
 import java.util.Optional;
 
 public class AuthRules {

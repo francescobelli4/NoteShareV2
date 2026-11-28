@@ -1,4 +1,4 @@
-package utils;
+package errors;
 
 public enum UsernameError implements AuthError {
     NULL_OR_EMPTY,

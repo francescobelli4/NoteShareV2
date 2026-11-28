@@ -1,6 +1,7 @@
 package app.views.fx.pages.auth;
 
 import app.exceptions.AuthException;
+import app.utils.Locales;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.auth.FxAuthLoginViewController;
 import javafx.animation.PauseTransition;
@@ -38,11 +39,17 @@ public class FxAuthLoginView extends FxView<FxAuthLoginViewController> {
                 controller.onLoginButtonClicked(usernameField.getText(), passwordField.getText()).exceptionally(error -> {
                     // For example, if no user with that username was found or password is wrong
                     Throwable cause = error.getCause() != null ? error.getCause() : error;
-                    updateUI(() -> showError(cause.getMessage()));
+
+                    if (cause instanceof AuthException authException) {
+                        updateUI(() -> showError(Locales.getErrorLabel(authException.getAuthError())));
+                    } else {
+                        updateUI(() -> showError(cause.getMessage()));
+                    }
+
                     return null;
                 });
-            } catch (AuthException e) {
-                showError(e.getMessage());
+            } catch (AuthException authException) {
+                showError(Locales.getErrorLabel(authException.getAuthError()));
             }
         });
     }

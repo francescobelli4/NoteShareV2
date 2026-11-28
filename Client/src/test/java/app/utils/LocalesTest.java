@@ -1,5 +1,7 @@
 package app.utils;
 
+import app.exceptions.LibraryException;
+import errors.LibraryError;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -31,5 +33,25 @@ class LocalesTest {
     @Test
     void testGet() {
         assertEquals("Note testNote was created", Locales.get("dialog.note_created", "testNote"));
+    }
+
+    @Test
+    void getErrorLabelTest() {
+
+        Locales.setCurrentLocale(Locale.ENGLISH);
+
+        LibraryException libraryException = new LibraryException(LibraryError.NOTE_ALREADY_EXISTS, "testNote");
+        String errorLabel = Locales.getErrorLabel(libraryException.getLibraryError(), libraryException.getCausingItemName());
+
+        assertEquals("Note testNote already exists", errorLabel);
+    }
+
+    @Test
+    void getErrorLabelTest_Unexpected() {
+
+        Locales.setCurrentLocale(Locale.ENGLISH);
+        String errorLabel = Locales.getErrorLabel(null);
+
+        assertEquals("Unexpected error", errorLabel);
     }
 }

@@ -6,9 +6,9 @@ import app.exceptions.AuthException;
 import app.views.GraphicController;
 import permissions.Role;
 import utils.AuthRules;
-import utils.AuthServiceError;
-import utils.PasswordError;
-import utils.UsernameError;
+import errors.AuthServiceError;
+import errors.PasswordError;
+import errors.UsernameError;
 
 import java.util.Objects;
 import java.util.Optional;

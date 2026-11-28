@@ -1,6 +1,6 @@
 package dtos;
 
-import utils.ErrorCode;
+import errors.ErrorCode;
 
 import java.util.Objects;
 

@@ -1,7 +1,10 @@
 package app.utils;
 
+import errors.ErrorCode;
+
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -31,5 +34,19 @@ public class Locales {
 
     public static String get(String key, Object... args) {
         return MessageFormat.format(bundle.getString(key), args);
+    }
+
+    public static String getErrorLabel(ErrorCode errorCode, Object... args) {
+
+        if (errorCode == null) return "Unexpected error";
+
+        Enum<?> errorCodeAsEnum = (Enum<?>) errorCode;
+        String key = errorCodeAsEnum.getDeclaringClass().getSimpleName() + "." + errorCodeAsEnum.name();
+
+        try {
+            return get(key, args);
+        } catch (MissingResourceException _) {
+            return "Unexpected error";
+        }
     }
 }

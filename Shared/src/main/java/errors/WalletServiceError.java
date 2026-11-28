@@ -1,4 +1,4 @@
-package utils;
+package errors;
 
 public enum WalletServiceError implements ProfileError {
     COULD_NOT_GET_BALANCE,

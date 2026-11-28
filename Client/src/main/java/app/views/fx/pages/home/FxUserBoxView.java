@@ -1,5 +1,6 @@
 package app.views.fx.pages.home;
 
+import app.exceptions.ProfileException;
 import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import app.models.walletmodel.WalletModel;
@@ -37,8 +38,16 @@ public class FxUserBoxView extends FxView<FxUserBoxController> implements UserMo
         subscribe(userModel.addListener(this));
 
         if (userModel.hasPermission(Permission.USE_COINS)) {
-            controller.getBalance().exceptionally(_ -> {
-                controller.notifyBalanceError();
+            controller.getBalance().exceptionally(error -> {
+
+                Throwable cause = error.getCause() != null ? error.getCause() : error;
+
+                if (cause instanceof ProfileException profileException) {
+                    updateUI(() -> controller.onError(profileException.getProfileError()));
+                } else {
+                    updateUI(() -> controller.onError(null));
+                }
+
                 return null;
             });
         }

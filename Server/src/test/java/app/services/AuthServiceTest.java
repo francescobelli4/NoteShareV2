@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import permissions.Role;
-import utils.AuthServiceError;
+import errors.AuthServiceError;
 import utils.Hashing;
-import utils.PasswordError;
-import utils.UsernameError;
+import errors.PasswordError;
+import errors.UsernameError;
 
 import java.util.UUID;
 

@@ -1,5 +1,7 @@
 package utils;
 
+import errors.PasswordError;
+import errors.UsernameError;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

@@ -9,7 +9,7 @@ import app.views.GraphicController;
 import app.views.fx.FxNavigator;
 import app.views.fx.FxViewFactory;
 import app.views.fx.pages.dialog.FxDialogView;
-import utils.LibraryError;
+import errors.LibraryError;
 import utils.LibraryRules;
 
 import java.util.Optional;
@@ -20,6 +20,8 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
     private final NotificationController notificationController;
     private final FxViewFactory factory;
     private final FxNavigator navigator;
+
+    private final String errorTitle = Locales.get("error");
 
     public FxLibraryExplorerTopBarController(LibraryController libraryController, NotificationController notificationController, FxViewFactory factory, FxNavigator navigator) {
         this.libraryController = libraryController;
@@ -46,28 +48,20 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
             Optional<LibraryError> nameError = LibraryRules.isNameValid(name);
 
             if (nameError.isPresent()) {
-
-                String errorStr = switch (nameError.get()) {
-                    case NAME_EMPTY -> Locales.get("dialog.name_empty");
-                    case NAME_TOO_LONG -> Locales.get("dialog.name_too_long", name);
-                    case NAME_NOT_VALID -> Locales.get("dialog.name_not_valid", name);
-                    default -> "Unexpected error";
-                };
-
-                notificationController.showError(Locales.get("error"), errorStr);
+                notificationController.showError(errorTitle, Locales.getErrorLabel(nameError.get(), name));
                 return;
             }
 
             if (chosenFile == null) {
-                notificationController.showError(Locales.get("error"), Locales.get("dialog.file_not_chosen"));
+                notificationController.showError(errorTitle, Locales.get("dialog.file_not_chosen"));
                 return;
             }
 
             try {
                 libraryController.createNoteInActive(name, chosenFile);
                 notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.note_created", name));
-            } catch (LibraryException _) {
-                notificationController.showError(Locales.get("error"), Locales.get("dialog.note_already_exists"));
+            } catch (LibraryException libraryException) {
+                notificationController.showError(errorTitle, Locales.getErrorLabel(libraryException.getLibraryError(), name));
             }
         });
 
@@ -87,23 +81,15 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
             Optional<LibraryError> nameError = LibraryRules.isNameValid(name);
 
             if (nameError.isPresent()) {
-
-                String errorStr = switch (nameError.get()) {
-                    case NAME_EMPTY -> Locales.get("dialog.name_empty");
-                    case NAME_TOO_LONG -> Locales.get("dialog.name_too_long", name);
-                    case NAME_NOT_VALID -> Locales.get("dialog.name_not_valid", name);
-                    default -> "Unexpected error";
-                };
-
-                notificationController.showError(Locales.get("error"), errorStr);
+                notificationController.showError(errorTitle, Locales.getErrorLabel(nameError.get(), name));
                 return;
             }
 
             try {
                 libraryController.createFolderInActive(name);
                 notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.folder_created", name));
-            } catch (LibraryException _) {
-                notificationController.showError(Locales.get("error"), Locales.get("dialog.folder_already_exists", name));
+            } catch (LibraryException libraryException) {
+                notificationController.showError(errorTitle,  Locales.getErrorLabel(libraryException.getLibraryError(), name));
             }
         });
 
@@ -122,9 +108,8 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
 
         try {
             libraryController.pasteClipboardIntoActive();
-        } catch (LibraryException e) {
-            // Soluzione temporanea...
-            notificationController.showError(Locales.get("error"), e.getLibraryError().toString());
+        } catch (LibraryException libraryException) {
+            notificationController.showError(errorTitle, Locales.getErrorLabel(libraryException.getLibraryError(), libraryException.getCausingItemName()));
         }
     }
 
