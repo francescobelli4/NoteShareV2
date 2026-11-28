@@ -1,5 +1,6 @@
 package utils;
 
+import errors.LibraryError;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

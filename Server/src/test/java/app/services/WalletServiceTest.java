@@ -9,7 +9,7 @@ import dtos.GetWalletBalanceResponseDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import permissions.Role;
-import utils.WalletServiceError;
+import errors.WalletServiceError;
 
 import static org.junit.jupiter.api.Assertions.*;
 

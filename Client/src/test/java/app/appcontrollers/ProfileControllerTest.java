@@ -9,7 +9,7 @@ import dtos.GetWalletBalanceResponseDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import utils.WalletServiceError;
+import errors.WalletServiceError;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -1,6 +1,6 @@
 package app.exceptions;
 
-import utils.AuthError;
+import errors.AuthError;
 
 /**
  * This exception is thrown whenever there is a problem with a login or a register

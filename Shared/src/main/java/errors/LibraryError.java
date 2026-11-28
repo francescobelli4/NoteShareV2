@@ -1,6 +1,6 @@
-package utils;
+package errors;
 
-public enum LibraryError {
+public enum LibraryError implements ErrorCode {
     NAME_EMPTY,
     NAME_TOO_LONG,
     FOLDER_ALREADY_EXISTS,

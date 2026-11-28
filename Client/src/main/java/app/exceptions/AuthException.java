@@ -1,6 +1,6 @@
 package app.exceptions;
 
-import utils.AuthError;
+import errors.AuthError;
 
 public class AuthException extends RuntimeException {
 

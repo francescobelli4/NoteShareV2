@@ -1,6 +1,6 @@
 package app.exceptions;
 
-import utils.ProfileError;
+import errors.ProfileError;
 
 /**
  * This exception is thrown whenever there is a problem with a login or a register

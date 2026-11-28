@@ -8,7 +8,7 @@ import app.models.usermodel.UserModel;
 import app.network.ConnectionManager;
 import app.utils.TokenManager;
 import dtos.*;
-import utils.AuthError;
+import errors.AuthError;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;

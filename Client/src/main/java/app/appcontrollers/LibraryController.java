@@ -10,7 +10,7 @@ import app.models.explorermodel.ExplorerModel;
 import app.models.librarymodel.LibraryModel;
 import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
-import utils.LibraryError;
+import errors.LibraryError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +162,7 @@ public class LibraryController {
     private void pasteNoteIntoActive(LibraryNoteEntity noteEntity) throws LibraryException {
 
         LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
-        if (activeFolder.hasNoteNamed(noteEntity.getName())) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS);
+        if (activeFolder.hasNoteNamed(noteEntity.getName())) throw new LibraryException(LibraryError.NOTE_ALREADY_EXISTS, noteEntity.getName());
 
         libraryDAO.pasteNote(noteEntity, activeFolder);
         libraryModel.addNoteToActive(noteEntity);
@@ -181,7 +181,7 @@ public class LibraryController {
     private void pasteFolderIntoActive(LibraryFolderEntity folderEntity) throws LibraryException {
 
         LibraryFolderEntity activeFolder = libraryModel.getActiveFolder();
-        if (activeFolder.hasSubFolderNamed(folderEntity.getName())) throw new LibraryException(LibraryError.FOLDER_ALREADY_EXISTS);
+        if (activeFolder.hasSubFolderNamed(folderEntity.getName())) throw new LibraryException(LibraryError.FOLDER_ALREADY_EXISTS, folderEntity.getName());
 
         // We should check if we are pasting the folder in the same folder or in a descendant to prevent loops
         if (activeFolder.isDescendantOf(folderEntity)) throw new LibraryException(LibraryError.PASTE_IN_SAME_OR_DESCENDANT);

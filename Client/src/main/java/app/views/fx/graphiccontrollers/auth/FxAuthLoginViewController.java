@@ -5,8 +5,8 @@ import app.beans.LoginBean;
 import app.exceptions.AuthException;
 import app.views.GraphicController;
 import utils.AuthRules;
-import utils.PasswordError;
-import utils.UsernameError;
+import errors.PasswordError;
+import errors.UsernameError;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

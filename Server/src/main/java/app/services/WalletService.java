@@ -6,7 +6,7 @@ import app.network.Session;
 import dtos.GetWalletBalanceRequestDTO;
 import dtos.GetWalletBalanceResponseDTO;
 import dtos.Response;
-import utils.WalletServiceError;
+import errors.WalletServiceError;
 
 public class WalletService {
 

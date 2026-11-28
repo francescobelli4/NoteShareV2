@@ -1,6 +1,7 @@
 package app.views.fx.pages.auth;
 
 import app.exceptions.AuthException;
+import app.utils.Locales;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.auth.FxAuthRegisterViewController;
 import javafx.animation.PauseTransition;
@@ -42,11 +43,17 @@ public class FxAuthRegisterView extends FxView<FxAuthRegisterViewController> {
                         .exceptionally(error -> {
                             // For example, if server answers that the username is already taken
                             Throwable cause = error.getCause() != null ? error.getCause() : error;
-                            updateUI(() -> showError(cause.getMessage()));
+
+                            if (cause instanceof AuthException authException) {
+                                updateUI(() -> showError(Locales.getErrorLabel(authException.getAuthError())));
+                            } else {
+                                updateUI(() -> showError(cause.getMessage()));
+                            }
+
                             return null;
                         });
-            } catch (AuthException e) {
-                updateUI(() -> showError(e.getMessage()));
+            } catch (AuthException authException) {
+                updateUI(() -> showError(Locales.getErrorLabel(authException.getAuthError())));
             }
         });
     }
