@@ -14,10 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 
@@ -99,7 +96,18 @@ public class FxExplorerView extends FxView<FxExplorerController> implements Expl
 
     @Override
     public void explorerModeUpdated(ExplorerMode mode) {
-        updateUI(() -> updateTopBar(mode));
+        updateUI(() -> {
+            updateTopBar(mode);
+            update(new ArrayList<>());
+
+            switch (mode) {
+                case LIBRARY -> controller.onLibraryModeSet();
+                case STORE -> controller.onExplorerModeSet();
+                default -> {
+                    // No-op
+                }
+            }
+        });
     }
 
     @Override

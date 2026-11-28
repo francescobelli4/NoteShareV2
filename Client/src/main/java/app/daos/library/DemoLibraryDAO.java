@@ -3,7 +3,13 @@ package app.daos.library;
 import app.entities.LibraryFolderEntity;
 import app.entities.LibraryNoteEntity;
 
+import java.util.Objects;
+
 public class DemoLibraryDAO implements LibraryDAO {
+
+    // In DEMO mode, these variables are needed to simulate the persistence of folders
+    private LibraryFolderEntity rootFolder;
+    private String username;
 
     /**
      * This function should load the full library. In demo mode, it's always made only of the root folder,
@@ -13,7 +19,11 @@ public class DemoLibraryDAO implements LibraryDAO {
      */
     @Override
     public LibraryFolderEntity loadFullLibrary(String username) {
-        return new LibraryFolderEntity(username);
+        if (rootFolder == null || !Objects.equals(this.username, username)) {
+            this.username = username;
+            rootFolder = new LibraryFolderEntity(username);
+        }
+        return rootFolder;
     }
 
     /**

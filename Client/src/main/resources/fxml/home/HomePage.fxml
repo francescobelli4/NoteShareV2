@@ -39,9 +39,9 @@
               <padding>
                   <Insets bottom="24" left="16" right="16" top="24" />
               </padding>
-              <Button maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="%your_notes" />
-              <Button maxWidth="Infinity" styleClass="nav-button" text="%explore" />
-              <Button maxWidth="Infinity" styleClass="nav-button" text="%shared_notes" />
+              <Button fx:id="yourNotesButton" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="%your_notes" />
+              <Button fx:id="exploreButton" maxWidth="Infinity" styleClass="nav-button" text="%explore" visible="false" managed="false" />
+              <Button fx:id="sharedNotesButton" maxWidth="Infinity" styleClass="nav-button" text="%shared_notes" visible="false" managed="false" />
           </VBox>
          <Region VBox.vgrow="ALWAYS" />
          <VBox alignment="CENTER" spacing="16.0">

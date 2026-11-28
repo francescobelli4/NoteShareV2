@@ -41,4 +41,12 @@ public class FxExplorerController implements GraphicController {
     public void onItemClicked(ExplorerItemEntity itemEntity) {
         explorerController.itemClicked(itemEntity);
     }
+
+    public void onLibraryModeSet() {
+        libraryController.loadLibrary();
+    }
+
+    public void onExplorerModeSet() {
+
+    }
 }

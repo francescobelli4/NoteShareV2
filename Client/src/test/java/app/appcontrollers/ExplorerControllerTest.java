@@ -3,6 +3,7 @@ package app.appcontrollers;
 import app.entities.ExplorerItemEntity;
 import app.entities.LibraryNoteEntity;
 import app.models.explorermodel.ExplorerModel;
+import app.models.librarymodel.LibraryModel;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

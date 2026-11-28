@@ -1,6 +1,7 @@
 package app.appcontrollers;
 
 import app.entities.ExplorerItemEntity;
+import app.models.explorermodel.ExplorerMode;
 import app.models.explorermodel.ExplorerModel;
 
 public class ExplorerController {
@@ -17,5 +18,9 @@ public class ExplorerController {
      */
     public void itemClicked(ExplorerItemEntity itemEntity) {
         explorerModel.setSelectedItem(itemEntity);
+    }
+
+    public void setExplorerMode(ExplorerMode explorerMode) {
+        explorerModel.setMode(explorerMode);
     }
 }

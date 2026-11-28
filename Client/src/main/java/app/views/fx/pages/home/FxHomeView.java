@@ -24,6 +24,12 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     private FxExplorerView folderExplorerView;
 
     @FXML
+    private Button yourNotesButton;
+    @FXML
+    private Button exploreButton;
+    @FXML
+    private Button sharedNotesButton;
+    @FXML
     private Button loginButton;
     @FXML
     private VBox guestBox;
@@ -50,6 +56,9 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
         subscribe(userModel.addListener(this));
 
         loginButton.setOnAction(_ -> controller.onLoginButtonClicked());
+        yourNotesButton.setOnAction(_ -> controller.onYourNotesButtonClicked());
+        exploreButton.setOnAction(_ -> controller.onExploreButtonClicked());
+
         controller.tryLoginUsingToken();
 
         updateUI(() -> {
@@ -72,6 +81,8 @@ public class FxHomeView extends FxView<FxHomeViewController> implements UserMode
     private void update() {
         setShown(guestBox, !userModel.isLoggedIn());
         setShown(userBoxContainer, userModel.isLoggedIn());
+        setShown(exploreButton, userModel.isLoggedIn());
+        setShown(sharedNotesButton, userModel.isLoggedIn());
     }
 
     private void setShown(Node node, boolean show) {
