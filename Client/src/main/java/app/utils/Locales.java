@@ -37,6 +37,9 @@ public class Locales {
     }
 
     public static String getErrorLabel(ErrorCode errorCode, Object... args) {
+
+        if (errorCode == null) return "Unexpected error";
+
         Enum<?> errorCodeAsEnum = (Enum<?>) errorCode;
         String key = errorCodeAsEnum.getDeclaringClass().getSimpleName() + "." + errorCodeAsEnum.name();
 
