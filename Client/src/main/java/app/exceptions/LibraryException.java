@@ -5,15 +5,16 @@ import errors.LibraryError;
 public class LibraryException extends RuntimeException {
 
     private final transient LibraryError libraryError;
-    private String causingItemName;
+    private final String causingItemName;
 
     public LibraryException(LibraryError libraryError) {
-        super(libraryError.toString());
-        this.libraryError = libraryError;
+        this(libraryError, null);
     }
 
     public LibraryException(LibraryError libraryError, String causingItemName) {
-        this(libraryError);
+        super(libraryError.toString());
+
+        this.libraryError = libraryError;
         this.causingItemName = causingItemName;
     }
 

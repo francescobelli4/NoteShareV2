@@ -21,6 +21,8 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
     private final FxViewFactory factory;
     private final FxNavigator navigator;
 
+    private final String errorTitle = Locales.get("error");
+
     public FxLibraryExplorerTopBarController(LibraryController libraryController, NotificationController notificationController, FxViewFactory factory, FxNavigator navigator) {
         this.libraryController = libraryController;
         this.notificationController = notificationController;
@@ -46,12 +48,12 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
             Optional<LibraryError> nameError = LibraryRules.isNameValid(name);
 
             if (nameError.isPresent()) {
-                notificationController.showError(Locales.get("error"), Locales.getErrorLabel(nameError.get(), name));
+                notificationController.showError(errorTitle, Locales.getErrorLabel(nameError.get(), name));
                 return;
             }
 
             if (chosenFile == null) {
-                notificationController.showError(Locales.get("error"), Locales.get("dialog.file_not_chosen"));
+                notificationController.showError(errorTitle, Locales.get("dialog.file_not_chosen"));
                 return;
             }
 
@@ -59,7 +61,7 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
                 libraryController.createNoteInActive(name, chosenFile);
                 notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.note_created", name));
             } catch (LibraryException libraryException) {
-                notificationController.showError(Locales.get("error"), Locales.getErrorLabel(libraryException.getLibraryError(), name));
+                notificationController.showError(errorTitle, Locales.getErrorLabel(libraryException.getLibraryError(), name));
             }
         });
 
@@ -79,7 +81,7 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
             Optional<LibraryError> nameError = LibraryRules.isNameValid(name);
 
             if (nameError.isPresent()) {
-                notificationController.showError(Locales.get("error"), Locales.getErrorLabel(nameError.get(), name));
+                notificationController.showError(errorTitle, Locales.getErrorLabel(nameError.get(), name));
                 return;
             }
 
@@ -87,7 +89,7 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
                 libraryController.createFolderInActive(name);
                 notificationController.showSuccess(Locales.get("success"), Locales.get("dialog.folder_created", name));
             } catch (LibraryException libraryException) {
-                notificationController.showError(Locales.get("error"),  Locales.getErrorLabel(libraryException.getLibraryError(), name));
+                notificationController.showError(errorTitle,  Locales.getErrorLabel(libraryException.getLibraryError(), name));
             }
         });
 
@@ -107,7 +109,7 @@ public class FxLibraryExplorerTopBarController implements GraphicController {
         try {
             libraryController.pasteClipboardIntoActive();
         } catch (LibraryException libraryException) {
-            notificationController.showError(Locales.get("error"), Locales.getErrorLabel(libraryException.getLibraryError(), libraryException.getCausingItemName()));
+            notificationController.showError(errorTitle, Locales.getErrorLabel(libraryException.getLibraryError(), libraryException.getCausingItemName()));
         }
     }
 

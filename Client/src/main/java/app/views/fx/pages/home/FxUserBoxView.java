@@ -1,15 +1,12 @@
 package app.views.fx.pages.home;
 
-import app.exceptions.AuthException;
 import app.exceptions.ProfileException;
 import app.models.usermodel.UserModel;
 import app.models.usermodel.UserModelListener;
 import app.models.walletmodel.WalletModel;
 import app.models.walletmodel.WalletModelListener;
-import app.utils.Locales;
 import app.views.fx.FxView;
 import app.views.fx.graphiccontrollers.home.FxUserBoxController;
-import errors.WalletServiceError;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import permissions.Permission;
